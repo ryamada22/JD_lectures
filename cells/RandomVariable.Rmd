@@ -38,10 +38,10 @@ The set of possible outcomes are $\mathbf{R}$ (real values).
 The probability to observe $x_1 \le X \le x_2$ is,
 
 $$
-P(x_1 \le X \le x_2) = \int_{x_1}^{x_2}\frac{1}{\sqrt{2\pi s^2}}e^{-\frac{(x-\mu)^2}{2s^2}} dx ,
+P(x_1 \le X \le x_2) = \int_{x_1}^{x_2} \frac{1}{\sqrt{2\pi s^2}} e^{-\frac{(x-\mu)^2}{2s^2}} dx ,
 $$
 
-where $\frac{1}{\sqrt{2\pi s^2}}e^{-\frac{(x-\mu)^2}{2s^2}}$ is probability density function of normal distribution.
+where $\frac{1}{\sqrt{2\pi s^2}} e^{-\frac{(x-\mu)^2}{2s^2}}$ is probability density function of normal distribution.
 
 
 ### Further readings
