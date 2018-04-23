@@ -1,0 +1,35 @@
+How to evaluate learning results:
+Training setとの誤差およびTest setとの誤差を評価する。
+
+How to evaluate learning methods:
+BiasとVarianceのバランスを評価する。
+
+Training set:
+学習のインプットに使うサンプル。
+
+Test set:
+学習の結果得られたモデルをテストするために使うサンプル。
+
+Bias:
+推定されたモデルとTraining setの誤差。
+
+Variance:
+推定されたモデルの、サンプル追加による変動。
+
+Bias-Variance tradeoff:
+推定と実際の差が大きいならサンプルを追加しても推定モデルはあまり変化せず、推定と実際の差が小さいならサンプルを追加したとき推定モデルは大きく変化してしまうこと。
+
+Overfitting:
+Biasを小さくするために多くの学習をさせた結果、Varianceが極端に大きくなってしまった状態のこと。
+
+Model complexity:
+推定した分布の複雑性を独立な分布の個数や特徴量の個数で表したもの。
+
+Report your opinion on the classification displayed in the bottom drawing in the document "Linear Models and Least Squares" :
+このグループ分けはうまくいっていない。実際、赤のグループはほぼ線の片方にいる一方、黒のグループは線に等分されてしまっている。これは、最小二乗法が散布図を直線近似するための手法であることが原因と思われる。各グループを点と見なせる状況、つまり各グループのサンプルが同程度に散らばっていれば、この手法によるグループ分けが成功すると予想される。
+
+Describe the top formula in the document "k-Nearest Neighbor Method" in your mother tongue language as if you describe it to the friends who are not familiar with math:
+自分から近い順にk個のサンプルを見た時、その多数決で自分がどちらのグループに属するかを決定する方法。kを変えると多数決に参加するサンプルが変更されるため、自分の属するグループも変わる可能性がある。これにより、グループ分けの境界線が動く、細かくなる、滑らかになるといった変化が起き得る。
+
+Describe the bottom 9 panels in the document "k-Nearest Neighbor Method" on the change in the regions along the parameter values of k:
+与えられたパラメータでの表示を行ってから、パラメータkを変更した。境界の様子やトレーニングセットとのずれを見ると、k=5が一番良さそうに見えたため、その付近のk=3,...,11でも出力を行った。結果、その中でもk=5が一番精度が良いように見えた。しかし、見えるだけでは主観を排除できないので、Biasの計算、Varianceの計算が必要になるということが実感できた。これを最小化するパラメータを選ぶことで、モデルの調整ができる。良い推定を行うためには、BiasとVarianceを公平に扱って最小化する、重みをつけて最小化する、どちらが良いのかという疑問が湧いた。統計的な計算で評価できるように思われるが、具体的な方法はわからなかった。
