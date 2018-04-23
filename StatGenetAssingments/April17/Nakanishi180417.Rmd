@@ -1,0 +1,225 @@
+---
+title: "180417Nakanishi"
+output: html_notebook
+---
+```{r}
+#3.2 Exercises 1-1
+
+x <- c(p,q)
+M <- matrix(c(a, b, c, d),byrow=TRUE,2,2)
+
+a <- runif(1)
+b <- (p-p*a)/q
+c <- runif(1)
+d <- (q-p*c)/q
+```
+
+```{r}
+#3.3 Exercises 1-2
+
+x <- c(p,q)
+y <- c(r,s)
+
+p <- 2
+q <- 3
+r <- 4
+s <- 6
+
+M <- matrix(c(a,b,c,d),byrow=TRUE,2,2)
+y <- M%*%x
+
+r <- a*p + b*q
+s <- c*p+ d*q
+
+4 <- 2a + 3b
+b <- (4-2a)/3
+6 <- 2c + 3d
+d <- (6-2c)/3
+
+z <- c(t,u)
+
+z <- M%*%y
+
+t <- a*r + b*s
+t <- 4a + 6(4-2a)/3
+t <- 4a + 8 -4a
+t <- 8
+
+u <- c*p + d*q
+u <- 2c + (6-2c)/3*3
+u <- 2c + 6 -2c
+u <- 6
+
+z <- c(8,6)
+```
+
+```{r}
+# 3.4 Exercises 1-3
+
+x <- c(p,q)
+y <- c(r,s)
+
+M <- matrix(c(a,b,c,d),byrow=TRUE,2,2)
+y <- M%*%x
+
+r <- a*p + b*q
+s <- c*p + d*q
+
+r != p
+s != q
+
+b != (1-a)*p/q
+d != (q-c*p)/q
+```
+
+```{r}
+# 5.1 Exercise 2-1
+V <- matrix(c(a,b,c,d),2,2)
+
+a <- cos(pi/6)
+b <- sin(pi/6)
+c <- cos(pi/3)
+d <- sin(pi/3)
+
+delta1 <- 1
+delta2 <- 2
+
+M <- V %*% matrix(c(1,0,0,2), 2, 2) %*% solve(V)
+M
+```
+
+```{r}
+# 5.2 Exercise 2-2
+
+M <- matrix(c(1,2,2,4),2,2)
+M
+z <- eigen(M)
+z
+
+x <- z$vectors[,1] 
+x
+
+y <- M %*% x
+y
+y <- 5*x
+y
+
+```
+
+```{r}
+#5.3 Exercise 2-3
+M <- matrix(c(1,2,2,4),2,2)
+x <- c(x1,x2)
+
+y <- M %*% x
+
+x1 <- 2
+x2 <- 3
+
+y
+
+```
+
+```{r}
+#5.4 Exercise 2-4
+
+solve(M)
+
+#Mで変換した点は全て y = 2x上に移動する
+```
+
+```{r}
+# 5.5 Exercise 2-5
+M <- matrix(c(1,3,2,4),2,2)
+z <- eigen(M)
+z
+z$values[1]
+
+```
+```{r}
+# 5.6 Exercise 2-6
+M <- matrix(c(a,c,b,d),2,2)
+
+values <- c(v1,v2)
+v1 <- -(a+d)/2 + sqrt((a+d)^2-4*(a*d-b*c))/2
+v2 <- -(a+d)/2 - sqrt((a+d)^2-4*(a*d-b*c))/2
+
+a <- 1
+d <- 1
+
+# 固有値が複素数になるには bc<0なら良い
+
+b >- -2
+c >- 2
+
+v1
+v2
+```
+
+```{r}
+# 5.8 Exercise 2-8
+
+M <- matrix(c(a,c,b,d),2,2)
+x <- c(x1, x2)
+
+eigen.out <- eigen(M)
+s <- eigen.out[[1]]
+V <- eigen.out[[2]]
+t <- seq(1, 5, by=1)
+Mt <- matrix(0, length(t), 2)
+ for(i in 1:t){
+  Mi <- V %*% diag(eigen.out[[1]]^i) %*% solve(V)
+  yi <- Mi %*% x
+  plot(yi)
+ }
+
+
+# 実数固有値を2つ有する時 bc>0 かつab != bc
+
+a <- 5
+b <- 3
+c <- 1
+d <- 4
+
+y <- Mt %*% x
+
+
+x <- z$vectors[,1] 
+x
+
+y <- M %*% x
+y
+y <- 5*x
+y
+
+```
+
+```{r}
+# 7.1 Exercise 3-1
+
+M <- matrix(c(2,3,3,4),2,2)
+A <- matrix(c(2,3,0,3,4,0,-7,-9,1),3,3)
+x <- c(x1, x2, 1)
+
+y <- A %*% x
+
+x1 <- 1
+x2 <- 2
+
+y
+```
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+

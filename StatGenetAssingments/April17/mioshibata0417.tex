@@ -1,0 +1,421 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{amsmath}								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{cases}
+
+
+%SetFonts
+%SetFonts
+
+\title{Assignment 0417}
+\author{Mio Shibata}
+\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+ 
+% In your main .tex file
+
+Exercise 1-0\\
+Let 
+$ M=
+\begin{pmatrix}
+ a & b\\
+ c & d
+\end{pmatrix}.\\$
+If given matrix of M transforms (2,3) to (2,3),\\
+$ M 
+\begin{pmatrix}
+ 2\\
+ 3
+\end{pmatrix}
+=
+\begin{pmatrix}
+ 2\\
+ 3
+\end{pmatrix}$
+\\
+Then,
+\begin{numcases}
+  {}
+  2a + 3b = 2 & \\
+  2c + 3d = 3  &
+\end{numcases}
+\begin{numcases}
+  {}
+  b = \frac{2-2a}{3} & \\
+  d = \frac{3-2c}{3}  &
+\end{numcases}\\
+Also$(M- E)
+\begin{pmatrix}
+ 2\\
+ 3
+\end{pmatrix}
+=
+\begin{pmatrix}
+ 0\\
+ 0
+\end{pmatrix}
+$\\
+It satisfies that
+$M-E =
+\begin{pmatrix}
+ a-1 & b\\
+ c & d-1
+\end{pmatrix}$\\
+
+By inserting (3),(4),\\
+$det(M-E)=(ad-bc)+1-(a+d)\\=3a-2ac-2c+2ac+3-3a+3-2c\\=0$
+
+Then, the factors of M satisfies this formula $ad-bc= a+d -1$.\\
+
+Exercise 1-1\\
+
+$ M 
+\begin{pmatrix}
+ p\\
+ q
+\end{pmatrix}
+=
+\begin{pmatrix}
+ p\\
+ q
+\end{pmatrix}$\\
+$(M- E)
+\begin{pmatrix}
+ p\\
+ q
+\end{pmatrix}
+=
+\begin{pmatrix}
+ 0\\
+ 0
+\end{pmatrix}
+$\\
+And $(p,q) \neq 0$\\
+$M-E = 0$\\
+$det (M-E) = 0$\\
+Then, the factors of matrix M is satisfied with this  relational expression,\\  $(ad-bc)+1-(a+d)=0$\\
+
+Exercise 1-2\\
+
+$ M 
+\begin{pmatrix}
+ 2\\
+ 3
+\end{pmatrix}
+=
+\begin{pmatrix}
+ 4\\
+ 6
+\end{pmatrix}
+ =
+2
+\begin{pmatrix}
+ 2\\
+ 3
+\end{pmatrix}\
+$\\
+
+$(M- 2E)
+\begin{pmatrix}
+ 2\\
+ 3
+\end{pmatrix}
+=
+\begin{pmatrix}
+ 0\\
+ 0
+\end{pmatrix}
+$\\
+Then,$M-2E = 0$\\
+$det (M-2E) = 0$\\
+Then, the factors of matrix M is satisfied with this  relational expression, \\ $(ad-bc)+4-2(a+d)=0$\\
+
+Exercise 1-3\\
+As I described above  Excercises1-3,  if any $(p.q)$ is not transformed by matrix of M, the factors of matrix M is satisfied with this  relational expression,\\  $(ad-bc)+1-(a+d)=0$\\
+In other words, all $(p.q)$ is transformed to $(p',q')$ ($p\neq p', q\neq q'$).\\
+Therefore, if $(ad-bc)+1-(a+d) \neq 0$, all $(p.q)$is transformed to others without $(p',q')\neq (0,0)$
+\\
+
+
+
+Exercise 2-1\\
+Let eigenvalues of matrix of M are $\lambda 1, \lambda 2$ and each eigenvectors are $\vec v_1, \vec v_2$,\\
+$\vec v_1, \vec v_2$ are described 
+$ \vec v_1=
+\begin{pmatrix}
+ \cos {\theta_1}\\
+ \sin {\theta_1} 
+\end{pmatrix}$
+$ \vec v_2=
+\begin{pmatrix}
+ \cos {\theta_2}\\
+ \sin {\theta_2} 
+\end{pmatrix}$.\\
+
+$M \vec v_1 = \lambda_1 \vec v_1,M \vec v_2 =\lambda_2 \vec v_2$ \\
+Let $V=(\vec v_1, \vec v_2)$, $V =\begin{pmatrix}\cos{\theta_1},\cos{\theta_2}\\ \sin{\theta_1},\sin{\theta_2} \end{pmatrix}$ 
+$MV= V\begin{pmatrix}
+  \lambda_1 & 0\\
+ 0 & \lambda_2
+\end{pmatrix}$\\
+$M = 
+\begin{pmatrix}
+ \cos{\theta_1},\cos{\theta_2}\\ 
+ \sin{\theta_1},\sin{\theta_2} 
+\end{pmatrix}
+\begin{pmatrix}
+ \lambda_1,0\\
+  0,\lambda_2
+  \end{pmatrix}V^{-1}\\
+= \begin{pmatrix}\lambda_1\cos{\theta_1},\lambda_2\cos{\theta_2}\\ \lambda_1\sin{\theta_1},\lambda_2\sin{\theta_2} \end{pmatrix}$\\
+$P^-1= \frac{1}{\cos{\theta_1}\sin{\theta_2}-\cos{\theta_2}\sin{\theta_1}}\begin{pmatrix}\sin{\theta_2}, -\cos{\theta_2}\\  -\sin{\theta_1},\cos{\theta_1} \end{pmatrix}$\\
+$A = \frac{1}{\cos{\theta_1}\sin{\theta_2}-\cos{\theta_2}\sin{\theta_1}} \begin{pmatrix}\lambda_1\cos{\theta_1},\lambda_2\cos{\theta_2}\\ \lambda_1\sin{\theta_1},\lambda_2\sin{\theta_2} \end{pmatrix}\begin{pmatrix}\sin{\theta_2}, -\cos{\theta_2}\\  -\sin{\theta_1},\cos{\theta_1} \end{pmatrix}\\
+= \frac{1}{\cos{\theta_1}\sin{\theta_2}-\cos{\theta_2}\sin{\theta_1}}  \begin{pmatrix}\lambda_1\cos{\theta_1}\sin{\theta_2} - \lambda_2\sin{\theta_1}\cos{\theta_1},-(\lambda_1-\lambda_2)\cos{\theta_1}\cos{\theta_2}\\ 
+(\lambda_1-\lambda_2)\sin{\theta_1}\sin{\theta_2},-\lambda_1\sin{\theta_1}\cos{\theta_2}+\lambda_2 \cos{\theta_1}\sin{\theta_2}\end{pmatrix}$
+
+
+
+
+Excercise 2-2\\
+ 
+$ M=
+\begin{pmatrix}
+ 1 & 2\\
+ 2 & 4
+\end{pmatrix}.$\\
+
+When one of eigenvalues is 5 and let eigenvector as $\vec x$, \\
+$(M-\lambda E) \vec x = 0$\\
+$(M-5 E) \vec x = 0$\\
+$ (\begin{pmatrix}
+ 1 & 2\\
+ 2 & 4
+\end{pmatrix}-
+\begin{pmatrix}
+ 5 & 0\\
+ 0 & 5
+\end{pmatrix})\vec x = 0.$\\
+$\begin{pmatrix}
+ -4 & 2\\
+ 2 & -1
+\end{pmatrix})\vec x = 0$\\
+then $\vec x = t\begin{pmatrix}
+ 1\\
+ 2
+\end{pmatrix}$.\\
+
+Let one coordinate on the eigenvector $\vec x$as $ (p,2p)$,\\
+$\begin{pmatrix}
+ 1 & 2\\
+ 2 & 4
+\end{pmatrix}
+\begin{pmatrix}
+ p\\
+ 2p
+\end{pmatrix}= \begin{pmatrix}
+ 5p\\
+ 10p
+\end{pmatrix}= 5\begin{pmatrix}
+ p\\
+ 2p
+\end{pmatrix}$\\
+
+
+Then that coordinate is transformed to 5times of coordinates.\\ 
+
+Exercise 2-3\\
+Let one coordinate as (m,n) not on the eigenvector,\\
+$\begin{pmatrix}
+ 1 & 2\\
+ 2 & 4
+\end{pmatrix}
+\begin{pmatrix}
+ m\\
+ n
+\end{pmatrix}= \begin{pmatrix}
+ m+2n\\
+ 2m+4n
+\end{pmatrix}= \begin{pmatrix}
+ m+2n\\
+ 2(m+2n)
+\end{pmatrix}$\\
+Then all coordinates are transformed $ t\begin{pmatrix}
+ 1\\
+ 2
+\end{pmatrix}$\\
+
+Exercise 2-4,\\
+When I did solve(M) on R, the error is shown.\\
+This is because $det (M) = 0$.\\
+All coordinates are transformed to a line.\\
+It means that if $det (M) = 0$, we can't get inverse matrix of M and transformation of matrix of M converge to a line.\\
+
+Exercise 2-5,\\
+Let $\lambda$ as eigenvalue of matrix of M and matrix  of M is given as below,\\
+$M=
+\begin{pmatrix}
+ 1 & 2\\
+ 3 & 4
+\end{pmatrix}$\\
+Then,
+$det(M) =\begin{pmatrix}
+ 1- \lambda  & 2\\
+ 3 & 4- \lambda
+\end{pmatrix}= 0$\\
+$(1- \lambda)(4- \lambda)-2\times3 = 0$\\
+$ \lambda^2 - 5 \lambda -2= 0$\\
+$ \lambda =\frac{5 \pm \sqrt{33}}{2}$\\
+
+Exercise 2-6,\\
+Let matrix of $M=
+\begin{pmatrix}
+ a & b\\
+ c & d
+\end{pmatrix}$ and  $\lambda$ as eigenvalue of matrix of M,\\
+$det(M) =\begin{pmatrix}
+ a- \lambda  & b\\
+ c & d- \lambda
+\end{pmatrix}= 0$\\
+$(a- \lambda)(d- \lambda)-bc = 0$\\
+$ \lambda^2 - (a+d)\lambda + ad - bc= 0$\\
+$ \lambda =\frac{(a+d) \pm \sqrt{a^2+d^2-2ad+4bc}}{2}$\\
+
+Exercise 2-7,\\
+From the result of Exercise 2-5,
+$ \lambda =\frac{(a+d) \pm \sqrt{a^2+d^2-2ad+4bc}}{2}$\\
+If eigenvalue is complex number,
+$\sqrt{a^2+d^2-2ad+4bc} <0$\\
+a,b,c and d are real numbers ,$a^2+d^2 \geqq 0$\\
+Then,$-2ad+4bc < 0$ and $a^2+d^2<2ad-4bc$.\\
+
+When M[1,1]=1、M[1,2]=1, and let M[2,1]=$m_1$,M[2,2]=$m_2$,\\
+$M=
+\begin{pmatrix}
+ 1 & 1\\
+ m_1 & m_2
+\end{pmatrix}$\\
+
+Then let eigenvalue $\lambda$,
+$(\lambda -1)( \lambda-m_2)-m_1 =0\\
+\lambda^2-(m_1-1)\lambda-m_1=0$\\
+Eigenvalues are complex numbers therefore $m_1 and m_2$ satisfy formula shown exercise 2-6.\\
+\begin{numcases}
+  {}
+  -2\times 1\times m_2 + 4\times 1\times m_1 <0\\
+  m_2^2 -2m_2+4m_1+1 < 0 &
+\end{numcases}\\
+One of the number is chosen like $m_1=-1$ and therefore $m_2^2 -2m_2-3 < 0$  $-1<m_2<3$.
+Therefore , given   
+$M=
+\begin{pmatrix}
+ 1 & 1\\
+ -1 & 1
+\end{pmatrix}$\\
+the eigenvalue is complex number.\\
+
+
+
+Exercise 2-8,\\
+When eigenvalues are two real numbers $\neq0$, each eigenvalue has eigenvector.
+Therefore the transformation of matrix that has those two eigenvalues is transform coordinates to on the line whose direction vector is each eigenvector and length is determined by each eigenvalue.\\
+
+When one eigenvalue is 0 and the other is not,
+$A \vec x=0$ ($\vec x$is eigenvector)\\
+Then $\vec x = 0$, meaning all transformations let all coordinates on (0,0).\\
+
+When eigenvalues are complex number,  those eigenvalues can't describe the length in real space.\\
+So if we use complex space, those eigenvalue can show the value of length in that space with eigenvectors.\\ 
+
+Exercise 3-1,\\
+To consider of $2\times 2$matrix of M,M transform $(1,0) -> (1,4), (0,1) -> (3,3)$\\ 
+Let $M=
+\begin{pmatrix}
+ a & b\\
+ c & d
+\end{pmatrix}$,\\
+$M\begin{pmatrix}
+ 1 & 0\\
+ 0 & 1
+\end{pmatrix}=
+\begin{pmatrix}
+ a & b\\
+ c & d\end{pmatrix}
+ \begin{pmatrix}
+ 1 & 0\\
+ 0 & 1
+\end{pmatrix}=\begin{pmatrix}
+ 1 & 3\\
+ 4 & 3
+\end{pmatrix}$
+Then $M=
+\begin{pmatrix}
+ 1 & 3\\
+ 4 & 3
+\end{pmatrix}$\\
+Let Affine transformation as matrix of A\\
+$A=
+\begin{pmatrix}
+ a & b & v1\\
+ c & d & v2\\
+ 0 & 0 &1
+\end{pmatrix}$\\
+Each transformation by matrix of A satisfies these formula,\\
+\begin{numcases}
+  {}
+  a + 2b + v1 = 1& \\
+  c + 2d + v2 = 2  &
+\end{numcases}\\
+\begin{numcases}
+  {}
+  2a + 2b + v1 = 3& \\
+  2c + 2d + v2 = 5  &
+\end{numcases}\\
+\begin{numcases}
+  {}
+  a + 3b + v1 = 4& \\
+  c + 3d + v2 = 6  &
+\end{numcases}\\
+Then, $a=2,b=3,c=3,d=4,v1=-7 ,v2 = -9$.
+$A=
+\begin{pmatrix}
+ 2 & 3 & -7\\
+ 3 & 4 & -9\\
+ 0 & 0 &1
+\end{pmatrix}$\\
+To check the transformation of (1,2) by A is (1,2),\\
+$A=
+\begin{pmatrix}
+ 2 & 3 & -7\\
+ 3 & 4 & -9\\
+ 0 & 0 &1
+\end{pmatrix}
+\begin{pmatrix}
+ 1\\
+ 2\\
+ 0
+\end{pmatrix}\\
+ =\begin{pmatrix}
+ 1\\
+ 2\\
+ 0
+\end{pmatrix}$
+
+
+
+
+%$M\begin{pmatlix}
+%1 \\ 0 \end{pmatlix}=\begin{pmatlix} \\c \end{pmatlix}$
+
+%$M\begin{pmatlix}0\\1\end{pmatlix}=\begin{pmatlix}\\d\end{pmatlix}$
+
+
+\end{document}  

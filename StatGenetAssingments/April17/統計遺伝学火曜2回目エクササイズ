@@ -1,0 +1,107 @@
+<20180417統計遺伝学火曜>
+* Go through "Transformation with matrices 行列で変換" and report exercises.
+* Go through "Properties of matrices 行列の特徴"; no need to report exercises.
+
+################################################################################
+Ex.1-1
+bc=(1-a)(1-d)
+
+Ex.1-2
+2a+3b=4,2c+3d=6 -> 4a+6b=8,4c+6d=12
+
+Ex.1-3
+bc=(1-a)(1-d)が不動点が存在する条件。
+つまりこの式を満たさなければ、不動点は原点以外に存在しない。
+
+################################################################################
+
+#Ex.2-1
+ex2_1  <- function(th,lam){
+	V <- matrix(c(cos(th[1]),sin(th[1]),cos(th[2]),sin(th[2])),2,2)
+	S <- diag(lam)
+	return(V %*% S %*% solve(V))
+  }
+
+#Ex.2-2
+M <- matrix(c(1,2,2,4),2,2)
+eigen.out <- eigen(M)
+ex2_2 <- eigen.out$vectors[,1]
+#数値で確認
+M %*% ex2_2
+5*ex2_2
+
+#グラフで確認したかった
+d <- 2 #dimention
+u <- matrix(ex2_2,1,2) #第一固有ベクトルを取り出して横に並べた
+v <- M %*% t(u) #　vはその行先：ベクトルの形で縦に並んでいる
+v <- t(v)# vを横に並び替えた
+plot(rbind(u,v),pch=20,col=c(1,2),xlim=c(0,3),ylim=c(0,5))#それをplotしてみた。
+abline(0,u[,2]/u[,1]) #０からの直線上にどちらも点がある！
+
+#Ex.2-3
+d <- 2 #dimention
+M <- matrix(c(1,2,2,4),2,2)
+g1 <- seq(from=-3,to=3,by=1) #gridでそれ以外の点の動きを確認する。seq()-3から3まで1ずつの数を並べる
+g2 <- seq(from=-3,to=3,by=0.01)
+grids <- rbind(expand.grid(g1,g2),expand.grid(g2,g1))
+#expand.grid()で0.01刻みの7つづつ(-3to3)のrowが601個ずつ下につながる(4207行*2列)それをrbindで縦につなげて→8414行2列
+plot(grids,pch=20,cex=0.1) #cex：文字の拡大率、pch値は20が黒丸
+grids. <- M %*% t(grids) # Mの行列の形で線形変換している、左からM(2*2行列)の掛け算に合わせるために、t()で行列を転置している：2行8414列の行列に
+plot(t(grids.),pch=20,col=2,cex=0.1)
+plot(grids,pch=20,cex=0.1,xlim=c(-10,10),ylim=c(-20,20))#サイズ感変えてみた
+points(t(grids.),pch=20,cex=0.1,col=2) #さっきのplot()に追加したはず。
+#線上にすべての点が乗ってしまっているという事？(もしくはコードミス？)
+
+#単なる確認に徹すると、
+M %*% matrix(c(3,4,5,6),2,2)
+M %*% matrix(c(4,5,6,7),2,2)
+
+#Ex.2-4
+M.inver <- solve(M)#エラーが出ます
+M.inver %*% t(u)#上でエラーが出ているので意味ないです
+v#これと同じになってほしかった
+#行列Mによって線上にしか動かないから、二次元が表現できない？
+
+#Ex.2-5
+M. <- matrix(c(1,3,2,4),2,2)
+eigen.ex2_5 <- eigen(M.)
+eigen.ex2_5[1]
+
+#Ex.2-6
+# matrix(c(a,c,b,d),2,2) の固有値を行列の成分で表す：abcdでない事に注意
+\lambda=\frac{(a+d)\pm \sqrt{(a+d)^{2}-4(ad+bc)}}{2}
+
+#Ex.2-7
+#　matrix(c(1,1,b,d),2,2)　として、固有値が複素数になるような行列Mを作成
+(a+d)^{2}-4(ad+bc)<0 #を満たせば複素数になる
+a <- 1
+b <- 1
+#例えばd=0でc=1でOK
+
+#Ex.2-8
+#１：異なる２つの0ではない実数固有値を持つ場合　→講義資料のplot()
+#２：１つの固有値が0ではない実数であり、もう一つの固有値が0である場合　→ex2-2のplot()
+#３：２つの固有値が複素数の場合　→平行移動？
+M <- matrix(c(1,1,1,0),2,2)
+g1 <- seq(from=-3,to=3,by=1)
+g2 <- seq(from=-3,to=3,by=0.01)
+grids <- rbind(expand.grid(g1,g2),expand.grid(g2,g1))
+plot(grids,pch=20,cex=0.1)
+grids. <- M %*% t(grids)
+plot(t(grids.),pch=20,col=2,cex=0.1)
+plot(grids,pch=20,cex=0.1,xlim=c(-10,10),ylim=c(-10,10))
+points(t(grids.),pch=20,cex=0.1,col=2)
+
+#Ex.3-1
+#文書は掃き出し法の事？　引き算の(2,1)→(2,2)では？
+M <- matrix(c(1,4,3,3),2,2)
+Affine <- matrix(c(1,4,0,3,3,0,1,2,1),3,3)
+ex3_1 <- matrix(c(1,2,1),3,1)
+Affine %*% ex3_1 #あれ？違う
+
+#自分で考えなおして、
+\begin{pmatrix}y_1\\y_2\end{pmatrix} = \begin{pmatrix}1,3\\3,3 \end{pmatrix} \begin{pmatrix} x_1 -1 \\x_2 -2\end{pmatrix} + \begin{pmatrix} 1\\2 \end{pmatrix}
+#これを展開して、
+\begin{pmatrix}y_1\\y_2\end{pmatrix} = \begin{pmatrix}1,3\\3,3 \end{pmatrix} \begin{pmatrix} x_1 \\x_2\end{pmatrix} + \begin{pmatrix} -6\\-7 \end{pmatrix}
+#上記が自分で可能だった理解。したがってaffineは下記となり、完成。
+\begin{pmatrix}y_1\\y_2\\1\end{pmatrix} = \begin{pmatrix}1,3,-6\\3,3,-7\\ 0,0,1 \end{pmatrix} \begin{pmatrix} x_1\\x_2\\1 \end{pmatrix}
