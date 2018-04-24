@@ -1,12 +1,15 @@
 ---
-title: "Properties of matrices s—ñ‚Ì“Á’¥"
+title: "Properties of matrices è¡Œå<88>—ã<81>®ç‰¹å¾´"
 author: "ryamada"
-date: "2016”N12Œ22“ú"
-output: 
+date: "2016å¹´12æœ<88>22æ—¥"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '6'
   html_document:
-    toc: true
+    number_section: yes
+    toc: yes
     toc_depth: 6
-    number_section: true
 ---
 
 ```{r setup, include=FALSE}
