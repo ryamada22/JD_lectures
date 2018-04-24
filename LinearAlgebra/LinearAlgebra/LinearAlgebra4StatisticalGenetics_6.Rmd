@@ -14,6 +14,8 @@ library(knitr)
 opts_chunk$set(echo = TRUE)
 library(rgl)
 knit_hooks$set(rgl = hook_webgl)
+library(mvtnorm)
+library(GPArotation)
 ```
 
 # 行列の特徴
@@ -30,6 +32,151 @@ knit_hooks$set(rgl = hook_webgl)
 
 #Exercise 1
 ## Exercise 1-1 
+## Exercise 4
+
+次のようにして生成される、多変量の観察データ x があったとする。
+```{r}
+d <- 3
+n <- 1000
+x <- matrix(rnorm(d*n),ncol=d)
+x <- apply(x,2,cumsum)
+
+plot(as.data.frame(x),pch=20,cex=0.1)
+```
+
+
+```{r rgl=TRUE}
+plot3d(x)
+```
+
+## Exercise 4-1
+
+xの各変数の標本平均を求めよ。
+xの分散共分散行列を求めよ。
+
+```{r echo=FALSE}
+apply(x,2,mean)
+cov(x)
+```
+
+## Exercise 4-2 
+
+4-1 で求めた平均値ベクトルと分散共分散行列とに基づく、多変量正規乱数を発生し、ペアワイズにプロットせよ。
+
+```{r echo=FALSE, rgl=TRUE}
+n <- 1000
+x.new <- rmvnorm(n=n,mean=apply(x,2,mean),sigma=cov(x))
+plot3d(x.new)
+```
+
+```{r echo=FALSE, rgl=TRUE}
+plot3d(x.new)
+
+points3d(x,col=2,radius=0.1)
+```
+
+## Exercise 4-3
+回転行列を用いて、xを回転し(軸を取り直し)、その標本平均と分散共分散行列とを求め、4-1のそれと比較せよ。
+
+各変数の平均も分散も異なることを確かめよ。
+
+```{r echo=FALSE}
+R <- Random.Start(d)
+x2 <- t(R %*% t(x))
+print("mean x")
+apply(x,2,mean)
+print("mean x rotated")
+apply(x2,2,mean)
+print("cov x")
+cov(x)
+print("cov x rotated")
+cov(x2)
+```
+
+## Exercise 4-4
+
+分散は異なるが、分散の和は変わっていないことを、分散共分散行列のトレースを計算することで確かめよ。
+
+同様に、分散共分散行列の固有値の和としてトレースを計算することでも確かめよ。
+```{r echo=FALSE}
+sum(diag(cov(x)))
+sum(diag(cov(x2)))
+
+sum(eigen(cov(x))[[1]])
+sum(eigen(cov(x2))[[1]])
+```
+## Exercise 4-5
+
+データセットxの軸の取り方を回転することによって変えても、各軸の分散の和は変わらない。
+分散の和は変わらないが、分散の総和の分配具合は変わる。
+
+そのことを、多数の回転行列をランダムに発生させ、データセットを回転した上で各軸方向の分散を計算し、その分散の値を大小順序でソートしてプロットし、分配具合が変わることを具体的に確認せよ。
+
+```{r echo=FALSE}
+n.iter <- 100
+sorted.vars <- matrix(0,n.iter,d)
+for(i in 1:n.iter){
+  R <- Random.Start(d)
+  x.tmp <- t(R %*% t(x))
+  cov.tmp <- cov(x.tmp)
+  sorted.vars[i,] <- sort(diag(cov.tmp))
+}
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var")
+```
+
+## Exercise 4-6
+
+xの分散共分散行列の固有値を求めることで、分散共分散行列を対角化するような回転をしたときの、各軸の分散を求めることができる。
+
+その分散を4-4のプロットに重ねてプロットせよ。
+
+```{r,echo=FALSE}
+x.cov <- cov(x)
+lambdas <- sort(eigen(x.cov)[[1]])
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var",col=1)
+points(1:d,lambdas,col=2,pch=20)
+for(i in 1:(d-1)){
+  segments(i,lambdas[i],i+1,lambdas[i+1],col=2)
+
+}
+```
+
+## Exercise 4-7
+
+4-4,4-5と同様のプロットを変数の数を増やして実施せよ。
+
+```{r}
+d <- 10
+n <- 1000
+x <- matrix(rnorm(d*n),ncol=d)
+x <- apply(x,2,cumsum)
+
+plot(as.data.frame(x[,1:5]),pch=20,cex=0.1)
+```
+
+```{r echo=FALSE}
+n.iter <- 100
+sorted.vars <- matrix(0,n.iter,d)
+for(i in 1:n.iter){
+  R <- Random.Start(d)
+  x.tmp <- t(R %*% t(x))
+  cov.tmp <- cov(x.tmp)
+  sorted.vars[i,] <- sort(diag(cov.tmp))
+}
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var")
+```
+
+```{r,echo=FALSE}
+x.cov <- cov(x)
+lambdas <- sort(eigen(x.cov)[[1]])
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var",col=1,ylim=range(c(sorted.vars,lambdas)))
+points(1:d,lambdas,col=2,pch=20)
+for(i in 1:(d-1)){
+  segments(i,lambdas[i],i+1,lambdas[i+1],col=2)
+
+}
+```
+
 『行列の特徴』のExercises 4-6, 4-7を再度実施せよ。
 
 # PCA
