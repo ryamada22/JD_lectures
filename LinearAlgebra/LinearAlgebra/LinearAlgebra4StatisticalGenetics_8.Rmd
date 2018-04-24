@@ -1,0 +1,105 @@
+---
+title: "Differentiate Matrix Formula 線形代数式を微分する"
+author: "ryamada"
+date: "2016年12月27日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+```
+
+# 最小二乗法
+
+$$
+y \sim X\mathbf{a}
+$$
+なる関係式があり、$X$の行数が列数より多いとき、
+
+$$
+\sum_{i=1}^n (y_i-\hat{y_i})^2 = (y-X\mathbf{a})^T \cdot (y-X\mathbf{a})
+$$
+を最小にするような$\hat{\mathbf{a}}$が、推定値であった。
+
+そして
+$$
+\hat{\mathbf{a}} = (X^TX)^{-1}X^Ty
+$$
+
+で求まるのであった。
+
+# 偏微分方程式
+
+$$
+f(\mathbf{a})=f((a_1,...,a_m))=\sum_{i=1}^n (y_i-\hat{y_i})^2 = (y-X\mathbf{a})^T \cdot (y-X\mathbf{a})
+$$
+は、$y$,$X$が与えられているとき、$m$個の変数$(a_1,...,a_m)$の二次式となっているスカラー関数である。
+
+今、この$f(\mathbf{a})$を最小にする$\mathbf{a}=(a_1,...,a_m)$とは、
+$$
+\frac{\partial f(\mathbf{a})}{\partial a_i}=0
+$$
+がすべての$a_i$について成り立つ場合である。
+
+スカラーを返す$z^Tw$は$z^Tw = w z^T$であることを使うと
+
+$$
+f(\mathbf{a}) = (y-X\mathbf{a})^T \cdot (y-X\mathbf{a})
+ = y^Ty -2(X\mathbf{a})^Ty+(X\mathbf{a})^T \cdot (X\mathbf{a})
+$$
+さらに変形して
+
+$$
+f(\mathbf{a}) = y^Ty -2(X^Ty)\cdot \mathbf{a} + \mathbf{a}^TX^TX\mathbf{a}
+$$
+
+これを$\mathbf{a}$で偏微分する。
+
+第1項は$0$
+
+第2項は、各成分に$-2y^TX$の各成分が残る。
+
+第３項は、$X^TX=Z$と置くと
+
+$$
+\mathbf{a}^T Z \mathbf{a} = \sum_{i=1}^m \sum_{j=1}^m a_i a_j Z_{ij}
+$$
+
+であり、その$a_k$による偏微分は
+
+$$
+\frac{\partial}{\partial a_k} (\sum_{i=1}^m \sum_{j=1}^m a_i a_j Z_{ij}) = 2\sum_{i=1}^m Z_{ik}a_i
+$$
+
+となり、$k=1,...,m$について合わせると
+$$
+2Z \mathbf{a}
+$$
+となるから、
+結局、
+
+$$
+0 - 2X^Ty + 2Z\mathbf{a} = 2(X^TX) \mathbf{a} - 2X^Ty = \mathbf{0}
+$$
+
+となり、
+
+$$
+(X^TX)\mathbf{a} = X^T y
+$$
+が得られる。
+
+ここから、$X^TX$に逆行列があるときは
+
+$$
+\mathbf{a} = (X^TX)^{-1}X^T y
+$$
+
+が得られる。
