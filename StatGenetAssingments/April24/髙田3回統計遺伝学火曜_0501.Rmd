@@ -1,0 +1,49 @@
+---
+title: "統計遺伝学第三回宿題"
+author: "Takada Daisuke"
+date: "2018年5月1日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Re-read "Properties of matrices", then describe "rank", "determinant", "trace" and "eigen values as you like
+
+※相似変換は階数・トレース・行列式・固有値を保存する
+
++ 階数：その行列が表す線型方程式系および線型変換がどのくらい「非退化」であるかを示すもの　(行列の階数は、対応する線型写像の階数である：髙田の結論としては、「基底ベクトルにした時に実質どれほどの次元があるか」)
++ トレース：固有値の和(基底変換に関して不変)線形写像の跡　髙田の結論としては、「トレースは固有値の和なので相似・転置・積の順序変更をしても変わらないという性質を持つ」
++ 行列式：線型変換によって空間の体積要素が何倍に変わるかという概念を抽象化したもの　(行列の可逆性を判定する指標でもある)
++ 固有値：固有方程式の解。その行列に相当する線形変換を行った際に方向が変わらないベクトルの方向を固有ベクトルと言うと、その方向への収縮・拡張の割合を固有値という。固有値が1だと伸長も収縮もしない。
+
+# Linear model, "y=ax + b" can be considered as an affine transformation. 
+
+自由に決めて良い成分を●とする。
+
+$$
+\begin{pmatrix}x\\ax+b\end{pmatrix} = \begin{pmatrix}1,●\\a,● \end{pmatrix} \begin{pmatrix} x\\0 \end{pmatrix} + \begin{pmatrix} 0\\b \end{pmatrix}
+$$
+
+という事は
+$$
+\begin{pmatrix}x\\ax+b\\1\end{pmatrix} = \begin{pmatrix}1,●,0\\a,●,b\\ 0,●,1 \end{pmatrix} \begin{pmatrix} x\\0\\1 \end{pmatrix} 
+$$
+
+後半部に関しては全て0の行を足せば正方行列となるので、
+$$
+\begin{pmatrix}a_1x_1+a_2x_2+c\\b_1x_1+b_2x_2+d\\0\end{pmatrix} = \begin{pmatrix}a_1,a_2,●\\b_1,b_2,●\\0,0,0 \end{pmatrix} \begin{pmatrix} x_1\\x_2\\0 \end{pmatrix} + \begin{pmatrix} c\\d\\0 \end{pmatrix}
+$$
+
+、
+$$
+\begin{pmatrix}a_1x_1+a_2x_2+c\\b_1x_1+b_2x_2+d\\0\\1\end{pmatrix} = \begin{pmatrix}a_1,a_2,●,c\\b_1,b_2,●,d\\ 0,0,●,0\\0,0,0,1 \end{pmatrix} \begin{pmatrix} x_1\\x_2\\0\\1 \end{pmatrix} 
+$$
+
+
+
