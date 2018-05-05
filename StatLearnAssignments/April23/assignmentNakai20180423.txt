@@ -1,0 +1,21 @@
+#1 <write an explanation on bias and variance and their tradeoff in machine learning to somebody who are new to machine learning.>
+
+The goal of machine learning algorithm is to learn a reasonable estimation mapping from training data to test data.
+The bias and variance are used as an evaluation of the algorithm when simultaneously considering the fit to the training data and suppression of overfitting.
+
+In repeated learning process, algorithm converges to some particular answer.
+But it is different from the truth.
+This deviation of the answer from the truth is called "bias".
+The bias is an error from erroneous assumptions in the learning algorithm.
+High bias can cause an algorithm to miss the relevant relations between features and target outputs (underfitting).
+
+In repeated learnig process, each learing results are deviated from the answer.
+It varies around 0, and the variation is called "Variance".
+The variance is an error from sensitivity to small fluctuations in the training set. 
+High variance can cause an algorithm to model the random noise in the training data, rather than the intended outputs (overfitting).
+
+The bias–variance tradeoff is the problem of simultaneously minimizing two sources of error that prevent supervised learning algorithms from generalizing beyond their training sets.
+If the model is simple, the bias becomes small but the variance becomes large.
+If the model is complex, the variance becomes small but the bias becomes large. 
+In other words, we can make a good prediction by finding a moderately complex model that minimizes mean square error
+
