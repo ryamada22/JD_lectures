@@ -1,0 +1,174 @@
+\documentclass[11pt, oneside]{jsarticle} 	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\usepackage{otf}
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps\UTF{0081}\UTF{0098} with pdflatex; use eps in DVI mode
+\usepackage{otf}								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{cases}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{Assignment April24 and May1}
+\author{Mio Shibata}
+\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}\\
+
+行列Aにおいてジョルダン標準形にから　$M = R AR^{-1}$と$M′=R′AR′^{−1}$と変形可能であればの相似性をいうことができる。Aの対角行列にはMとM’の固有ベクトルが並ぶという性質がある。
+同じ固有ベクトルをもち、その固有ベクトルは固有値から与えられているために固有値と固有ベクトルは１対１に対応している。
+トレースその相似性を示す固有値の総和であり、rankは固有値の数、行列式は固有値の総じて席であることから固有値を介して、それぞれの値が同じであることが相似性を示すことになる。\\
+
+Assume that a transformation moves a point $(x,0)$ to $(x,ax)$,\\
+a transformation matrix 
+$ M=
+\begin{pmatrix}
+ 1 & 0\\
+ a & 0
+\end{pmatrix}.$\\
+$\begin{pmatrix}
+ x\\
+ ax
+\end{pmatrix}=M\begin{pmatrix}
+ x\\
+ 0
+\end{pmatrix}=\begin{pmatrix}
+ 1 & 0\\
+ a & 0
+\end{pmatrix}\begin{pmatrix}
+ x\\
+ 0
+\end{pmatrix}$
+
+
+Then when a transformation moves a point $(x,0)$ to $(x,ax+b)$ and let transformation matrix A and a parallel matrix is B, \\
+$ A=
+\begin{pmatrix}
+ 1 & 0\\
+ a & 0
+\end{pmatrix}$ 
+$ B=
+\begin{pmatrix}
+ 0\\
+ b
+\end{pmatrix}.$
+
+$\begin{pmatrix}
+ x\\
+ ax+b
+\end{pmatrix}=A\begin{pmatrix}
+ x\\
+ 0
+\end{pmatrix}+B=\begin{pmatrix}
+ 1 & 0\\
+ a & 0
+\end{pmatrix}\begin{pmatrix}
+ x\\
+ 0
+\end{pmatrix}+\begin{pmatrix}
+ 0\\
+ b
+\end{pmatrix}$.
+\\
+Let us designate that transformation by 3$\times$3 matrix with Affine transformation, \\when the transformation moves $(x,0,1)$ to $(x,ax+b,1)$\\
+$\begin{pmatrix}
+ a_1 & a_2 & 0\\
+ b_1 & b_2 & b\\
+ 0 & 0 & 1
+\end{pmatrix}\begin{pmatrix}
+ x\\
+ 0\\
+ 1
+\end{pmatrix} = \begin{pmatrix}
+ x\\
+ ax+b\\
+ 1
+\end{pmatrix}$
+\\ \\
+
+Assume that a transformation moves a point $(x_1,x_2,0)$ to $(a_1x_1 + a_2x_2,b_1x_1+b_2x_2)$,\\
+a transformation matrix 
+$ M=
+\begin{pmatrix}
+ a_1 & a_2 & 0\\
+ b_1 & b_2 & 0\\
+ 0 & 0 & 0
+\end{pmatrix}$,\\
+$\begin{pmatrix}
+ a_1x_1 + a_2x_2,\\
+ b_1x_1+b_2x_2
+\end{pmatrix}=M\begin{pmatrix}
+ x_1\\
+ x_2\\
+ 0
+\end{pmatrix}=\begin{pmatrix}
+ a_1 & a_2 & 0\\
+ b_1 & b_2 & 0\\
+ 0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}
+ x_1\\
+ x_2\\
+ 0
+\end{pmatrix}$\\
+Then when a transformation moves a point $(x_1,x_2,0)$ to $(a_1x_1 + a_2x_2+c,b_1x_1+b_2x_2+d)$ and let transformation matrix A and a parallel matrix is B, \\
+$A=\begin{pmatrix}
+ a_1 & a_2 & 0\\
+ b_1 & b_2 & 0\\
+ 0 & 0 & 0
+\end{pmatrix}$, $B=\begin{pmatrix}
+ c\\
+ d\\
+ 0
+ \end{pmatrix}$.\\
+ $\begin{pmatrix}
+ a_1x_1 + a_2x_2+c\\
+ b_1x_1+b_2x_2+d\\
+ 0 
+ \end{pmatrix}=A\begin{pmatrix}
+ x_1\\
+ x_2\\
+ 0
+\end{pmatrix}+B=\begin{pmatrix}
+ a_1 & a_2 & 0\\
+ b_1 & b_2 & 0\\
+ 0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}
+ x_1\\
+ x_2\\
+ 0
+\end{pmatrix}+\begin{pmatrix}
+ c\\
+ d\\
+ 0
+ \end{pmatrix}$
+ 
+ Let us designate that transformation by 4$\times$4 matrix with Affine transformation, \\when the transformation moves $(x_1,x_2,0,1)$ to $(a_1x_1 + a_2x_2+c,b_1x_1+b_2x_2+d,0,1)$\\
+ $\begin{pmatrix}
+ a_1 & a_2 & 0 &c\\
+ b_1 & b_2 & 0 &d\\
+ 0 & 0 & 1 & 0\\
+ 0 & 0 & 0 & 1
+\end{pmatrix}\begin{pmatrix}
+ x_1\\
+ x_2\\
+ 0\\
+ 1
+\end{pmatrix}=\begin{pmatrix}
+a_1x_1 + a_2x_2+c\\
+b_1x_1+b_2x_2+d\\
+0\\
+1\end{pmatrix}$\\
+
+
+
+\end{document}  
