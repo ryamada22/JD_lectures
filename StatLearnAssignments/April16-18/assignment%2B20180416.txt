@@ -1,0 +1,24 @@
+①	Report your opinion on the classification displayed in the bottom drawing in the document "Linear Models and Least Squares" 
+
+The classification boundary dosen't look so good. 
+The liniar models would have high bias to the "TRUTH"
+
+②	Describe the top formula in the document "k-Nearest Neighbor Method" in your mother tongue language as if you describe it to the friends who are not familiar with math.
+
+ノンパラメトリックな教師有り学習アルゴリズムの一つ。
+多次元の特徴空間における位置ベクトルで表現される訓練データが既に存在している状況下を考える。
+新たな入力xに対して出力yを生成したいとき、訓練データの中からxの最近傍例をk個見つける。
+そのk点に対応する出力の中で最も一般的なクラス（平均を採用するのも1つのアルゴリズム）を、新たな入力xに対する出力に割り当てる
+
+
+③	Describe the bottom 9 panels in the document "k-Nearest Neighbor Method" on the change in the regions along the parameter values of k.
+
+The panel in lower k(1~2), the classification seems to be overfitted.
+There are isolated classification boundary.
+Up to a certain degree of k (about 3〜10), classification seems to be optimized to test data.
+The border of classification is getting smoother. 
+However, when k reaches a certain value or more (about 20〜40),
+The error rates in training data seem to be getting higher.
+It seemes to be getting underfitted.
+The panel in k=100, the classification is clearly strange.
+
