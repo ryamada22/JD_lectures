@@ -1,0 +1,196 @@
+---
+title: "2018_0424_0501_assignment_Takaya"
+author: "Hisamitsu Takaya"
+date: "2018/5/4"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Assignment
+
+#### Re-read "Properties of matrices", then describe "rank", "determinant", "trace" and "eigen values as you like, so that the description would be helpful for yourself a half year later. You can write in your mother tongue. In case the description is not in English or Japanese, do not anticipate feedback, though.
+
+---
+
+- rank
+
+0でない固有値の数  
+行列の変形で0ベクトルにならない行（列）ベクトルの最大本数
+
+行列$A$での写像を考えた場合、写像後の次元が行列$A$のランクになる。  
+例えば$n$次正方行列が行列$A$によって変換された時、$A$のランクが$n$よりも小さい場合、変換後の行列は次元が低くなる。
+次元削減を必要とする処理を行う場合は、低ランクの行列で変換することで次元を減らすことができる。
+
+
+- determinant
+
+面積（体積）の拡大率  
+固有値の積
+
+行列式が0でない場合は0でない固有値を持つ。
+つまり変換によって次元が削減されることはない。
+行列式が1の場合は、変換によって数値は変わっても、全体の数値の広がりは変わらない。
+
+- trace
+
+正方行列の対角成分の和  
+行列のトレースはその行列の固有値の和に等しい
+
+- eigen values
+
+正方行列$A$に対し、
+$$
+\det (A-\lambda I)=0
+$$
+で求められる$\lambda$の値が行列$A$の固有値
+
+---
+
+#### Linear model, "y=ax + b" can be considered as an affine transformation. Assume a transformation that moves a point (x,0) to (x,ax). Make a matrix that does the transformation. Then make a matrix that moves a point (x,0) to (x,ax+b). How about a matrix that moves (x1,x2,0) to (a1x1 + a2x2,b1x1+b2x2). Then a matrix that moves (x1,x2,0) to (a1x1+a2x2+c,b1x1+b2x2+d).  
+
+---
+
+2次正方行列$M$によって
+$$
+M\begin{pmatrix}x \\ 0 \end{pmatrix}=\begin{pmatrix}x \\ ax \end{pmatrix}
+$$
+となると考えると、
+$$
+M=\begin{pmatrix}m_{11} & m_{12} \\ m_{21} & m_{22} \end{pmatrix}
+$$
+とすると、
+$$
+m_{11}x=x,\ \ m_{21}x=ax \\
+m_{11}=1, \ \ m_{21}=a \\
+M=\begin{pmatrix}1 & \text{any} \\ a & \text{any} \end{pmatrix}
+$$
+となる。次に、
+$$
+\begin{pmatrix}x \\ 0 \end{pmatrix} \to \begin{pmatrix}x \\ ax+b \end{pmatrix}
+$$
+となる行列を考える。これは先ほどの行列$M$で$(x,0) \to (x,ax)$に移動したあと$(0,b)$だけ移動すると考えられるので、
+$$
+\begin{pmatrix}x \\ ax+b \end{pmatrix}=M\begin{pmatrix}x \\ 0 \end{pmatrix}+\begin{pmatrix}0 \\ b \end{pmatrix}
+$$
+これをアフィン変換で考えると、
+$$
+\begin{pmatrix}x \\ ax+b \\ 1 \end{pmatrix}=
+\begin{pmatrix}1 & \text{any} & 0 \\ a & \text{any} & b \\ 0 & 0 & 1 \end{pmatrix}
+\begin{pmatrix}x \\ 0 \\ 1\end{pmatrix}
+$$
+となる。
+
+
+これを検算する。
+```{r}
+x <- runif(1)
+a <- runif(1)
+X <- c(x,0)
+M <- matrix(c(1,runif(1),a,runif(1)),byrow=T,nrow=2)
+M %*% X
+c(x, a*x)
+```
+
+アフィン変換は、
+```{r}
+b <- runif(1,3,5)
+X2 <- c(x,0,1)
+M2 <- rbind(cbind(M,c(0,b)),c(0,0,1))
+M2 %*% X2
+c(x,a*x+b,1)
+```
+
+となる。座標で表示すると、
+
+```{r}
+x <- seq(-3,3,by=1)
+y <- seq(-3,3,by=0.01)
+x. <- numeric(length(x)^2)
+y. <- numeric(length(y)^2)
+grid <- rbind(expand.grid(x,y),expand.grid(y,x))
+plot(grid,pch=20,cex=0.1,xlim=c(-10,10),ylim=c(-10,10))
+grid. <- M %*% t(grid)
+par(new=T)
+plot(t(grid.),pch=20,cex=0.1,col=2,xlim=c(-10,10),ylim=c(-10,10))
+grid.. <- M2 %*% t(cbind(grid,rep(1,dim(grid)[1])))
+par(new=T)
+plot(t(grid..)[,1],t(grid..)[,2],pch=20,cex=0.1,col=3,xlim=c(-10,10),ylim=c(-10,10))
+```
+
+となり、座標全体がy軸方向へ平行移動していることがわかる。
+
+
+次に、
+$$
+\begin{pmatrix}x_1 \\ x_2 \\ 0 \end{pmatrix} \to \begin{pmatrix}a_1x_1+a_2x_2 \\ b_1x_1+b_2x_2 \end{pmatrix}
+$$
+の変換を考える。移動先が$1\times 2$行列なので、変換する行列$S$は$2\times 3$行列となり、
+$$
+S=\begin{pmatrix}a_1 & a_2 & \text{any} \\ b_1 & b_2 & \text{any} \end{pmatrix}
+$$
+とすると、
+$$
+\begin{pmatrix}a_1x_1+a_2x_2 \\ b_1x_1+b_2x_2 \end{pmatrix}
+=S\begin{pmatrix}x_1 \\ x_2 \\ 0 \end{pmatrix}
+$$
+が成立する。すると、
+$$
+\begin{pmatrix}x_1 \\ x_2 \\ 0 \end{pmatrix} \to \begin{pmatrix}a_1x_1+a_2x_2+c \\ b_1x_1+b_2x_2+d \end{pmatrix}
+$$
+の変換は、
+$$
+\begin{pmatrix}a_1x_1+a_2x_2+c \\ b_1x_1+b_2x_2+d \end{pmatrix}
+=S\begin{pmatrix}x_1 \\ x_2 \\ 0 \end{pmatrix}
++\begin{pmatrix}c \\ d \end{pmatrix}
+$$
+と考えられるので、アフィン変換で考えると、
+$$
+\begin{pmatrix}a_1x_1+a_2x_2+c \\ b_1x_1+b_2x_2+d \\ 1 \end{pmatrix}
+=\begin{pmatrix}a_1 & a_2 & \text{any} & c \\ b_1 & b_2 & \text{any} & d \\ 0 & 0 & 0 & 1 \end{pmatrix}
+\begin{pmatrix}x_1 \\ x_2 \\ 0 \\ 1 \end{pmatrix}
+$$
+となる。
+
+これを検算する。
+```{r}
+x1 <- runif(1)
+x2 <- runif(1)
+a1 <- runif(1)
+a2 <- runif(1)
+b1 <- runif(1)
+b2 <- runif(1)
+XX <- c(x1,x2,0)
+S <- matrix(c(a1,a2,runif(1),b1,b2,runif(1)),byrow=T,nrow=2)
+S %*% XX
+c(a1*x1+a2*x2,b1*x1+b2*x2)
+```
+
+アフィン変換は、
+```{r}
+c <- runif(1,3,5)
+d <- runif(1,3,5)
+XX2 <- c(x1,x2,0,1)
+S2 <- rbind(cbind(S,c(c,d)),c(0,0,0,1))
+S2 %*% XX2
+c(a1*x1+a2*x2+c,b1*x1+b2*x2+d,1)
+```
+
+座標の移動で見ると、
+
+```{r}
+x <- seq(-3,3,by=1)
+y <- seq(-3,3,by=0.01)
+x. <- numeric(length(x)^2)
+y. <- numeric(length(y)^2)
+grid <- rbind(expand.grid(x,y),expand.grid(y,x))
+plot(grid,pch=20,cex=0.1,xlim=c(-10,10),ylim=c(-10,10))
+grid. <- S %*% t(cbind(grid,rep(0,dim(grid)[1])))
+par(new=T)
+plot(t(grid.),pch=20,cex=0.1,col=2,xlim=c(-10,10),ylim=c(-10,10))
+grid.. <- S2 %*% t(cbind(grid,matrix(c(rep(0,dim(grid)[1]),rep(1,dim(grid)[1])),byrow=F,ncol=2)))
+par(new=T)
+plot(t(grid..)[,1],t(grid..)[,2],pch=20,cex=0.1,col=3,xlim=c(-10,10),ylim=c(-10,10))
+```
+
+となり、x軸方向とy軸方向に平行移動した座標が得られる。
