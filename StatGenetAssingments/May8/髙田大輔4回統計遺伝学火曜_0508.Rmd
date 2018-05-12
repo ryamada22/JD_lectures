@@ -1,0 +1,42 @@
+---
+title: "“Œvˆâ“`Šw‰Î—j‘æ4‰ñh‘è"
+author: "Takada Daisuke"
+date: "2018”N5Œ8“ú"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 2-1
+
+```{r}
+data <- c(100,20,80,60,50,30,80,10,100,70,10,10,10,10,10,60,60,30,20,50,70,80,20,60,50)
+X <- matrix(data,5,5)
+label <- c("‰pŒê","”Šw","‘Œê","—‰È","Ğ‰ï")
+rbind(label,X)
+M <- cov(X)
+M
+eigen.out <- eigen(M)
+eigen.values <- eigen.out[[1]]
+eigen.values
+```
+
+# 2-2 
+```{r}
+data_2 <- c(1,0,0,2)
+X_2 <- matrix(data_2,2,2)
+rotatev <- matrix(c(cos(pi/3),sin(pi/3),-sin(pi/3),cos(pi/3)),2,2)
+rotatev_inver <- solve(rotatev)
+N <- rotatev_inver %*% X_2 %*% rotatev
+N #‘ÎÌ‚©‚Â‘ÎŠp>0
+eigen.out_2 <- eigen(N)
+eigen.values_2 <- eigen.out_2[[1]]
+eigen.values_2 #eigen>0
+```
+
