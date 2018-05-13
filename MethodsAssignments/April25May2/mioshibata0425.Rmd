@@ -1,0 +1,85 @@
+---
+title: "Mioshibata0425"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R skills
+This functions show mean(), var(), skewness(), and kurtosis() of the vector of input.
+Then I generated a random values following Normal distribution and applied these functions to the random values.
+
+```{r}
+mymean <- function(x,p){
+  n<-length(x)
+  m<-mean(x)
+  ret<-sum((x-m)^p)/n
+  return(ret)
+}
+
+myvar<-function(x,p){
+  n<-length(x)
+  m<-mean(x)
+  ret<-sum((x-m)^p)/n
+  return(ret)
+}
+
+
+myskew<-function(x,p){
+  n<-length(x)
+  m<-mean(x)
+  sd<-sd(x)
+  ret<-sum((x-m)^p/sd^p)/n
+  return(ret)
+}
+
+#Kurtosis of normal ditribution is 3, then we need to substract 3 from the result which is given by the formula to compare the difference from normal distribution.
+mykurtosis<-function(x,p){
+  n<-length(x)
+  m<-mean(x)
+  sd<-sd(x)
+  ret<-sum((x-m)^p/sd^p)/n -3 
+  return(ret)
+}
+
+```
+
+Generate a random values in Normal distribution and apply the function above to the value set. 
+```{r}
+ramdom <-rnorm(100000)
+
+x<-ramdom
+```
+
+Each value from functions that I generated.
+```{r}
+mymean(x,1)
+myvar(x,2)
+myskew(x,3)
+mykurtosis(x,4)
+```
+
+Skewness and kurtosis should be essentially zero but the values are not zero because I generated a random value containg 100000 samples. If I generated infinite samples in normal distribution, skewness and kurtosis would be absolutely zero.
+
+##Draw a histogram of the random values.
+```{r}
+hist(x)
+```
+
+
+###Generate two sets of random values, each of which follow Normal distribution with different mean and sd, respectively.
+Combine the two sets and treat them as one set. Draw the histogram of the combined set. Then I applied my functions. 
+```{r}
+a<-as.vector(rnorm(100000,mean = 0, sd = 1))
+b<-as.vector(rnorm(100000,mean = 5, sd = 2))
+
+c<- rbind(a,b)
+hist(c)
+
+myskew(c,3)
+mykurtosis(c,4)
+
+```
+
