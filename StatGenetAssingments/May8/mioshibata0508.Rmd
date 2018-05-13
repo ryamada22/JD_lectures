@@ -1,0 +1,88 @@
+---
+title: "Assignments 0508"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Positive definite matrix is defined that matrix is symmetric and all its eigenvalules are positive.
+This is the one of the example.
+
+$$
+A=
+\begin{pmatrix}
+ 2 & 1\\
+ 1 & 2
+\end{pmatrix}
+$$
+$$
+det(A)= 4-1=3>0\\
+$$
+
+Assume $\lambda$ as the eigenvalues of matrix of A,
+
+$$
+(2-\lambda)^2 -1 = 0\\
+(\lambda-3)(\lambda-1)=0\\
+\lambda=3,1 >0
+$$
+Both eigne values are positive.
+Then the matrix of A can be said as positive definite matrix.
+
+###Generating the positive definite 2 $\times$ 2matrix.
+Assume the positive definite matrix as M,
+
+$$
+M=
+\begin{pmatrix}
+ a & b\\
+ b & a
+\end{pmatrix}
+$$
+The eigen value is $\lambda$,
+$$
+(a-\lambda)^2 - b^2=0\\
+(\lambda-a+b)(\lambda-a-b)=0\\
+\lambda= a-b, a+b
+$$
+Then if $a-b>0 and a+b>0$, the matrix of M is positive definite matrix.
+
+###R code,
+ (i) by generating data matrix and making its covariance matirix,
+
+```{r}
+k <- 3
+n <- 100
+X <-matrix(rnorm(k^2),k,k)
+M <- cov(X)
+M
+```
+Showing that eigen values are positive
+```{r}
+eigen(M)
+```
+
+(ii) by generating a diagonal matrix(D) whose diagonal elements >0 and sandwich it with rotation matrix(R) and its inverse wiht this formula,
+$R^{-1}MR=D$
+
+Generating the positive definiti matrix of M
+```{r}
+k <- 3
+e <- runif(k,0)
+D<-diag(e)
+
+##Generating rotation matrix and its inverse 
+library(GPArotation)
+R <- Random.Start(k)
+M <- R %*% D %*% t(R)
+M
+```
+
+Showing the eigenvalue
+```{r}
+eigen(M)
+```
+
+
