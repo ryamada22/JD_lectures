@@ -1,0 +1,111 @@
+---
+title: "2018_0508_Assignment_Takaya"
+author: "Hisamitsu Takaya"
+date: "2018/5/10"
+output: html_document
+---
+
+## Assignment
+
+### Report R codes to generate positive-definite matrix, that is the matrix satisfying the features of covariance matrix, i.e., symmetric and all eigenvalues being positive with two ways; (i) by generating data matrix and making its covariance matirix, (ii) by generating a diagonal matrix whose diagonal elements >0 and sandwich it with rotation matrix and its inverse
+
+---
+
+#### (i) Generate positive-definite matrix by generating data matrix and making its covariance matrix
+
+```{r}
+# generate data from normal distribution which has some relation
+
+d <- 5
+n_sample <- 100
+X <- matrix(rep(n_sample*d,0),n_sample,d)
+x <- rnorm(n_sample,3,3)
+for(i in 1:d){
+  if(i == 1){
+    X[,i] <- x
+  }else{
+    X[,i] <- x + rnorm(n_sample,0,3)
+  }
+}
+
+# make covariance matrix
+M <- cov(X)
+M
+```
+
+```{r}
+# check covariance matrix has the features of positive-definite matrix
+
+M - t(M) # should be zero matrix
+
+eigen.M <- eigen(M)
+eigen.val <- eigen.M[[1]]
+eigen.vec <- eigen.M[[2]]
+
+eigen.val > 0 # all values should be TRUE
+round(t(eigen.vec) %*% eigen.vec,8) # should be identity matrix
+```
+
+positive-definite matrix meet the following condition 
+
+$$
+v^TMv>0(v \neq \bf{0})
+$$
+
+```{r}
+
+n_iter <- 1000
+v <- matrix(rep(d*n_iter,0),n_iter,d)
+s <- rep(n_iter,0)
+for(i in 1:1000){
+  v[i,] <- rnorm(d)
+  s[i] <- t(v[i,]) %*% M %*% v[i,]
+}
+plot(seq(n_iter),s,ylim=c(0,max(s)))
+abline(h=0,col=2)
+range(s)
+
+```
+
+#### (ii) Generate positive-definite matrix by generating a diagonal matrix whose diagonal elements >0 and sandwich it with rotation matrix and its inverse
+
+```{r}
+# generate a diagonal matrix
+D <- diag(runif(d,1,5))
+D
+```
+
+To generate symmetric matrix, rotation matrix must be orthogonal matrix. A orthogonal matrix can be made eigen vectors of a symmetric matrix.
+
+```{r}
+# make a rotation matrix
+R <- matrix(rnorm(d^2),d,d)
+R2 <- eigen(R+t(R))[[2]]
+R2
+Y <- R2 %*% D %*% solve(R2)
+Y
+
+round(Y - t(Y),8)
+```
+
+```{r}
+# matrix Y has the same eigen values with matrix D
+
+eigen(D)[[1]]
+eigen(Y)[[1]]
+
+# check matrix Y2 has the features ofpositive-definite matrix
+
+n_iter <- 1000
+v <- matrix(rep(d*n_iter,0),n_iter,d)
+s <- rep(n_iter,0)
+for(i in 1:1000){
+  v[i,] <- rnorm(d)
+  s[i] <- t(v[i,]) %*% Y %*% v[i,]
+}
+plot(seq(n_iter),s,ylim=c(0,max(s)))
+abline(h=0,col=2)
+range(s)
+
+```
+
