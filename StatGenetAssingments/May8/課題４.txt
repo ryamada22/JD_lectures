@@ -1,0 +1,22 @@
+R code
+
+(i) generating data matrix and making its covariance matirix
+k <- 7
+n <- 200
+X <- matrix(0,n,k)
+for(i in 1:k){
+	X[,i] <- rnorm(n)
+}
+M <- cov(X)
+M
+
+(ii)generating a diagonal matrix whose diagonal elements >0 and sandwich it with rotation matrix and its inverse.
+n <- 3
+X <- matrix(0,n,n)
+X[1,1] <- 1
+for(i in 2:n){
+	X[i,i] <- X[i-1,i-1] + 1
+}
+Y <- matrix(c(1,0,0,0,3/5,-4/5,0,4/5,3/5),3,3)
+M <- Y %*% X %*% solve(Y)
+M
