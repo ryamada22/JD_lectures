@@ -1,0 +1,54 @@
+---
+title: "統計遺伝学月曜宿題(5/14st)"
+author: "Takada Daisuke"
+date: "2018年5月14日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Today, we discussed on three panels of beta coefficients of three methods, stepwise, Lasso and Ridge. Describe the three panels.Also write the formula for three methods and add description on them.
+
+# Stepwise
+$$
+stepwise というより最小二乗法だが、\\
+\sum_{i=1}^n\{y_i-f(x)\}^2\\
+を最小とするようなf(x)の係数\beta_jを求める事。
+$$
+単に残差を小さくするように(そのモデルでできる限り多くの事を説明できるように)βを設定する。残差が小さくなるような係数(上の式のj)を選択する。
+
+
+# Lasso
+$$
+{E_\lambda = \sum_i \left| y^{(i)} - \sum_p \beta_p x^{(i)}_p \right|^2 + \lambda \left\| \boldsymbol \beta \right\|_1
+}
+　　\\を最小とする{\beta_j} を求める
+$$
+
+上の式の$${\lambda \left\| \boldsymbol \beta \right\|_1}$$が罰則項(LASSOではL1正則化)と呼ばれる。これを俗語で言うと、「ほとんど影響の無いと考えられるパラメータを削る」作業と言える。λの値を設定することで、数学的に「ほとんど影響のない」と考えるほとんど具合を設定できる。
+よくある誤差のグラフ(楕円と四角形の図)で説明すると、誤差項を小さくしていく時に一番小さくなった点は、w1w2のどちらかがゼロとなるため、次元が消失する。
+
+
+# Ridge
+$$
+{E_\lambda = \sum_i \left| y^{(i)} - \sum_p \beta_p x^{(i)}_p \right|^2 + \lambda \left\| \boldsymbol \beta \right\|_2^2
+}
+　　\\を最小とする{\beta_j} を求める
+$$
+上の式の$${\lambda \left\| \boldsymbol \beta \right\|_2^2}$$が罰則項(RidgeではL2正則化)と呼ばれる。これは俗語で言うと、「係数を大きくしないよう設定する」作業と言える。
+よくある誤差のグラフ(楕円と円の図)で説明すると、円の設定が重み付けベクトルθの要素の二乗和がある数値以下という「原点からの距離」で表されるため、係数の大きさにのみ作用する。
+
+# Erastic net　(勉強したついでに)
+$$
+{E_{\lambda, \alpha} = \sum_i \left| y^{(i)} - \sum_p \beta_p x^{(i)}_p \right|^2 + \lambda \left ( \alpha \left \| \boldsymbol \beta  \right \|_1 + (1 - \alpha) \left \| \boldsymbol \beta \right \|_2^2 \right )
+}
+　　\\[5pt]を最小とする{\beta_j} を求める
+$$
+
+L1 / L2正則化項は数学的には単なる線形和で表せるので、普通にL1をα,L2を(1-α)というように割合を定めてミックスさせる事ができる。
