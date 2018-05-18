@@ -1,0 +1,50 @@
+---
+title: "統計遺伝学火曜宿題(5/15st)"
+author: "Takada Daisuke"
+date: "2018年5月15日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Today we've learned linear algebra formulas to solve least square regression. Partial differentiation of least square formula will give you the solution formula. Check the transformation yourself and comment on it.
+
+$$
+二次形式は対称行列Aと対応しており、\\
+変数を縦に並べたベクトル x を用いて x^{\top}Ax という形で書ける
+$$
+まずは式を整理する
+$$
+\|Ax-b\|^2=(Ax-b)^{\top}(Ax-b)\\ 
+=(x^{\top}A^{\top}-b^{\top})(Ax-b)\\ 
+=x^{\top}A^{\top}Ax-2x^{\top}A^{\top}b+b^{\top}b　-(1)式　(∵b^{\top}Ax=x^{\top}A^{\top}b)
+$$
+よって、最小二乗法では(1)式の最小値を求める計算となる。
+$$
+
+\\ちなみに∵は例えば、A=\begin{pmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\\a_{31}&a_{32}\end{pmatrix},
+x=\begin{pmatrix}x_1\\x_2\end{pmatrix},b=\begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}とすると、\\
+\begin{pmatrix}b_1&b_2&b_3\end{pmatrix}\begin{pmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\\a_{31}&a_{32}\end{pmatrix}\begin{pmatrix}x_1\\x_2\end{pmatrix}=\begin{pmatrix}x_1&x_2\end{pmatrix}\begin{pmatrix}a_{11}&a_{21}&a_{31}\\a_{21}&a_{22}&a_{32}\end{pmatrix}\begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}\\
+となり、同じスカラー値となる。
+$$
+(1)式をxで微分すると、
+$$
+2A^{\top}Ax-2A^{\top}b\\
+∵　Aは対称行列なので、二次形式x^{\top}Axの微分は2Ax
+$$
+これがゼロになる点が、最小値となる。なので、
+
+$$
+2A^{\top}Ax-2A^{\top}b=0 \\
+A^{\top}Ax=A^{\top}b\\
+x=(A^{\top}A)^{-1}A^{\top}b
+$$
+と求める事ができる。
+
+
