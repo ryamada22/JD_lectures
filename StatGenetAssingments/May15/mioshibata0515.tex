@@ -1,0 +1,67 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}    
+\usepackage{setspace}               		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\fontsize{12pt}{1cm}\selectfont
+				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}								
+\usepackage{cases}
+
+\title{Assignment 0515}
+\author{Mio Shibata}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+Given the formula of least square as $y=Ax+B$,  we want to find the smallest of deviation between estimation data and the observed data.\\
+We think the minimum of the distance should be minimum when the distance is squared.\\
+$\Sigma{(y_i-Ax_i-B)^2} 
+\\=A^2\Sigma{x_i^2}+nB^2+\Sigma{y_i^2}-2A \Sigma{x_i y_i}-2B\Sigma{y_i}+2AB\Sigma{x_i}$\\
+
+Now, partial derivative  with respect to A,\\
+$2A\Sigma{x_i^2}- 2\Sigma{x_i y_i} + 2B\Sigma{x_i}$\\
+then partial derivative  with respect to B,\\
+$2nB-2\Sigma{y_i}+2A\Sigma{x_i}$
+
+When these two are equal $0$, the maximum will be given.\\
+Now solve this simultaneous equation,\par
+\begin{numcases}
+  {}
+  2A\Sigma{x_i^2}- 2\Sigma{x_i y_i} + 2B\Sigma{x_i}= 0 & \\
+  2nB-2\Sigma{y_i}+2A\Sigma{x_i} = 0  &
+\end{numcases}\\
+\begin{numcases}
+  {}
+  A\Sigma{x_i^2} - \Sigma{x_i y_i} + B\Sigma{x_i}= 0 & \\
+  nB-\Sigma{y_i}+A\Sigma{x_i} = 0  &
+\end{numcases}\\
+
+
+Then, \begin{equation} B=\dfrac{\Sigma{y_i}-A\Sigma{x_i}}{n} \end{equation}
+
+Inserting this to (3),\\
+
+\begin{spacing}{1.5}
+$A\Sigma{x_i^2} - \Sigma{x_i y_i} + \frac{\Sigma{y_i}-A\Sigma{x_i}}{n}\Sigma{x_i}= 0$\par
+
+$nA\Sigma{x_i^2} - n\Sigma{x_i y_i} + \Sigma{y_i}-A(\Sigma{x_i})^2= 0$\par
+
+$A=\dfrac{n\Sigma{x_i y_i}-\Sigma{x_i}\Sigma{y_i}}{n\Sigma{x_i^2}-(\Sigma{x_i})^2}$,\par
+\end{spacing}
+Inserting this to (5)\\
+\begin{spacing}{1.5}
+$B=\dfrac{1}{n}(\Sigma{y_i}-A\Sigma{x_i})$\par=$\dfrac{1}{n}\left(\Sigma{y_i}-\Sigma{x_i}(\frac{n\Sigma{x_i y_i}-\Sigma{x_i}\Sigma{y_i}}{n\Sigma{x_i^2}-(\Sigma{x_i})^2})\right)$
+\par=$\dfrac{1}{n}\dfrac{n\Sigma{x_i^2}\Sigma{y_i}-(\Sigma{x_i})^2\Sigma{y_i}-n\Sigma{x_i}\Sigma{x_i y_i}+(\Sigma{x_i})^2\Sigma{y_i}}{n\Sigma{x_i^2}-(\Sigma{x_i})^2})$
+\par=$\dfrac{\Sigma{x_i^2}\Sigma{y_i}-n\Sigma{x_i}\Sigma{x_i y_i}}{n\Sigma{x_i^2}-(\Sigma{x_i})^2}$
+\end{spacing}
+
+Therefore given ($x_i,y_i$), we can calculate the gradients and intercepts from formula.
+
+\end{document}  
