@@ -1,0 +1,45 @@
+---
+title: "2018_0515_assignment_Takaya"
+author: "Hisamitsu Takaya"
+date: "2018/5/21"
+output: html_document
+---
+
+被説明変数ベクトル$\mathbf{y}$に対して複数の説明変数から成るデータ行列$\mathbf{X}$がある場合、その回帰式は偏回帰係数ベクトル$\mathbf{a}$を用いて、
+$$
+\mathbf{y} \sim \mathbf{Xa}
+$$
+と表すことができる。
+
+最小二乗法によりこの$\mathbf{a}$の解を求める方法として、
+$$
+\min_a\ ||\mathbf{y}-\mathbf{X} \mathbf{a}||^2
+$$
+を求めれば良い。$||y-Xa||^2$を$a$についての関数$R(a)$と考えると、
+
+$$
+\frac{\partial R(\mathbf{a})}{\partial \mathbf{a}}=0
+$$
+を、それぞれの$a$についてとけば良いことになる。
+
+$$
+\begin{align}
+R(\mathbf{a})&=||\mathbf{y}-\mathbf{X} \mathbf{a}||^2\\
+&= (\mathbf{y}-\mathbf{X} \mathbf{a})^T\cdot (\mathbf{y}-\mathbf{X} \mathbf{a})\\
+&= \mathbf{y}^T\mathbf{y}-2\mathbf{y}^T\mathbf{X} \mathbf{a}+\mathbf{a}^T \mathbf{X}^T \mathbf{X} \mathbf{a}\\
+\frac{\partial R(\mathbf{a})}{\partial \mathbf{a}}&=2\mathbf{X}^T \mathbf{X} \mathbf{a}-2\mathbf{y}^T\mathbf{X}=0\\
+\end{align}
+$$
+
+となり、$\mathbf{X}^T \mathbf{X} \mathbf{a}-\mathbf{y}^T\mathbf{X}=0$を$\mathbf{a}$について解けばよい。
+左から$(\mathbf{X}^T \mathbf{X})^{-1}$をかけると、
+$$
+\begin{align}
+(\mathbf{X}^T \mathbf{X})^{-1}(\mathbf{X}^T \mathbf{X} \mathbf{a}-\mathbf{y}^T\mathbf{X})&=(\mathbf{X}^T \mathbf{X})^{-1}(\mathbf{X}^T \mathbf{X} \mathbf{a})-(\mathbf{X}^T \mathbf{X})^{-1}\mathbf{y}^T\mathbf{X}\\
+&=(\mathbf{X}^T \mathbf{X})^{-1}(\mathbf{X}^T \mathbf{X})\mathbf{a}-(\mathbf{X}^T \mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\\
+&=I\mathbf{a}-(\mathbf{X}^T \mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}=0\\
+\mathbf{a}&=(\mathbf{X}^T \mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+\end{align}
+$$
+
+よって、最小二乗法による$\mathbf{a}$の推定値は$(\mathbf{X}^T \mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$となる。
