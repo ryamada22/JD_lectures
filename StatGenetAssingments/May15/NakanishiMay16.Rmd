@@ -1,0 +1,97 @@
+---
+title: "NakanishiMay16"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+ 
+by using this site(http://yusuke-ujitoko.hatenablog.com/entry/2017/05/04/000401)
+\begin{align}
+\frac{\partial \boldsymbol{x}^{T} \boldsymbol{B} \boldsymbol{x}}{\partial \boldsymbol{x}} &=
+\begin{pmatrix}
+\vdots \\
+\frac{\partial  \sum_{i}^{d} \sum_{j}^{d} b_{ij} x_{i} x_{j}}{\partial x_{k}} \\
+\vdots
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+\vdots \\
+\frac{\partial (
+b_{kk}x_{k}^{2} + \sum_{i \neq k}b_{ik} x_{i} x_{k} + \sum_{j \neq k}b_{kj} x_{k} x_{j} + \sum_{i \neq = k, j \neq k}b_{ij} x_{i} x_{j}
+)}{\partial x_{k}} \\
+\vdots
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+\vdots \\
+b_{kk} \frac{\partial x_{k}^{2}}{\partial x_{k}} + \sum_{i \neq k}b_{ik} \frac{\partial x_{i} x_{k}}{\partial x_{k}} + \sum_{j \neq k}b_{kj}\frac{\partial x_{k} x_{j}}{\partial x_{k}} + 0 \\
+\vdots
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+\vdots \\
+2b_{kk}x_{k} + \sum_{i \neq k}b_{ik}x_{i} + \sum_{j \neq k}b_{kj}x_{j} \\
+\vdots
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+\vdots \\
+\sum_{i = 1}^{d} b_{ik}x_{i} + \sum_{j = 1}^{d}b_{kj}x_{j} \\
+\vdots
+\end{pmatrix} \\
+&=
+(\boldsymbol{B} + \boldsymbol{B}^{T}) \boldsymbol{x}
+\end{align}
+
+||y -Xa||^2 = (a -1)^T M (a -1)
+これの微�?は (M +M^T) (a -1)
+
+```{r}
+x <- seq(1:10)
+x
+y <- 2*x +1
+y
+XY <- cbind(x, y)
+XY
+M <- t(XY) %*% XY
+M
+```
+||y -Xa||^2が最少となるaを求め�?
+```{r}
+M_ <- M + t(M) 
+M_
+```
+770a -1650 + 1650a - 3540
+= 2420a - 5190 = 0 
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+```{r}
+a <- 5190/2420
+a
+```
+�?�?yはy=2x+1を満たす値として生�?�したが、ある一定�?�値aで近似するとすれば
+a=2.1が最も距離を最少にするとわかった�?
+```{r}
+x <- seq(1:10)
+x
+y <- 2*x
+y
+XY <- cbind(x, y)
+XY
+M <- t(XY) %*% XY
+M
+M_ <- M + t(M) 
+M_
+```
+```{r}
+a <- 4620/2310
+a
+```
+y = 2xとすれば当然a はゼロとな�?
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
