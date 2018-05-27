@@ -1,0 +1,86 @@
+---
+title: "2018_0522_assignment_Takaya"
+author: "Hisamitsu Takaya"
+date: "2018/5/27"
+output: html_document
+---
+
+## "ax + by + cz = 0" represents a plane in 3D space. Generate many points on the plane and draw them in 3D. Also indicate the direction of a vector (a,b,c) in the drawing.
+
+```{r}
+# coefficients 'a, b, c' is determined randomly
+a <- rnorm(1)
+b <- rnorm(1)
+c <- rnorm(1)
+
+# make random points from the formula $ax+by+cz=0$ and plot on 3-dimension space
+x <- rnorm(100)
+y <- rnorm(100)
+f <- function(x,y){(-a*x-b*y)/c}
+z <- f(x,y)
+library(rgl)
+plot3d(x,y,z,col='red')
+plot3d(0,0,0,size=2,add=T)
+
+# make plane $ax+by+cz=0$
+planes3d(a,b,c,0,col='blue', alpha=0.5)
+
+s <- matrix(c(a,b,c,0,0,0),2,3,byrow=T)
+segments3d(s)
+```
+
+この平面上の点は、ベクトル$(a,b,c)$との内積が0になる点の集合
+
+
+3元連立方程式の解を可視化する
+$$
+\begin{cases}
+a_1x+b_1y+c_1z=d_1\\
+a_2x+b_2y+c_2z=d_2\\
+a_3x+b_3y+c_3z=d_3\\
+\end{cases}
+\\
+M=\begin{pmatrix}
+a_1 & b_1 & c_1 \\
+a_2 & b_2 & c_2 \\
+a_3 & b_3 & c_3 \\
+\end{pmatrix},\ \ \beta=\begin{pmatrix}d_1 \\ d_2\\ d_3\end{pmatrix}\\
+M\begin{pmatrix}x \\ y \\ z \\ \end{pmatrix}=\beta
+$$
+
+普通に解く
+```{r}
+M <- matrix(rnorm(9),3,3)
+beta <- rnorm(3)
+solve(M, beta)
+```
+
+可視化する
+```{r}
+a1 <- M[1,1]
+b1 <- M[1,2]
+c1 <- M[1,3]
+a2 <- M[2,1]
+b2 <- M[2,2]
+c2 <- M[2,3]
+a3 <- M[3,1]
+b3 <- M[3,2]
+c3 <- M[3,3]
+d1 <- beta[1]
+d2 <- beta[2]
+d3 <- beta[3]
+x <- rnorm(10)
+y <- rnorm(10)
+f. <- function(a,b,c,d,x,y){(d-a*x-b*y)/c}
+z1 <- f.(a1,b1,c1,d1,x,y)
+z2 <- f.(a2,b2,c2,d2,x,y)
+z3 <- f.(a3,b3,c3,d3,x,y)
+p <- solve(M,b)
+plot3d(x,y,z1,col='red')
+plot3d(x,y,z2,col='blue',add=T)
+plot3d(x,y,z3,col='green',add=T)
+planes3d(a1,b1,c1,(-1)*d1,col='red', alpha=0.3)
+planes3d(a2,b2,c2,(-1)*d2,col='blue', alpha=0.3)
+planes3d(a3,b3,c3,(-1)*d3,col='green', alpha=0.3)
+```
+3平面の交点が解となる。
