@@ -1,0 +1,21 @@
+I have gone throught these code as assignment.
+These document intruduce the three cllasification method.
+
+ELinere regression
+The two classes to be classified are represented as the numbers 0 or 1.
+These values is handled as objective variable (y) of linear regression.
+When predicted value by the model >= 0.5, that sample is classified the class 1.
+When predicted value by the model < 0.5, that sample is classified the class 0.
+Training data with class label is required for this method.
+Then, separation boundary surface becomes a plane.
+
+EK-means method
+Unlike liner regression, training data with class label is not required.
+Since classifying samples based on the distance from the center of gravity of each class, separation boundary surface becomes a plane.
+
+
+ESupport Vector Machine Classifier
+Training data with class label is required for this method.
+The cost function to be minimized is different with linear regression using the least squares method.
+The separation boundary surface becomes a plane, but by combining kernel method, it can be non-linear boundary surface.
+
