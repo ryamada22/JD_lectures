@@ -1,0 +1,48 @@
+#abcの関係式→aとbの組み合わせをたくさんつくって、cはaとbで表す。
+library(rgl)
+a <- 1
+b <- 2
+c <- 3
+x <- rnorm(10000)
+y <- rnorm(10000)
+z <- c(a*x+b*y)/(c*(-1))
+M <- matrix(c(x,y,z),10000,3)
+plot3d(M)
+arrow3d(0, c(a,b,c), type = "extrusion", col = "red")
+
+
+a <- 4
+b <- 2
+c <- 3
+x <- rnorm(10000)
+y <- rnorm(10000)
+z <- c(a*x+b*y)/(c*(-1))
+M <- matrix(c(x,y,z),10000,3)
+plot3d(M)
+arrow3d(0, c(a,b,c), type = "extrusion", col = "blue")
+
+a <- 4
+b <- 5
+c <- 1
+x <- rnorm(10000)
+y <- rnorm(10000)
+z <- c(a*x+b*y)/(c*(-1))
+M <- matrix(c(x,y,z),10000,3)
+plot3d(M)
+arrow3d(0, c(a,b,c), type = "extrusion", col = "green")
+
+#以下無理でした。rglやからかな#
+library(rgl)
+par(mfrow=c(2,2))
+for(i in 1:4){
+ a <- i
+ b <- 2
+ c <- 3
+ x <- rnorm(10000)
+ y <- rnorm(10000)
+ z <- c(a*x+b*y)/(c*(-1))
+ M <- matrix(c(x,y,z),10000,3)
+ plot3d(M)
+ arrow3d(0, c(a,b,c), type = "extrusion", col = "red")
+}
+par(mfcol=c(1,1))

@@ -1,0 +1,45 @@
+---
+title: "Assignment"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+library(matlib)
+knit_hooks$set(matlib = hook_webgl)
+```
+
+##A plane in 3D space.
+Generate many points on the plane and draw them in 3D. Also indicate the direction of a vector (a,b,c) in the drawing.
+The ciidubates meet this formula,and given a,b,c as random number.
+This code show the coordinates and a plane meeting $ax+by+cz=0$.
+In addition, the green arrow is the vector (a,b,c).
+
+```{r}
+K <- 200
+a <-runif(1)
+b <-runif(1)
+c <-runif(1)
+x <- matrix(rnorm(K),ncol=1)
+y <- matrix(rnorm(K),ncol=1)
+z <- -(a*x+b*y)/c
+vec<-c(a,b,c)
+p2<-cbind.data.frame(x,y,z)
+```
+
+
+```{r}
+
+fit <- lm(z ~ x + y, p2)
+coefs <- coef(fit)
+```
+
+```{r rgl=TRUE}
+plot3d(p2)
+vectors3d(vec,col="green",origin = c(0,0,0)) 
+planes3d(coefs[2], coefs[3], -1, coefs[1], col="blue", alpha=0.5)
+```
+
