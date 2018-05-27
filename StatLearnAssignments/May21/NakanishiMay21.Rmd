@@ -1,0 +1,85 @@
+---
+title: "5/21 R"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+K <- 200
+p <- 2
+x <- matrix(rnorm(K*p),ncol=p)
+
+ctr1 <- 1
+ctr2 <- 0.5
+r1 <- 0.2
+r2 <- 0.5
+v <- r1 * (x[,1]-ctr1)^2 + r2 * (x[,2]-ctr2)^2
+t <- 1.2
+v0 <- which(v< t)
+v1 <- which(v>=t)
+
+gr <- rep(0,K)
+p0 <- 0.1
+p1 <- 0.9
+gr[v0] <- sample(0:1,length(v0),replace=TRUE,prob=c(p0,1-p0))
+gr[v1] <- sample(0:1,length(v1),replace=TRUE,prob=c(p1,1-p1))
+plot(x,col=gr+1,pch=20,cex=2)
+
+X. <- cbind(x[,1],rep(1,K))
+a. <- solve(t(X.)%*%X.)%*%t(X.) %*% x[,2]
+a.
+abline(a.[2],a.[1],col=2)
+
+```
+
+
+```{r}
+n.gr <- 3 # number of component distributions
+d <- 2 # dimension
+# Fraction of n.gr distributions
+f <- runif(n.gr)
+f <- f/sum(f)
+f
+# means
+ms <- matrix(runif(n.gr*d),ncol=d)*15
+# var-covar matrices are unit matrix for all components
+
+# Sampling
+n.sample <- 500
+gr.label <- sample(1:3,n.sample,replace=TRUE,prob=f)
+table(gr.label)
+# locations of samples
+X <- matrix(0,n.sample,d)
+for(i in 1:n.sample){
+    this.gr <- gr.label[i]
+    X[i,] <- c(rnorm(1,ms[this.gr,1]),rnorm(1,ms[this.gr,2]))
+}
+
+plot(X)
+plot(X,col=gr.label) # color with group label
+```
+
+```{r}
+cl <- kmeans(X,n.gr)
+cl
+plot(X, col = cl$cluster)
+plot(X, col = rainbow(9)[(cl$cluster-1) + 3*(gr.label-1)+1],pch=(cl$cluster-1) + 3*(gr.label-1)+1)
+```
+```{r}
+plot(X, col = rainbow(9)[(cl$cluster-1) + 3*(gr.label-1)+1],pch=(cl$cluster-1) + 3*(gr.label-1)+1)
+```
+(cl$cluster-1)はk平均法で分類した3パターンであり(0, 1, 2)の値をとる 
+3*(gr.label-1)は元のラベルの値で(0, 3, 6)の値をとる 
+最終的に+ 1をすることで、(1, 2, 3, 5, 6, 9)の値をとり、それぞれが色に対応している
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
