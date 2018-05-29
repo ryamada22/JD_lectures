@@ -1,0 +1,34 @@
+---
+title: "NakanishiGenetStatMay22"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+# https://www.rdocumentation.org/packages/rgl/versions/0.97.0/topics/planes3d
+open3d()
+x <- rnorm(100)
+y <- rnorm(100)
+z <- 0.2*x - 0.3*y
+fit <- lm(z ~ x + y)
+plot3d(x, y, z, type = "s", col = "red", size = 1)
+
+coefs <- coef(fit)
+a <- coefs["x"]
+b <- coefs["y"]
+c <- -1
+d <- coefs["(Intercept)"]
+
+planes3d(a, b, c, d, alpha = 0.5)
+# 法線ベクトルの描き方がわかりませんでした、、
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
