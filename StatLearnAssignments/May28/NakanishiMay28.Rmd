@@ -1,0 +1,74 @@
+---
+title: "20180528homework"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+# https://www.rdocumentation.org/packages/rgl/versions/0.97.0/topics/planes3d
+install.packages('rgl')
+library(rgl)
+open3d()
+x <- rnorm(100)
+y <- rnorm(100)
+b1 <- 2
+b2 <- -1
+z <- b1*x + b2*y
+fit <- lm(z ~ x + y)
+coefs <- coef(fit)
+b1 <- coefs["x"]
+b2 <- coefs["y"]
+c <- -1
+d <- coefs["(Intercept)"]
+plot3d(x, y, z, type = "s", col = "red", size = 1)
+planes3d(b1, b2, -1, 0, alpha = 0.5)
+
+```
+```{r}
+X <- matrix(c(0,1,0,1,0,0,1,1), 4, 2)
+y <- c(1,2,3,4)
+# |y-Xb|^2 = zとするとzは内積となる
+myfunc <- function(b1, b2) {1 + (2-b1)^2 +(3-b2)^2+(4-b1-b2)^2}
+b1 = b2 = seq(-2, 2, length=50)
+z <- outer(b1, b2, myfunc)
+persp(b1,b2,z,expand=0.5)
+```
+
+```{r}
+# y = b1*x1 +b2*x2を満たす
+# さらにy = b1*(x1+x2) + b2*x2^2を満たす
+
+myfunc <- function(x1, x2) {b1*x1 +b2*x2 & b1*(x1+x2) + b2*x2^2}
+x1 <- seq(-2, 2, length=50)
+x2 <- seq(-2, 2, length=50)
+b1 <- seq(-2, 2, length=50)
+y <- outer(x1, x2, myfunc)
+persp(x1,x2,y,expand=0.5)
+
+```
+
+```{r}
+# 追加
+fn <- function(y, b1, b2) {
+  x1 = x2 = seq(-2, 2, length=50)
+  c(y - b1*x1 -b2*x2, y - b1*(x1+x2) - b2*x2^2)
+}
+fn1 <- function(b2) fn(seq(-2, 2, length=50), b2)
+install.packages('nleqslv')
+library(nleqslv)
+ans <- nleqslv(1, fn1)
+
+fn1 <- function(x) fn(x, 1, 1)
+ans <- nleqslv(c(3, 3), fn1) 
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
