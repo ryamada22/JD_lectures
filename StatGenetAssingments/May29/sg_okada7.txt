@@ -1,0 +1,9 @@
+ A graph G consists a set of vertices V(G) and a set of edges E(G).Graphs are classifiled into directed or undirected graph depending on whether edges have direction.
+The graph is expressed as the adjacency matrix mathematically, whose element is 1 when there is edge between two node.
+One of the major statistics on the graph defined for each node is node-degree.One of the major statistics on the graph defined for the relation between two node is path length.
+
+ The relation among bio-molecularsuch as transcriptional regulatory network,protein interaction networks or metabolic network 
+can be represented as graph.The meanings of nodes and edges are different for each bio-molecule network.
+Using network analysis, we can identify motifs or functional modules in biological networks from network structure 
+or mine novel pathways based on biological pathway database.
+ 
