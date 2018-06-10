@@ -1,0 +1,77 @@
+---
+title: "20180604HomeworkNakanishi"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+from https://qiita.com/sergeant-wizard/items/c5f79adefe5016f4740e
+カーネル法では、入力空間から特徴空間の座標変換を直接考えるのではなく、特徴空間での内積を考える。
+https://en.wikipedia.org/wiki/Kernel_method
+
+kernel methods are a class of algorithms for pattern analysis
+kernel functions which enable them to operate in a high-dimensional, implicit feature space without ever computing the coordinates of the data in that space, but rather by simply computing the inner products between the images of all pairs of data in the feature space.
+This approach is called the "kernel trick”.
+
+https://en.wikipedia.org/wiki/Positive-definite_kernel
+positive definite kernel is a generalization of a positive definite function or a positive-definite matrix.
+
+```{r}
+kernel <- function(u, v) {
+  (u %*% v)[1, 1]
+}
+library(plyr)
+
+points <- seq(from = 0, to = 1, by = 0.01)
+
+grid_points <- merge(x = points, y = points)
+fixed_point_1 <- c(0.25, 0.75)
+fixed_point_2 <- c(1.00, 0.00)
+
+xyz <- ddply(grid_points, .(x, y), function(point) {
+  data.frame(
+    V1 = kernel(fixed_point_1, c(point$x, point$y)),
+    V2 = kernel(fixed_point_2, c(point$x, point$y))
+  )
+})
+
+contour_matrix_1 <- matrix(xyz$V1 , nrow = length(points), byrow = TRUE)
+contour_matrix_2 <- matrix(xyz$V2 , nrow = length(points), byrow = TRUE)
+filled.contour(x = points, y = points, z = contour_matrix_1, xlab = "x", ylab = "y")
+filled.contour(x = points, y = points, z = contour_matrix_2, xlab = "x", ylab = "y")
+
+```
+
+```{r}
+points <- rnorm(100, 0, 1)
+sortlist <- order(points)
+X <- points[sortlist] 
+points <- rnorm(100, 0, 1)
+sortlist <- order(points)
+Y <- points[sortlist] 
+grid_points <- merge(x = X, y = Y)
+fixed_point_1 <- c(0.25, 0.75)
+fixed_point_2 <- c(1.00, 0.00)
+
+
+xyz <- ddply(grid_points, .(x, y), function(point) {
+  data.frame(
+    V1 = kernel(fixed_point_1, c(point$x, point$y)),
+    V2 = kernel(fixed_point_2, c(point$x, point$y))
+  )
+})
+
+contour_matrix_1 <- matrix(xyz$V1 , nrow = length(points), byrow = TRUE)
+contour_matrix_2 <- matrix(xyz$V2 , nrow = length(points), byrow = TRUE)
+filled.contour(x = X, y = Y, z = contour_matrix_1, xlab = "x", ylab = "y")
+filled.contour(x = X, y = Y, z = contour_matrix_2, xlab = "x", ylab = "y")
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
