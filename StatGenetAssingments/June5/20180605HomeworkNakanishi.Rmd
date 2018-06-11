@@ -1,0 +1,66 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+先端のことをleafという treeについて
+
+```{r}
+rm(list = ls()) # Remove all the objects we created so far.
+library(igraph) # Load the igraph package
+
+g <- graph( edges=c(1,2, 2,3, 2,6, 3,4, 5,6, 6,7, 6,9, 8,9, 9,10), n=10, directed=F )
+plot(g) 
+
+# generate edgelist
+el <- matrix(c(1,2, 2,3, 2,6, 3,4, 5,6, 6,7, 6,9, 8,9, 9,10), byrow = TRUE, ncol=2)
+g_el <- graph.edgelist(el, directed=FALSE)
+plot(g_el)
+
+# use adjacent matrix
+m <- matrix(0, 10, 10)
+m[1,2] <- 1
+m[2,1] <- 1
+m[2,3] <- 1
+m[2,6] <- 1
+m[3,2] <- 1
+m[3,4] <- 1
+m[4,3] <- 1
+m[5,6] <- 1
+m[6,2] <- 1
+m[6,5] <- 1
+m[6,7] <- 1
+m[6,9] <- 1
+m[7,6] <- 1
+m[8,9] <- 1
+m[9,6] <- 1
+m[9,8] <- 1
+m[9,10] <- 1
+m[10,9] <- 1
+g.ad <- graph.adjacency(m, mode='undirected')
+plot(g.ad)
+
+```
+
+```{r}
+g.ad <- graph.adjacency(m, mode='undirected', weighted = TRUE)
+E(g.ad)
+E(g.ad)$weight
+E(g.ad)$weight <- c(1,1,4,1,1,1,4,1,1)
+E(g.ad)$weight
+E(g.ad)$weight <- c(4,4,1,4,4,4,1,4,4)
+plot(g.ad)
+shortest.paths(g.ad)
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+

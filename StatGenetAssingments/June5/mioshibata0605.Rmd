@@ -1,0 +1,77 @@
+---
+title: "Assignments 0605"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("igraph")
+```
+
+##
+Drawing the graph by hand
+![](IMG_2821.jpg)
+
+
+##
+Make a graph object of the tree by two ways; using the edge list and the adjacency matrix.
+
+
+```{r}
+g<-c(0,1,0,0,0,0,0,1,0,0,
+     1,0,0,1,0,0,0,0,0,1,
+     0,0,0,0,0,1,0,1,1,0,
+     0,1,0,0,1,0,0,0,0,0,
+     0,0,0,1,0,0,0,0,0,0,
+     0,0,1,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,1,0,0,
+     1,0,1,0,0,0,1,0,0,0,
+     0,0,1,0,0,0,0,0,0,0,
+     0,1,0,0,0,0,0,0,0,0)
+g.mat <- matrix(g, nrow=10)
+g.mat
+g <- graph.adjacency(g.mat, weighted=TRUE)
+g
+plot(g)
+```
+
+```{r}
+V(g)
+```
+```{r}
+E(g)
+```
+
+```{r}
+E(g)$weight
+```
+
+##
+Give positive integer values to the edges and provide the edge weight to the graph object(s).
+```{r}
+gw<-c(0,2,0,0,0,0,0,5,0,0,
+      2,0,0,1,0,0,0,0,0,10,
+      0,0,0,0,0,3,0,1,8,0,
+      0,1,0,0,7,0,0,0,0,0,
+      0,0,0,7,0,0,0,0,0,0,
+      0,0,3,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,2,0,0,
+      5,0,1,0,0,0,2,0,0,0,
+      0,0,8,0,0,0,0,0,0,0,
+      0,10,0,0,0,0,0,0,0,0)
+gw.mat <- matrix(gw, nrow=10)
+gw.mat
+grw <- graph.adjacency(gw.mat, weighted=TRUE)
+grw
+plot(grw)
+```
+```{r}
+V(grw)
+```
+```{r}
+E(grw)
+```
+
+```{r}
+E(grw)$weight
+```
