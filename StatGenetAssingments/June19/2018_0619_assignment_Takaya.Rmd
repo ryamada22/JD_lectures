@@ -1,0 +1,67 @@
+---
+title: "2018_0619_assignment_takaya"
+author: "Hisamitsu Takaya"
+date: "2018/6/21"
+output: html_document
+---
+
+## Make an adjacency matrix for n vertices that have k separated components, by manipulating the rectangular blocks of "zero-throughout".
+
+```{r}
+library(igraph)
+
+# create a function which generate series of graph consists of n vertices and k separated components
+sep.graph <- function(n,k,complete=TRUE){
+  # determine vertices which make each separated component
+  sep <- rep(1,k)+rmultinom(1,n-k,rep(1,k))
+  sep.v <- cumsum(sep)
+  # create adjacency matrix of complete graph
+  if(complete==TRUE){
+    a.mat <- matrix(rep(1,n^2),n,n)
+  }else{ # incomplete graph is generated using random value generator
+    a.mat <- matrix(rnorm(n^2),n,n)
+    a.mat <- (a.mat+t(a.mat))/2
+    a.mat <- ifelse(a.mat>=mean(a.mat),1,0)
+    # to avoid more than k components, "1" is assigned into elements which is next to diagonal elements
+    for(i in 1:(n-1)){
+      a.mat[i,i+1] <- 1
+      a.mat[i+1,i] <- 1
+    }
+  }
+  diag(a.mat) <- 0
+  # create rectangular "zero" blocks into adjacency matrix for separating components
+  for(i in 1:(k-1)){
+    a.mat[1:sep.v[i],(sep.v[i]+1):n] <- 0
+    a.mat[(sep.v[i]+1):n,1:sep.v[i]] <- 0
+  }
+  weight <- rep(1:k,sep)
+  g <- graph.adjacency(a.mat,mode="undirected")
+  g$weight <- weight
+  return(g)
+}
+```
+
+- check the function (create complete graph)
+
+```{r}
+gr <- list()
+for(i in 1:10){
+  gr[[i]] <- sep.graph(30,4)
+}
+for(i in 1:10){
+  plot(gr[[i]],vertex.color=gr[[i]]$weight,vertex.size=10,vertex.label.cex=0.8)
+}
+```
+
+- incomplete graph
+
+```{r}
+gr2 <- list()
+for(i in 1:10){
+  gr2[[i]] <- sep.graph(30,4,complete=F)
+}
+for(i in 1:10){
+  plot(gr2[[i]],vertex.color=gr2[[i]]$weight,vertex.size=10,vertex.label.cex=0.8)
+}
+```
+

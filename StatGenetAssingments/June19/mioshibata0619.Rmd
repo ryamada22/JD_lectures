@@ -1,0 +1,47 @@
+---
+title: "June19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(igraph)
+```
+Make an adjacency matrix for n vertices containing 0 or 1 at random.
+I extracted upper triangular matrix then sum up the matrix and transverse matrix of the matrix.
+
+```{r}
+n<-16
+n_mat<-as.integer(runif(n^2, min=0, max=2))
+N<-matrix(n_mat,n,n)
+N
+N[lower.tri(N,diag=TRUE)] <- 0
+M<-t(N)
+g.mat<-N+M
+g.mat
+```
+
+I tried to make the k separated components but I coudn't use k in R scripts.
+Insted of that I assigned the numbers that imply the number of nodes in a components.
+```{r }
+a<-4
+b<-7
+c<-5
+
+g.mat[1:a,(a+1):n]<-0
+g.mat[(a+1):n,1:a]<-0
+
+g.mat[(a+1):(a+b),(a+b+1):n]<-0
+g.mat[(a+b+1):n,(a+1):(a+b)]<-0
+
+g.mat
+
+```
+
+I used the function to generate the figure.
+```{r}
+g <- graph.adjacency(g.mat, weighted=TRUE)
+g
+plot(g)
+```
+

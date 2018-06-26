@@ -1,0 +1,63 @@
+---
+title: "20180619Nakanishi"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+install.packages('igraph')
+library(igraph)
+n <- 20
+An <- sample(c(0, 1), n*n, replace = TRUE)
+Kn <- matrix(An, n, n)
+# k = 3とする
+k <- 3
+split <- sample(2:(n-1), k-1, replace = TRUE)
+split <- sort(split) # 6, 12
+split
+Kn
+Kn[1:(split[1]), (split[1]):n] <- 0
+Kn[(split[1]+1):n, 1:(split[1])] <- 0
+Kn[(split[1]+1):(split[2]), (split[2]):n] <- 0
+Kn[(split[2]+1):n, 1:(split[2])] <- 0
+diag(Kn) <- 0
+g <- graph.adjacency(Kn, mode='undirected')
+plot(g)
+# n=100, k=10とする
+n <- 100
+An <- sample(c(0, 1), n*n, replace = TRUE)
+Kn <- matrix(An, n, n)
+Kn
+k <- 10
+split <- sample(2:(n-1), k-1, replace = TRUE)
+split <- sort(split) 
+split
+diag(Kn) <- 0
+Kn
+for (i in 1:(k-1)) {
+ Kn[1:(split[i]), (split[i]):n] <- 0
+ Kn[(split[i]+1):n, 1:(split[i])] <- 0
+}
+Kn
+g <- graph.adjacency(Kn, mode='undirected')
+plot(g)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
