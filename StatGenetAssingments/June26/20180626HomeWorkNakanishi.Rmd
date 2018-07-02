@@ -1,0 +1,48 @@
+---
+title: "20180626HomeWork"
+output: html_notebook
+---
+
+```{r}
+p <- 0.95
+q <- 0.1
+r <- 0.1
+M <- matrix(c(p, 1-p, 0, 0, q,1-q,1-r,0,r), 3,3)
+init.S <- c(0.9, 0.1,0)
+n <- 10
+SS <- matrix(0, n, 3)
+SS[1,] <- init.S 
+for(i in 2:n){
+  SS[i, ] <- M %*% SS[i-1,]
+}
+SS
+matplot(SS, type='l')
+n <- 10
+for(i in 2:n){
+  SS[i, ] <- M %*% SS[i-1,]
+}
+```
+
+```{r}
+el <- matrix(c('H','F','F','R','R','H','H','H','F','F','R','R'), 6,2, byrow=TRUE)
+el
+library(igraph)
+g5 <- graph.edgelist(el)
+plot(g5)
+V(g5)
+E(g5)
+# t = 5の時のサイズをみる
+V(g5)$size <- 100*SS[10,]
+p <- 0.95
+q <- 0.1
+r <- 0.1
+E(g5)$width <- 10*c((1-p), (1-q), (1-r), p, q, r)
+plot(g5)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
