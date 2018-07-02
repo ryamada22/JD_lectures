@@ -1,0 +1,110 @@
+---
+title: "2018_0626_assignment_Takaya"
+author: "Hisamitsu Takaya"
+date: "2018/6/28"
+output: html_document
+---
+
+## Assume a population has three statuses, A,B, and C. Set a transition matrix M that moves some fraction of each status to other statuses. Simulate the change of fraction per status.
+
+
+```{r}
+# Set an initial status as A:0.65, B:0.25, C:0.10
+A <- 0.65
+B <- 0.25
+C <- 0.10
+S0 <- matrix(c(A,B,C),3,1)
+
+# Set a transition matrix M
+M <- matrix(c(0.65,0.3,0.05,0,0.8,0.2,0.6,0.05,0.35),3,3)
+
+# calculate after n-times transition
+n <- 30
+Sn <- matrix(0,n,3)
+Sn[1,] <- S0
+for(i in 1:(n-1)){
+  Sn[i+1,] <- M %*% Sn[i,]
+}
+matplot(Sn,type="l")
+
+# difference of fraction before and after transition converge to zero
+dif <- Sn[1:(n-1),] - Sn[2:n,]
+matplot(dif,type="l")
+
+```
+
+```{r}
+# change the initial status at random using rmultinom function
+frac <- rmultinom(1,100,abs(rnorm(3)))/100
+S0r <- frac
+S0r
+
+# calculate after n-times transition
+n <- 10
+Snr <- matrix(0,n,3)
+Snr[1,] <- S0r
+for(i in 1:(n-1)){
+  Snr[i+1,] <- M %*% Snr[i,]
+}
+matplot(Snr,type="l")
+
+# any initial status converge to the same fraction
+
+n_iter <- 100
+init.stock <- matrix(0,n_iter,3)
+after.stock <- matrix(0,n_iter,3)
+
+for(i in 1:n_iter){
+  S0r <- rmultinom(1,100,abs(rnorm(3)))/100
+  n <- 30
+  Snr <- matrix(0,n,3)
+  Snr[1,] <- S0r
+  for(j in 1:(n-1)){
+    Snr[j+1,] <- M %*% Snr[j,]
+  }
+  init.stock[i,] <- S0r
+  after.stock[i,] <- Snr[n,]
+}
+
+init <- as.vector(t(init.stock))
+after <- as.vector(t(after.stock))
+matplot(t(cbind(init,after)),col=1:3,lty=1:3,type="l")
+
+```
+
+
+## Draw a graph whose nodes are statuses and edges are transition among them. Make the size of vertices proportional to the fraction in the population at a particular point. Make the width of edges proportional to the probability in transition.
+
+```{r}
+library(igraph)
+
+# edgelist of initial status
+el.i <- matrix(c("A-i","B-i","A-i","C-i","B-i","C-i","C-i","A-i","C-i","B-i","A-i","A-i","B-i","B-i","C-i","C-i"),byrow=T,ncol=2)
+
+# edgelist of after convergency
+el.c <- matrix(c("A-c","B-c","A-c","C-c","B-c","C-c","C-c","A-c","C-c","B-c","A-c","A-c","B-c","B-c","C-c","C-c"),byrow=T,ncol=2)
+
+g.i <- graph.edgelist(el.i,directed=T)
+g.c <- graph.edgelist(el.c,directed=T)
+weight <- c(0.3,0.05,0.8,0.6,0.05,0.65,0.2,0.35)
+E(g.i)$weight <- weight
+
+# change the edge color by transition probability
+color <- rep("black",8)
+color[which(weight>0.5)]<- "red"
+color[which(weight<0.1)]<- "blue"
+
+# change the vertex size by status probability
+size.i <- S0
+size.c <- Snr[n,]
+V(g.i)$weight <- size.i
+V(g.c)$weight <- size.c
+
+# draw a graph at initial status
+plot(g.i,edge.width=E(g.i)$weight*5,edge.curved=0.3,vertex.size=V(g.i)$weight*150,vertex.color=2:4,edge.color=color)
+
+# draw a graph at convergency
+plot(g.c,edge.curved=0.3,vertex.size=V(g.c)$weight*150,vertex.color=2:4,edge.color="black")
+```
+
+
