@@ -1,0 +1,47 @@
+---
+title: "Assignment0626"
+author: "Mio Shibata"
+date: "2018/7/2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(igraph)
+library(markovchain)
+```
+
+## 
+Setting the status at the beggining and transition matrix as M.
+```{r}
+Status<- matrix(c(1000,200,50),1,3)
+Status
+
+M<-matrix(c(0.7,0.2, 0.1,0.1,0.6,0.3,0.2,0.2,0.6),3,3)
+
+```
+
+## 
+Transition matrix put into "marcovchain" in order to simulate n times changes.
+```{r}
+dtmcA <- new("markovchain", transitionMatrix = M,
+             states = c("A","B","C"),
+             name = "Transition") #create the DTMC
+
+```
+
+If the change happened twice, the result of status is similated below. 
+```{r}
+n<-2
+M_2<-dtmcA^n
+Ms_2<-as.matrix(M_2@transitionMatrix)
+
+Result<-Status%*%Ms_2
+Result
+
+```
+
+```{r}
+plot(dtmcA,edge.width=dtmcA@transitionMatrix*5,vertex.color="yellow",vertex.size=as.matrix(Result)*0.25,edge.curved=TRUE,loop.angle=pi/2)
+
+```
+
