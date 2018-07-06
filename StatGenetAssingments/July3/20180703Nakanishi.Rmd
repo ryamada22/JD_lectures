@@ -1,0 +1,46 @@
+---
+title: "20180703 Classnote"
+output: html_notebook
+---
+
+```{r}
+library(igraph)
+# A: adjacency matrix
+A <- matrix(c(0,1,1,0,1,0,1,0,1,1,0,1,0,0,1,0), 4,4)
+g <- graph.adjacency(A, mode='undirected')
+plot(g)
+# D: degree matrix
+D <- diag(degree(g))
+# Laplacian matrix
+L <- D - A
+range(L - t(L)) # L is symmetric
+eigen.out <- eigen(L)
+eigen.out[[1]]
+round(eigen.out[[1]], 5)
+length(which((eigen.out[[1]])^2 < 10^(-16)))
+```
+wikiより
+The number of connected components in the graph is the dimension of the nullspace of the Laplacian and the algebraic multiplicity of the 0 eigenvalue.
+つまりconnectされたvertexの数が固有値の中のゼロの数となる
+```{r}
+M <- matrix(rnorm(100), 10, 10)
+M <- M + t(M) 
+A <- (M > 1) + 0
+diag(A) <- 0
+g <- graph.adjacency(A, mode='undirected')
+plot(g)
+D <- diag(degree(g))
+L <- D - A
+eigen(L)
+help(package=igraph)
+clu <- components(g)
+groups(clu)
+clu
+m <- mst(g)
+plot(m)
+```
+Together with Kirchhoff's theorem, it can be used to calculate the number of spanning trees for a given graph. 
+spanning trees = 最少のedgeで全てのvertexを結ぶことができるグラフ
+
+応用について
+https://web.stanford.edu/class/archive/cs/cs106b/cs106b.1174/lectures/25/Small25.pdf
