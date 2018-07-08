@@ -1,0 +1,6 @@
+Kernel density estimation is one of nonparametric methods 
+for estimating the probability density function of a random variable from sample data.
+This method estimate probability density function 
+by adding kernel functions around each sample point. 
+The formula of the kernel function and band width which determine how far each data point exist affect density estimation, 
+are determined by the user.
