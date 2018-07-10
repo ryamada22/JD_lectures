@@ -1,0 +1,51 @@
+---
+title: "Assignment 0703"
+author: "Mio Shibata"
+date: "2018/7/8"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(igraph)
+```
+
+
+Making the matrix that can be converted to a graph that is connected.
+```{r}
+S<-sample(0:8,100,replace = TRUE)
+S_m<-matrix(S,10,10)
+g<-graph.adjacency(S_m,mode = "undirected",weighted = TRUE)
+g
+
+```
+Plotting the graph.
+```{r}
+plot(g)
+```
+
+
+
+Useing the mst() to generate the minimum spanning tree.
+```{r}
+mst<-mst(g,weights = E(g)$weight,algorithm="prim")
+mst
+```
+
+Comapring three mode in mst plotting.
+No option
+```{r}
+plot(mst)
+```
+
+Option : graph = "nsca"
+```{r}
+plot(mst,graph = "nsca")
+```
+
+Option : graph = "circle" 
+```{r}
+plot(mst, graph = "circle")
+```
+
+
