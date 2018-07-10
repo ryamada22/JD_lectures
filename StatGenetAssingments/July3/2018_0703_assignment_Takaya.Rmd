@@ -1,0 +1,29 @@
+---
+title: "20180703_assignment"
+author: "Hisamitsu Takaya"
+date: "2018/7/8"
+output: html_document
+---
+
+
+### Make a graph that is connected and find its minimum spanning tree and draw both graphs.
+
+```{r}
+library(igraph)
+
+my.mst <- function(n.node, prob=c(0.8,0.2)){
+  adj.matrix <- matrix(sample(c(0,1),n.node^2,replace=T,prob=prob),n.node,n.node)
+  adj.matrix <- adj.matrix + t(adj.matrix)
+  adj.matrix[adj.matrix >= 1] <- 1
+  diag(adj.matrix) <- 0
+  gr <- graph.adjacency(adj.matrix,mode="undirected")
+  mst <- mst(gr)
+  par(mfrow=c(1,2))
+  plot(gr,main="Random graph")
+  plot(mst,main="Minimum spanning tree")
+}
+
+my.mst(10)
+my.mst(20)
+```
+
