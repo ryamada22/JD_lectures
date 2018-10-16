@@ -1,0 +1,42 @@
+---
+title: '20181009'
+output:
+  html_document:
+    df_print: paged
+---
+*統計遺伝学の基礎(山田Prof)の第4章を読む
+*[こちら](https://en.wikipedia.org/wiki/Metric_space)を読む
+
+## dist() or distance()について
+
+* まずdistについて
+* dist()はmethod = "●●●●●●"が指定できる
+* methodには"euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski"が指定できる
+* euclidean
+$$
+\sqrt{\sum_{i=1}^n (q_i-p_i)^2}
+$$
+* maximum チェビシェフ距離 各座標の差（の絶対値）の最大値
+* [こちら](https://ja.wikipedia.org/wiki/チェビシェフ距離)
+$$
+\max_{i} (|p_i-q_i|)
+$$
+* manhattan 各座標の差（の絶対値）の総和を2点間の距離
+$$
+\sum_{i=1}^n |p_i-q_i|
+$$
+* canberra 下記の数式 数式はわかるが直感的にイメージしづらい。
+$$
+\sum_{i=1}^n \frac{|p_i-q_i|}{|P_i|+|q_i|}
+$$
+* binary これは変数がbinaryの時の用いることができる。
+$$
+1-\frac{\sum_{i=1}^n \min(p_i,q_i)}{\sum_{i=1}^n \max(p_i,q_i)}
+$$
+* minkowski距離 マンハッタンやeuclidをより一般化させた距離
+k=2 euclid k=1 manhattan k=∞ chebyshev
+$$
+(\sum_{i=1}^n |p_i-q_i|^k)^{1/k}
+$$
+
+* [こちら](https://cran.r-project.org/web/packages/philentropy/vignettes/Distances.html)にはdistance関数で測定できる距離が色々載っている
