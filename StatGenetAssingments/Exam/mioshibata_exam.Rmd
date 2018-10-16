@@ -1,0 +1,67 @@
+---
+title: "Exam Stat Genetics"
+author: "Mio Shibata"
+date: "2018/7/31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(igraph)
+```
+
+Before taking the class, I used some pathway tools that was based on the graph theory, but I didn't know that such tools are used linear algebra to draw them.
+
+The lectures help me read the paper that was given for the exam because the terminologies were not familiar with me and I didn't want to read such a paper.
+During this semester, I learned graph theory using matrixes, such as adjacency matrix, edge matrix and Lapracian matrix that are fundamental for the network. Understanding of the concept of graph theory let me read such a paper easily. 
+
+Before describing how the lectures worked for my reading, I would like to show one of my assignments that helped me understand graph theory.
+The assignment of June 5th was below.
+Make a graph object of the tree by two ways; using the edge list and the adjacency matrix.
+```{r}
+g<-c(0,1,0,0,0,0,0,1,0,0,
+     1,0,0,1,0,0,0,0,0,1,
+     0,0,0,0,0,1,0,1,1,0,
+     0,1,0,0,1,0,0,0,0,0,
+     0,0,0,1,0,0,0,0,0,0,
+     0,0,1,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,1,0,0,
+     1,0,1,0,0,0,1,0,0,0,
+     0,0,1,0,0,0,0,0,0,0,
+     0,1,0,0,0,0,0,0,0,0)
+g.mat <- matrix(g, nrow=10)
+g <- graph.adjacency(g.mat, weighted=TRUE)
+plot(g)
+```
+
+Give positive integer values to the edges and provide the edge weight to the graph object(s). Then I gave some weights to the edge.
+```{r}
+gw<-c(0,2,0,0,0,0,0,5,0,0,
+      2,0,0,1,0,0,0,0,0,10,
+      0,0,0,0,0,3,0,1,8,0,
+      0,1,0,0,7,0,0,0,0,0,
+      0,0,0,7,0,0,0,0,0,0,
+      0,0,3,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,2,0,0,
+      5,0,1,0,0,0,2,0,0,0,
+      0,0,8,0,0,0,0,0,0,0,
+      0,10,0,0,0,0,0,0,0,0)
+gw.mat <- matrix(gw, nrow=10)
+grw <- graph.adjacency(gw.mat, weighted=TRUE)
+plot(grw)
+```
+
+After this assignment, I realized that the network we use are based on the matrix and that the relations are given by the weights.
+
+That step by step learning brought me the concept that the network was based on the information converted into matrix and that the network was defined from what kind of relations was first assigned.
+
+In this paper, there some prediction tools based on some models were introduced.
+I think the important thing to understand this paper is what matrixes were given for modeling and what factors were contained. Moreover,for finding the mutations they used machine leaning that I learned at the Stat Learn class. 
+
+The model-based method is given by the matrix which comes from the molecular phenotypes or genes interactions.
+On the other hand the network-based one is given by the matrix which comes from the network which has established before.The results of prediction were influenced by the characters of the information that forms the matrix. When we interpret the meaning, we should chekch what kinds relationship were applied to the prerequisite. 
+
+Finally the paper confirmed how accuracy of their prediction based on the network is with applying results that have already published.
+
+Before leaning the matrix and graph theory, I tended to focus on what kinds of interaction would be generated.
+But now I try to understand the difference between methods based on several ways beyond the biological result. 

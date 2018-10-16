@@ -1,0 +1,41 @@
+---
+title: "20180731 Exam"
+output: html_notebook
+---
+
+まず最初に、講義受講前ではほぼ全く理解できなかったであろう課題論文について、少なくとも内容の概略を理解することができるようになったのは間違いなく講義受講の賜物と考える。
+具体的に理解可能となった理由として自分が考える点を以下に記す。
+
+(1) 単語がある程度理解できる
+ 例えば、adjacency matrix / directed acyclic matrix / diagonal matrix / Laplacian matrixなど講義で触れられていた単語が多く出ていることで理解が容易となった。
+(2) わからない用語を調べて推測する能力が高まった (例えばwikipediaなど)
+
+理解が足りないところ
+(a)「NETWORK-BASED ANALYSIS OF PERSONAL GENOMIC PROFILES」のparagraghについて
+3つの方法論が記載されている
+1: Model-based integration
+ a graph Laplacianを用いてregularizationするということについて理解ができていない。Laplacian graphが何であるかについては講義で習い、定義は理解しているつもりであるが、それをどのように応用するかについては未だ理解の達していない点である。本文にはregularizationの目的がto encourage similar coefficients on the genes or other genomic features that are connected in the network.とある。
+ (これらの理解にはこちらhttps://arxiv.org/pdf/1604.07948.pdfなど参考になるかもしれない。)さらに、p.5には数式が続くが、それぞれを完全には理解できていない。グラフ理論の簡単な参考書を1つ熟読することなどで理解が深まるのではと考える。
+ また、laplacianの代わりにLASSOを用いたregularizationについても差異が述べられているが理解が不十分であった。何らかの少ないサンプルにおいて、simulationをしてみれば理解が深まるのかもしれない。
+2: preprocessing integration 
+ 既存のnetworkからsubnetworkをどのような基準で抽出するかが理解できていない。
+ そのヒントとなるのがstainer treeという単語の可能性が高く、それはsubnetworkにおけるspanning treeと同義でありそう。
+3: Post-analysis integration
+It shows a lot of network analysis methods, most of which are very new to me, such as PARADIGM, MEMo method, SPIA, MILP.
+
+(b)「NETWORK-BASED METHODS FOR DRUG REPOSITIONING」のparagraghについて
+1: graph connectivity measures
+drug-drug similarity matrixであるWとknown drug-target matrixであるAをかけることでcadidate targetsのランキングを求めるというやり方など、講義で学んだ行列の掛け算で説明されており、ある程度理解できた。
+2: Link Prediction models
+ 本章ではrandom-walk approach, information-flow approach, bipartite graph-learning method based on kernel regressionと一見では理解が難しい単語が複数あり理解が困難であった。
+3: Network-based classification methods
+ こちらでは機械学習(SVM classifier)をしようしてpredictionを行なっていることが理解できた。ただ、kernel法の中でもdiffusion-types of kernelsを使用しているという点については理解が十分でない。拡散kernelについて(http://ibisforest.org/index.php?拡散カーネル)
+
+最後に1-3の方法論の特徴が説明されているが、やはり2がもっとも理解が難しく、かつ一方でde novoの予測をすることが可能であると述べられている。
+kernel methodの方法論を理解すると共に数式で記載されている内容についての理解をもう少し深める必要があると感じた。
+
+(c)「NETWORK-BASED ANALYSIS OF TCGA MUTATION DATA AND A CASE STUDY ON OVARIAN CANCER」について
+文脈のある程度は理解できたが、具体的なnetwork analysisの使用方法についてはsupplementary informationにある方法論で、hypergeometric testを用いるとのことであったが、supplementary informationが取得できないこと、またhypergeometric informationについても理解が不十分であることなどから自分で実装するには程遠い状態である。
+
+まとめると、これまでは「意味不明」であった内容が「読んで意味がわかる」という範囲が広がった。ただそれを自分で研究プロジェクトとして「使用する」というレベルに達するには数段のハードルがあることが認識できた。（それ自体が理解しているということではない可能性もあるが、、）biological fieldにおいてはここのタンパクなどのnetworkは非常に重要であり、ガンの分野のみではなく是非network analysisを生かした研究をして見たいと感じている。
+
