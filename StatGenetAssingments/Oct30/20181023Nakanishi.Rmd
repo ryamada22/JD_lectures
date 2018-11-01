@@ -1,0 +1,67 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+N <- 100
+p <- 0.7
+
+AA <- N * p^2
+Aa <- N * 2 * p * (1-p)
+aa <- N * (1-p)^2
+
+Genotype <- matrix(rep(0,3*31), 31, 3)
+
+for (k in 1:31){
+  Genotype[k,1] <- k + 39
+  Genotype[k,2] <- 62 - 2 * k
+  Genotype[k,3] <- k - 1
+}
+Genotype
+
+install.packages('HardyWeinberg')
+library('HardyWeinberg')
+
+HWE.results <- rep(0, 31)
+HWExact(Genotype[1,])$pval
+
+for (k in 1:31){
+  HWE.results[k] <- HWExact(Genotype[k,])$pval
+}
+HWE.results
+```
+
+###packageを用いず、山田先生のtextより
+[こちら](http://www.statgenet.med.kyoto-u.ac.jp/StatGenet/ryamada_bon/Whole/Whole20100523/ryamadaBonEn_Whole.html)y取り
+```{r}
+hweExact<-function(g=c(813,182,5)){ # number of people with three genotypes
+ n<-sum(g) # total 
+ nA<-2*g[1]+g[2] # No. allele A
+ na<-2*g[3]+g[2] # No. allele a
+ evod<-g[2]%%2 # Heterozygoutes are even or odd
+ maxAa<-min(nA,na)-evod
+ Aa<-seq(from=evod,to=maxAa,by=2) # list of possible heterozygous people number
+ AA<-(nA-Aa)/2 # corresponding No. AA
+ aa<-(na-Aa)/2 # corresponding No. aa
+ obs<-(g[2]-evod)/2+1 # observed heterozygoutes
+ prob<-rep(0,length(Aa)) # exact probs of all cases
+ prob<-exp(n*lgamma(2+1)+lgamma(nA+1)+lgamma(na+1)-lgamma(2*n+1)-(AA*lgamma(2+1)+Aa*lgamma(1+1)+aa*lgamma(2+1))+lgamma(n+1)-(lgamma(AA+1)+lgamma(Aa+1)+lgamma(aa+1)))
+ p.value<-sum(prob[prob<=prob[obs]]) # p-value
+ # Aa No. heteros
+ # prob exact probs
+ # obsprob exact prob of observed table
+ # p.value 
+ list(Aa=Aa,prob=prob,obsprob=prob[obs],p.value=p.value)
+}
+xx<-hweExact(c(813,182,5))
+xx$p.value # test p-value
+sum(xx$prob) # sum of all exact probs is 1
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
