@@ -1,0 +1,123 @@
+---
+title: "1023高田宿題"
+author: "Daisuke Takada"
+date: "2018/10/25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+もう少し授業内で日本語を増やして頂けましたら幸いです。
+
+## まずは自分なりの授業の復習から  
+Hardy-Weinberg Equilibriumとは(自分の言葉で)：観測された遺伝子型の頻度が、恒常性を保たれた状態である事。
+
+HWEの状態かどうかは検定して統計的に判断する。
+
+一般にはカイ二乗検定だが、サンプル数が少ないと正確検定を行う。
+
+手順：  
+優性のアレル頻度を計算する$$p=\frac{2*(AAの数)+1*(Aaの数)}{2N}$$
+
+劣性は$$q = 1-p$$
+
+そこからN,p,qを使って、期待値が求まる。
+カイ自乗値を求めて、カイ自乗分布からその確率を求めて棄却か否かを判断する。
+
+正確検定のほうでは、与えられたアリル頻度においてあるヘテロ接合帯数を与える確率を、次式で与える。
+
+$$   
+prob[n_{12}|n_1]=\frac{
+\left(
+    \begin{array}{ccc}
+      n \\
+      n_{11},n_{12},n_{22} 
+    \end{array}
+  \right)
+}{
+\left(
+    \begin{array}{ccc}
+      2n \\
+      n_1 
+    \end{array}
+  \right)
+}
+2^{n_{12}}
+$$
+
+n11, n12、 n22 はそれぞれ AA、 Aa、 及び aaという３つの観測された遺伝子型を示しており、 n1 は A のアリル数を示しており、これらの関係は $n_{1}=2n_{{11}}+n_{{12}}$と表される。
+
+ちなみに授業では、
+$$
+p=\frac{
+\left(
+    \begin{array}{ccc}
+      a+b \\
+      a
+    \end{array}
+  \right)
+\left(
+    \begin{array}{ccc}
+      c+d \\
+      c 
+    \end{array}
+  \right)
+}{
+\left(
+    \begin{array}{ccc}
+      n \\
+      a+c 
+    \end{array}
+  \right)
+}=
+\frac{
+(a+b)!(..)....(b+d)!
+}{
+a!b!c!d!n!
+}
+$$
+
+
+## ここから宿題
+
+- Make 1x3 table of SNP three genotypes. Calculate sample allele frequency.
+- Generate a series of 1x3 tables that keeps the observed allele counts.
+- Perform Exact HWE test on the tables. You will find HWE-exact function in the textbook or in a package somewhere.
+- Next week: Chapter 13 "Statistical tests" .
+
+#### Package ‘HardyWeinberg’p.30を参考に
+
+```{r}
+library(HardyWeinberg)
+x <- c(298,489,213) #total:1000
+names(x) <- c("MM","Mm","mm")
+HW.test <- HWExact(x,verbose=TRUE)
+summary(HW.test)
+```
+
+```{r}
+HW.test <- HWExact(x,verbose=TRUE,pvaluetype="midp")
+summary(HW.test)
+```
+
+```{r}
+rs5968922  <- c(A=392, B=212, AA=275, AB=296, BB=80 )
+HWExact(rs5968922,x.linked=TRUE,verbose=TRUE)
+```
+
+有意だったので、棄却されました。
+
+if pvaluetype is set to *dost* then the p-value of a two-sided test is computed
+as twice the tail area of a one-sided test. When set to *selome*, the p-value is
+computed as the sum of the probabilities of all samples less or equally likely
+as the current sample. When set to *midp*, the p-value is computed as half the
+probability of the current sample + the probabilities of all samples that are more
+extreme.
+
+
+
+
+
+
