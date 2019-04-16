@@ -259,10 +259,17 @@ plot(pss,likes,type=&quot;l&quot;)</code></pre>
 <p><span class="math display">\[
 \Gamma(\alpha) = (\alpha-1)!\\
 \Gamma(\beta+1) = \beta!
-\]</span> $$ _0^1  p_1^k p_2^{N-k} d p_1 =1\ _0^1  p_1^k p_2^{N-k} d p_1 =1\ _0^1  p_1^k p_2^{N-k} d p_1 =1\ _0^1  p_1<sup>p_2</sup>d p_1 =1\</p>
-<p>$$ ## Beta distribution</p>
+\]</span> <span class="math display">\[
+\int_0^1  \frac{(N+1)!}{k! (N-k)!} p_1^k \times p_2^{N-k} d p_1 =1\\
+\int_0^1  \frac{\gamma(N+2)}{\Gamma(k+1) \Gamma((N-k)+1)!} p_1^k \times p_2^{N-k} d p_1 =1\\
+\int_0^1  \frac{\gamma((k+1)+((N-k)+1))}{\Gamma(k+1) \Gamma((N-k)+1)!} p_1^k \times p_2^{N-k} d p_1 =1\\
+\int_0^1  \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)!} p_1^{\alpha-1} \times p_2^{\beta-1} d p_1 =1\\
+\]</span></p>
+</div>
+<div id="beta-distribution" class="section level2">
+<h2>Beta distribution</h2>
 <p><span class="math display">\[
-\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)!} p_1^\alpha \times p_2^\beta
+\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} p_1^{\alpha-1} \times p_2^{\beta-1}
 \]</span></p>
 <ul>
 <li>Beta distribution is a “distribution function” because its area under the curve is 1.</li>
@@ -270,6 +277,15 @@ plot(pss,likes,type=&quot;l&quot;)</code></pre>
 <li>This “good relation” is described as “beta distribution is the conjugate prior of bionmial distribution”.</li>
 </ul>
 <p>See the “Example” section of “Conjugate prior” in Wikipedia. <a href="https://en.wikipedia.org/wiki/Conjugate_prior" class="uri">https://en.wikipedia.org/wiki/Conjugate_prior</a></p>
+</div>
+<div id="information-table-of-distribution-articles-of-wikipedia" class="section level2">
+<h2>Information table of distribution articles of Wikipedia</h2>
+<p><a href="https://en.wikipedia.org/wiki/Binomial_distribution" class="uri">https://en.wikipedia.org/wiki/Binomial_distribution</a></p>
+</div>
+<div id="multinomial-distribution-and-dirichlet-distribution" class="section level2">
+<h2>Multinomial distribution and Dirichlet distribution</h2>
+<p><a href="https://en.wikipedia.org/wiki/Multinomial_distribution" class="uri">https://en.wikipedia.org/wiki/Multinomial_distribution</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Dirichlet_distribution" class="uri">https://en.wikipedia.org/wiki/Dirichlet_distribution</a></p>
 </div>
 
 

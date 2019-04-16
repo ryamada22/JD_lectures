@@ -145,13 +145,13 @@ $$
 \int_0^1  \frac{(N+1)!}{k! (N-k)!} p_1^k \times p_2^{N-k} d p_1 =1\\
 \int_0^1  \frac{\gamma(N+2)}{\Gamma(k+1) \Gamma((N-k)+1)!} p_1^k \times p_2^{N-k} d p_1 =1\\
 \int_0^1  \frac{\gamma((k+1)+((N-k)+1))}{\Gamma(k+1) \Gamma((N-k)+1)!} p_1^k \times p_2^{N-k} d p_1 =1\\
-\int_0^1  \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)!} p_1^\alpha \times p_2^\beta d p_1 =1\\
-
+\int_0^1  \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)!} p_1^{\alpha-1} \times p_2^{\beta-1} d p_1 =1\\
 $$
+
 ## Beta distribution
 
 $$
-\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)!} p_1^\alpha \times p_2^\beta
+\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} p_1^{\alpha-1} \times p_2^{\beta-1}
 $$
 
 * Beta distribution is a "distribution function" because its area under the curve is 1.
@@ -160,3 +160,11 @@ $$
 
 See the "Example" section of "Conjugate prior" in Wikipedia. https://en.wikipedia.org/wiki/Conjugate_prior 
 
+## Information table of distribution articles of Wikipedia
+https://en.wikipedia.org/wiki/Binomial_distribution
+
+## Multinomial distribution and Dirichlet distribution
+
+https://en.wikipedia.org/wiki/Multinomial_distribution 
+
+https://en.wikipedia.org/wiki/Dirichlet_distribution
