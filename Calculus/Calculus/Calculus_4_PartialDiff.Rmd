@@ -1,0 +1,250 @@
+---
+title: "Calculus4 Partial differentiation"
+author: "ryamada"
+date: "2017年1月22日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+```
+
+# 正規分布のパラメタ推定 Estimation of parameters of normal distribution
+
+$k$個の実数 $X=(x_1,...,x_k)$が観察されたとする。
+
+Assume k real values $X=(x_1,...,x_k)$, are observed.
+
+これらが平均$m$、SD $s$の正規分布からの独立標本であるとすると、その尤度関数は
+
+The likelihood function under the hypothesis where they are from normal dist with mean $m$ and SD $s$ is;
+
+$$
+L(m,s|x) = \prod_{i=1}^k (\frac{1}{\sqrt{2\pi s^2}}e^{-\frac{1}{2}\frac{(x_1-m)^2}{s^2}})
+$$
+である。
+
+対数をとって、定数部分を省略すれば
+
+Taking logaithm,
+
+$$
+\log{L} = -k\log{s} -\frac{1}{2}\frac{1}{s^2}\sum_{i=1}^k (x_i-m)^2 + C
+$$
+
+これを、$m$,$s$の関数らしく変形すると
+
+Transform the function so that it appears a function of $m$ and $s$,
+
+$$
+\log{L} = -k\log{s}-\frac{1}{2}\frac{1}{s^2} (k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2) + C
+$$
+
+この対数尤度に準じた関数を、横軸に$m$、縦軸に$s$をとって描いてみる。
+
+Draw the function with $m$ horizontal and $s$ vertical axes;
+
+```{r,rgl=TRUE}
+k <- 10
+m0 <- 2
+s0 <- 1
+x <- rnorm(k,m0,s0)
+
+m <- seq(from=-2,to=4,by=0.05)
+s <- seq(from=0.5,to=20,by=0.05)
+ms <- as.matrix(expand.grid(m,s))
+log.L <- -k*log(ms[,2])-1/2 * (1/ms[,2]^2) * (k*ms[,1]^2-2*sum(x)*ms[,1]+sum(x^2))
+plot3d(ms[,1],ms[,2],log.L)
+```
+
+## m = 0
+
+平均が0の正規分布からのサンプルであることがわかっているなら
+
+Under the assumption where mean is 0,
+
+```{r,rgl=TRUE}
+id <- which(ms[,1]==0)
+plot3d(ms[,1],ms[,2],log.L)
+spheres3d(ms[id,1],ms[id,2],log.L[id],radius=3,color=2)
+```
+
+$m=0$の下での、$s$の最尤推定値は、対数尤度(に準じた)関数の$m$に0を代入した尤度関数を微分すればよい
+
+The function with $m=0$ should be differentiate to tell the MLE of $s$. 
+
+$$
+\log{L} = -k\log{s}-\frac{1}{2}\frac{1}{s^2} (k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2) + C\\
+=-k\log{s}-\frac{1}{2}\frac{1}{s^2} \sum_{i=1}^k x_i^2 + C
+$$
+$$
+\frac{d}{ds} (\log{L}) = -\frac{k}{s} + \frac{1}{s^3} \sum_{i=1}^k x_i^2\\
+=-\frac{1}{s^3}(k s^2 - \sum_{i=1}^k x_i^2)
+$$
+
+結局 then,
+$$
+s = \sqrt{\frac{\sum_{i=1}^k x_i^2}{k}}
+$$
+
+```{r}
+id <- which(ms[,1]==0)
+plot3d(ms[,1],ms[,2],log.L)
+spheres3d(ms[id,1],ms[id,2],log.L[id],radius=3,color=2)
+s. <- sqrt(sum(x^2)/k)
+log.L. <- -k*log(s.)-1/2 * (1/s.^2) * (sum(x^2))
+spheres3d(0,s.,log.L.,radius=5,color=3)
+
+```
+
+## m=1
+
+$m=1$で同じことをするなら
+
+In the case of $m=1$,
+$$
+\log{L} = -k\log{s}-\frac{1}{2}\frac{1}{s^2} (k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2) + C\\
+=-k\log{s}-\frac{1}{2}\frac{1}{s^2} (k-2\sum_{i=1}^k x_i + \sum_{i=1}^k x_i^2) + C
+$$
+
+$$
+\frac{d}{ds} (\log{L}) = -\frac{k}{s} + \frac{1}{s^3} (k-2\sum_{i=1}^k x_i + \sum_{i=1}^k x_i^2)\\
+=-\frac{1}{s^3}(k s^2 - \sum_{i=1}^k (k-2\sum_{i=1}^k x_i + \sum_{i=1}^k x_i^2))
+$$
+$$
+s = \sqrt{\frac{\sum_{i=1}^k (k-2\sum_{i=1}^k x_i + \sum_{i=1}^k x_i^2)}{k}}
+$$
+```{r}
+id <- which(ms[,1]==0)
+plot3d(ms[,1],ms[,2],log.L)
+spheres3d(ms[id,1],ms[id,2],log.L[id],radius=3,color=2)
+s. <- sqrt(sum(x^2)/k)
+log.L. <- -k*log(s.)-1/2 * (1/s.^2) * (sum(x^2))
+spheres3d(0,s.,log.L.,radius=5,color=3)
+
+id <- which(ms[,1]==1)
+spheres3d(ms[id,1],ms[id,2],log.L[id],radius=3,color=4)
+s.. <- sqrt((k-2*sum(x)+sum(x^2))/k)
+log.L.. <- -k*log(s..)-1/2 * (1/s..^2) * (k-2*sum(x)+sum(x^2))
+spheres3d(1,s..,log.L..,radius=5,color=5)
+```
+
+## $m= ? $
+
+$m=0$, $m=1$の場合では、$m$を固定して$\log{L}$を$s$で微分した。
+
+For the cases of $m=0$ and $m=1$, $\log{L}$ was differentiated with $s$ with $m$ as constant.
+
+このように変数を固定して残りの変数で微分するのが偏微分。
+This is partial differentiation.
+
+$$
+\frac{\partial}{\partial s} \log{L} = -\frac{k}{s} + \frac{1}{s^3} (k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2)
+$$
+$m$の値に応じて、$s$の最尤推定値は次のような値をとることがわかる
+
+Partial differentiation tells MLE for arbitrary $m$.
+
+$$
+\sqrt{\frac{(k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2)}{k}}
+$$
+
+```{r}
+s.mle <- sqrt((k*m^2-2*sum(x)*m+sum(x^2))/k)
+
+plot(m,s.mle,type="l")
+```
+
+## Exercise 1
+
+### Exercise 1-１
+$m$に関する偏微分をして、$s$とそれに対応する$m$の最尤推定値の関係をプロットせよ１
+
+Partially differentiate $\log{L}$ with $m$ and draw the relation between $s$ and MLE of $m$.
+
+
+### Exercise 1-3
+
+常染色体上のSNPは3種類のディプロタイプを作る。
+そのディプロタイプ頻度を$(p_{MM},p_{Mm},p_{mm})$とする。
+
+SNP in autosomal chromosome makes 3 diplitypes, whose frequency is 
+$(p_{MM},p_{Mm},p_{mm})$.
+
+
+今、3ディプロタイプ人数が$(n_{MM},n_{Mm},n_{mm})$と観察されたとする。
+
+Assume $(n_{MM},n_{Mm},n_{mm})$ are the observed number of individuals of three diplotypes.
+
+この観察の下での、集団のディプロタイプ頻度
+(p_{MM},p_{Mm},p_{mm})の尤度関数は
+
+The likelihood fucntion of diplotype frequency for the observarion follows.
+
+$$
+L((p_{MM},p_{Mm},p_{mm})|(n_{MM},n_{Mm},n_{mm})) = \begin{pmatrix} n_{MM}+n_{Mm}+n_{mm}\\n_{MM},n_{Mm},n_{mm} \end{pmatrix} p_{MM}^{n_MM} p_{Mm}^{n_{Mm}} p_{mm}^{n_{mm}}
+$$
+
+
+尤度関数の対数を取り、定数部分を省略すると以下のようになる。
+
+Taking logarithm,
+
+$$
+\log{L((p_{MM},p_{Mm},p_{mm})|(n_{MM},n_{Mm},n_{mm}))} = n_{MM} \log{p_{MM}} + n_{Mm}\log{p_{Mm}} + n_{mm}\log{p_{mm}} + C
+$$
+
+$p_{mm}=1 - p_{MM}-p_{Mm}$であることを利用して、$\log{L}$を$(p_{MM},p_{Mm})$の2変数関数であるとみなし、$p_{MM}$,$p_{Mm}$でそれぞれ偏微分せよ。
+
+Using $p_{mm}=1 - p_{MM}-p_{Mm}$, handle the function as the funtion with two parameters $p_{MM}$,$p_{Mm}$ and partially differentialte the function with both.
+
+
+
+### Exercise 1-4
+
+Exercise 1-3 の偏微分を利用して、$(p_{MM},p_{Mm},p_{mm})$の最尤推定値を求めよ
+
+Using the result of Exercise 1-4, answer MLE of $(p_{MM},p_{Mm},p_{mm})$.
+
+### Exercise 1-5
+
+アレル頻度を(p,1-p)とすると、Hardy-Weinberg 平衡の下でのディプロタイプ頻度は
+
+Under the condition of Hardy-Weinberg equilibrium, three diplotype freq when allele frequencies are (p,1-p),
+
+$$
+(p_{MM},p_{Mm},p_{mm}) = (p^2, 2p(1-p),(1-p)^2)
+$$
+である。HWEを仮定すると、尤度関数は、1変数関数となる。
+
+Under the assumption of HWE, the likelihood function is a funciton with one parameter.
+
+HWE仮定の下での、尤度関数を示し、それを微分することでアレル頻度$p$の最尤推定値を求めよ。
+
+Show the likelihood function and differentiate it and answer MLE.
+
+### Exercise 1-6
+
+Hardy-Weinberg不平衡を許せば
+
+Under the assumption of HW-disequiriblium,
+
+
+$$
+(p_{MM} + \delta, p_{Mm} - 2\delta, p_{mm} + \delta)
+$$
+と表せる。
+
+これにより、尤度関数は$p$,$\delta$の2変数関数となる
+
+2変数で偏微分し、その結果を示せ
+
+Now the likelihood funtion has two parameters.
+Partially differentiate it and show the results.
+

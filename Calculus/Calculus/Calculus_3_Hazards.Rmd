@@ -1,0 +1,233 @@
+---
+title: "Calculus3 Density, Cumulative, Hazard"
+author: "ryamada"
+date: "2017年1月22日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+```
+
+
+確率密度関数を積分すると累積密度関数。
+
+Integrate probability density function, then it is cumulative density function.
+
+累積密度関数を微分すると確率密度関数。
+Differentiate cumulative density function, then it is density function.
+
+確率分布の本体は同じで、その見方が異なっているだけ。
+Both density and cumulative density functions represent the same function and they are two ways to show it.
+
+いろいろな見方を扱い、それらの微積分関係を確認する。
+
+Some other ways to represent probability function follow.
+
+# 確率密度関数 Probability density function $f(x)$
+
+確率変数$X$が値$x$をとる確率密度を$P(X=x)$と書く。
+
+Let $P(X=x)$ denote the probability density of X being x 
+
+確率密度関数 Probability density function.
+$$
+f(x) = P(X=x)\\
+f(x) \ge 0\\
+\int_{x\in D} f(x) = 1
+$$
+
+指数分布を例に取ると In case of exponential distribution,
+
+$$
+f(x) = \lambda e^{-\lambda x}
+D = [0;\infty)
+$$
+
+```{r}
+lambda <- 3
+x <- seq(from=0,to=5,length=100)
+fx <- lambda * exp(-lambda *x)
+plot(x,fx,type="l")
+fx. <- dexp(x,lambda)
+plot(fx,fx.)
+```
+
+# 累積分布関数 Cumulative distribution function $F(x)$
+
+$$
+F(x) = P(X \le x) = \int_{}^x f(x) dx\\
+\frac{d}{dx} F(x) = f(x)
+$$
+
+指数分布の場合 Exponential distribution:
+
+$$
+F(x) = \int_{0}^x f(t) dt\\
+= \int_0^x \lambda e^{-\lambda t}dt\\
+= [\lambda \frac{1}{-\lambda} e^{-\lambda t}]^x_0 \\
+= - e^{-\lambda x} + e^{0}\\
+= 1-e^{-\lambda x} 
+$$
+```{r}
+Fx <- 1-exp(-lambda*x)
+plot(x,Fx,type="l")
+abline(h=1,col=2)
+Fx. <- pexp(x,lambda,lower.tail=TRUE)
+plot(Fx,Fx.)
+```
+
+# 生存関数 Survival function $S(x)$
+
+The order of x in $F(x)$ is inversed.
+
+累積分布関数$F(x)$の昇降順を逆にした関数。
+
+$P(X=x)$を時刻$X=x$での瞬間死亡率とすると、$S(x)$は時刻$X=x$での生存者の割合
+
+When the $P(X=x)$ is probability of death at time $X=x$, then $S(x)$ stands for the fraction of survivers at time $X=x$.
+
+$$
+S(x) = P(X>x)\\
+S(x) = 1- F(x) = \int_x^{} f(x) dx\\
+=1- (1-e^{-\lambda x}) \\
+= e^{-\lambda x}
+$$
+```{r}
+Sx <- exp(-lambda * x)
+plot(x,Sx,type="l")
+Sx. <- pexp(x,lambda,lower.tail=FALSE)
+plot(Sx,Sx.)
+```
+# 逆累積分布関数 Inverse of cumulative density function $G(t)$
+
+
+
+$$
+P(X \le G(t)) = t\\
+\int_{}^{G(t)} f(x) dx = t\\
+F(G(t)) = t\\
+G(t) = F^{-1}(t)
+$$
+
+$$
+F(G(t)) = t\\
+F(G(t)) = t = 1-e^{-\lambda G(t)}\\
+e^{-\lambda G(t)} = 1-t\\
+-\lambda G(t) = \log{1-t}\\
+G(t) = -\frac{\log{(1-t)}}{\lambda}
+$$
+
+
+```{r}
+t <- seq(from=0,to=1,length=100)
+Gt <- -(log(1-t))/lambda
+plot(t,Gt,type="l")
+Gt. <- qexp(t,lambda)
+plot(Gt,Gt.)
+```
+
+# 逆生存関数 Inverse of survival function $Z(x)$
+
+$$
+P(X>Z(t)) = t\\
+\int_{Z(t)}^{} f(x) dx = t\\
+S(Z(t)) = t\\
+Z(t) = S^{-1}(t)
+$$
+
+$$
+S(Z(t)) = t\\
+S(Z(t)) = t = e^{-\lambda Z(t)}\\
+\lambda Z(t) = - \log{t}\\
+Z(t) = -\frac{\log{t}}{\lambda}
+$$
+
+```{r}
+Zt <- -log(t)/lambda
+plot(t,Zt,type="l")
+Zt. <- qexp(t,lambda,lower.tail=FALSE)
+plot(Zt,Zt.)
+```
+
+# ハザード関数 Hazard function $h(x)$
+
+$$
+h(x) = \frac{f(x)}{S(x)}\\
+h(x) = \frac{f(x)}{\int_x^{} f(x) dx}
+$$
+$$
+\frac{d}{dx} F(x) = f(x)\\
+S(x) = 1- F(x)\\
+\frac{d}{dx} S(x) = -\frac{d}{dx}F(x) = -f(x)
+$$
+
+$$
+h(x) = -\frac{\frac{d}{dx}S(x)}{S(x)}\\
+= - \frac{d}{dx} (\log{S(x)})
+$$
+
+$$
+f(x) = \lambda e^{-\lambda x}\\
+S(x) = e^{-\lambda  x}\\
+h(x) = \frac{f(x)}{S(x)} = \lambda\\
+h(x) = -\frac{d}{dx} \log{S(x)}\\
+= -\frac{d}{dx} \log{e^{-\lambda x}}\\
+= -\frac{d}{dx} (-\lambda x)\\
+= \lambda
+$$
+生き残っている部分$S(x)$の死亡率(瞬間死亡率)
+
+Probability to die for the survivers.
+
+```{r}
+hx <- fx/Sx
+plot(x,hx,type="l")
+```
+
+
+
+指数分布とは、「どの時点においても、生き残っている部分での瞬間死亡率が一定」である分布
+
+Exponential distribution stands for the stochastic process where the probability to die among the people alive is constant regardless of the size of population.
+
+# 累積ハザード関数 Cumulative hazard function $H(x)$
+
+$$
+\frac{d}{dx}H(x) = h(x) = -\frac{d}{dx} \log{S(x)}\\
+H(x) = -\log{S(x)}
+$$
+
+$$
+H(x) = -\log{S(x)} = -\log{e^{-\lambda x}}= \lambda x
+$$
+
+# Exercise 1
+
+## Exercise 1-1
+
+生存時間のモデル、機械が故障するまでの時間のモデルのひとつが指数分布である。
+
+Exponential distribution is one of stochastic models of survival time (time to death) or time to failure.
+
+別のモデルとしてワイブル分布がある。
+
+Weibull distribution is one of them.
+
+ワイブル分布の確率密度分布は The probability density distribution of Weibull distribution is;
+
+$$
+f(x) = k\lambda (\lambda x)^{k-1} e^{-(\lambda x)^k}
+$$
+で与えられる。
+
+このワイブル分布の生存関数、ハザード関数を求め、指数分布のそれと比較せよ
+
+Calculate survival function and hazard function for Weibull distribution, then compare them with ones of exponential distribution.
