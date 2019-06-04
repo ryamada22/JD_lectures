@@ -1,0 +1,119 @@
+---
+title: "指数型分布族と双対座標系 Exponential Family and dual coordinate systems"
+author: "ryamada"
+date: "2017年3月6日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+```
+
+# はじめに Introduction
+
+- 正規分布を例に都合のよい２つの座標系があることを示し、それらは平坦で、双直交であると説明した。
+
+$$
+\theta_1 = \frac{m}{s^2}\\
+\theta_2 = -\frac{1}{2s^2}\\
+m = -\frac{\theta_1}{2\theta_2}\\
+s^2 = -\frac{1}{2\theta_2}
+$$
+
+
+$$
+\eta_1 = m\\
+\eta_2 = m^2+s^2\\
+m = \eta_1\\
+s^2 = \eta_2- \eta_1^2
+$$
+
+- この座標系のとり方を説明するために、分布の指数型表現というものを使う。
+
+# 正規分布の指数型表現
+
+$$
+P(x|m,s) = \frac{1}{\sqrt{2\pi s^2}}e^{-\frac{(x-m)^2}{2s^2}}
+$$
+- 対数を取り、$x$とパラメタが関係する部分と、パラメタのみにかかわる部分(と$x$のみにかかわる部分(以下の例ではない))とに分ける。
+
+
+
+$$
+\log{P(x|m,s)} = - \frac{(x-m)^2}{2s^2} -\frac{1}{2}\log{2\pi s^2}\\
+= \frac{m}{s^2} x - \frac{1}{2s^2}x^2 - (\frac{m^2}{2s^2} + \frac{1}{2}\log{2\pi s^2})\\
+= \begin{pmatrix}\frac{m}{s^2},- \frac{1}{2s^2} \end{pmatrix} \cdot \begin{pmatrix} x \\ x^2 \end{pmatrix} -  (\frac{m^2}{2s^2} + \frac{1}{2}\log{2\pi s^2})
+$$
+
+- 次のように書き表すことにする。
+
+$$
+\log{P(x|\theta_1,\theta_2)} = \begin{pmatrix}\theta_1,\theta_2 \end{pmatrix} \cdot \begin{pmatrix} x \\ x^2 \end{pmatrix} -  A(\theta_1,\theta_2)\\
+= \begin{pmatrix}\theta_1,\theta_2 \end{pmatrix} \cdot \begin{pmatrix} f_1(x) \\ f_2(x) \end{pmatrix} -  A(\theta_1,\theta_2)\\
+\theta_1 = \frac{m}{s^2}\\
+\theta_2 = -\frac{1}{2s^2}\\
+A(\theta_1,\theta_2) = -\frac{\theta_1^2}{4\theta_2} +\frac{1}{2}\log{\frac{\pi}{\theta_2}}\\
+f_1(x) = x\\
+f_2(x) = x^2
+$$
+
+- 以下のように、指数関数の形で表されるので、「指数型」と呼ばれる。
+
+$$
+P(x|\theta_1,\theta_2) = e^{\begin{pmatrix}\theta_1,\theta_2 \end{pmatrix} \cdot \begin{pmatrix} f_1(x) \\ f_2(x) \end{pmatrix} -  A(\theta_1,\theta_2)}
+$$
+
+- 平坦で双対座標系の片方となる$\theta$座標系は、分布関数を指数型で表したときに、$x$の関数($f_i(x))$の係数であることが知られている
+
+- 他方、$\eta$座標系は、$\theta$座標系と双対な関係にある座標系であるが、どのようなものがそれに相当するかというと、$x$の関数として現れた$f_i(x)$の期待値であることが知られている。
+
+- 正規分布の場合には$f_1(x)=x$と$f_2(x)=x^2$のそれぞれの期待値である。平均$m$、標準偏差$s$の正規分布の$x$の期待値は$m$そのものであるし、$(x-m)^2$の期待値が$s^2$であるから、$x^2$の期待値は、$m^2+s^2$である。
+
+# $\eta$座標系
+
+- 指数型表現をしたときの$x$の関数の係数が$\theta$座標であり、$x$の関数の期待値が$\eta$座標である。
+
+- $\eta$座標は次のようにも表せる。分布関数の$x$によらない成分、$\theta$のみによる成分に「双対対応」するのが$\eta$であり、その「双対対応」というのは偏微分をとることである、というように読める。
+
+$$
+\eta_i = \frac{\partial A(\theta)}{\partial \theta_i}
+$$
+- これは、対数尤度関数を$\theta_i$で偏微分したものの期待値が0であることを利用することで、以下のように示せる。
+
+$$
+\frac{\partial \log{p}}{\partial \theta_i} = f_i(x) - \frac{\partial A(\theta)}{\partial \theta_i}\\
+\int \frac{\partial \log{p}}{\partial \theta_i} \times p dx = \int (f_i(x) - \frac{\partial A(\theta)}{\partial \theta_i} ) \times pdx\\
+\int \frac{\partial \log{p}}{\partial \theta_i} \times p dx=\int f_i(x) \times p dx - \frac{\partial A(\theta)}{\partial \theta_i} \int p dx\\
+\int \frac{1}{p}\frac{\partial p}{\partial \theta_i} \times p dx = E[f_i(x)] - \frac{\partial A(\theta)}{\partial \theta_i} \times 1\\
+\int \frac{\partial p}{\partial \theta_i} dx = E[f_i(x)] - \frac{\partial A(\theta)}{\partial \theta_i}\\
+0 = E[f_i(x)] - \frac{\partial A(\theta)}{\partial \theta_i}
+$$
+## 練習問題
+
+### 指数型分布族の例 Examples of exponential family
+
+非常に多くの理論確率分布が含まれる。どのような分布が含まれるか確認せよ。https://en.wikipedia.org/wiki/Exponential_family 
+
+There are very many theoretical probability functions in exponental family. See the URL above.
+
+### Canonical formの導出 Derive canonical form
+
+2つの分布をhttps://en.wikipedia.org/wiki/Exponential_family　より選び、その指数型表現を通常のパラメタ表現から導け。
+
+Select two distributions from the site and derive their exponential form.
+
+### ヤコビ行列 Jacobian matrix
+
+正規分布のパラメタ変換におけるヤコビ行列を求めよ。 We changed the parameters of normal distribution. Show its Jacobian matrix. 
+$$
+\theta_1 = \frac{\mu}{\sigma^2}\\
+\theta_2 = - \frac{1}{2\sigma^2}
+$$
+
