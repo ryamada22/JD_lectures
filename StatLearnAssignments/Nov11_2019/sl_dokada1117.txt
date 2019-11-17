@@ -1,0 +1,2 @@
+This page describes the indicators for the quantifying the quality of predictions of the statistical model. 
+Various indicators have been proposed depending on the type of task such as classification and regression.
