@@ -1,0 +1,104 @@
+---
+title: "PointEstimateGenetics"
+author: "ryamada"
+date: "2019/09/28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Binomial distribtuion, SNV, NGS
+
+### True positive and false positive
+
+Assume you use NGS for genotyping of a [SNV](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism).
+
+NGS provides d reads per site and the d is called depth of coverage. [Depth (coverage) of NGS](https://en.wikipedia.org/wiki/Coverage_(genetics))
+
+Assume when the site is heterozygous, the number of reads of one allele follows in binomial distribution with probabilities of 0.5 and 0.5.
+
+Calculate probabilities that all of d reads are identical when the site is heterozygous for series of d and plot them. 
+
+Use dbinom() function.
+
+```{r}
+d <- 1:100
+prob.homo <- 2 * dbinom(0,d,0.5)
+plot(d,prob.homo,type="h")
+```
+
+### Depth varies
+
+Assume there are n sites. 
+
+You plan to have the depth of the experiment at $\lambda$. 
+
+Assume the depth of your experiment should follow Poisson distribution.
+
+Plot the density mass for d from 0 to a adequately large depth.
+
+```{r}
+lambda <- 16
+depth.pois <- dpois(0:100,lambda)
+plot(0:100,depth.pois,type="h")
+```
+
+### Expected probability of miscall of heterozygous sites
+
+Based on the assumptions above, calculate the expected probablity to call heterozygous sites as homozygous due to homogeneous reads.
+
+$$
+Prob = \sum_{d=1}^{\infty} P(d|\lambda) \times Pr(homogeneous reads|d)
+$$
+
+```{r}
+sum(depth.pois[-1] * prob.homo)
+```
+
+### Simulation
+
+Assume n heterozygous SNV sites.
+
+Generate random depths for n sites in Poisson distribution with its parameter $\lambda$. 
+
+Generate number of reads of one allele in binomial distribution.
+
+Plot the depths and the number of reads of one allele, using matplot().
+
+```{r}
+n <- 10000
+p <- 20
+d <- rpois(n,p)
+x <- rbinom(n,d,0.5)
+matplot(cbind(d,x),type="l")
+```
+
+Sort the depths and re-plot the depths and the numbers of reads in the order of depths.
+
+Use order() function.
+
+```{r}
+s <- order(d)
+matplot(cbind(d[s],x[s]),type="l")
+```
+
+You can sort the depths and the number of reads together; the order of the depths first and the order of the numbers next, with [order() function](https://www.statmethods.net/management/sorting.html). 
+
+```{r}
+s. <- order(d,x)
+matplot(cbind(d[s.],x[s.]),type="l")
+```
+
+### Additional tasks
+
+When you assume mistakes of bases of reads, homozygous sites may provide mixture of two or more bases.
+
+In this case, too low depths are not safe to estimate depths. 
+
+Also a pair of unbalanced numbers of two alleles is not safe to call heterozygous.
+
+How would you handle depths/number-per-allele to make the precision of genotype calling?
+
+

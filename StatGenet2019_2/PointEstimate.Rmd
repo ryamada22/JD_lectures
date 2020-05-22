@@ -1,0 +1,27 @@
+---
+title: "Point estimate"
+author: "ryamada"
+date: "2019/09/28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Use R. Make a function to calculate mean of values of a vector. Don't use R's mean() function! [help](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/)
+2. See the right-side panel of Wikipedia article of "Binomial distribution" and find the formula of mean of it. Pick value for two parameters, n and p, so that mean is the area of a circle of radius 10. Generate a vector of 100000 random values in the binomial distribution. Draw a histogram of r.
+3. Calculate mean of r. You can use your mean function or mean() function in R. Check the mean is close to the area of the circle.
+4. Let's assume r is the series of experiments to know about the variable. You can assume the initial n elements of r is the result of n experiments. Using this idea, you can calculate the series of mean along with the increase of number of experiments from 1 to 100000. Make a vector of the means in two ways.
+    + Use "for loop".
+    + Use ["cumsum()"](https://www.r-bloggers.com/two-new-cumulative-sum-functions-2/) and [": (colon)"](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Colon.html) . This way is much faster...
+5. Draw the sequence of means with a horizontal line indicating the "true value". The behavior indicates the point estimates converges to the true value. Type "line" would be better than the other types of [plot()](https://www.rdocumentation.org/packages/graphics/versions/3.6.1/topics/plot) function. You should draw two the converging line graphs; from 1 to 100000 and from 1 to somewhere that tells you more about the converging behavior.
+6. When you want to know the converging behavior is typical or not, you should repeat the procedure many times. Try the following three ways.
+    + Repeat the procedure 10 times and keep the results in 100000 x 10 matrix, X. Draw multiple converging lines with matplot() function. Now you should get familiar with ["help(matplot)"](https://www.r-project.org/help.html) command to get information of specified functions.
+    + A quick-and-dirtier way is to reuse r with 100000 elements. Shuffle r with sample() function and used the new value vector as a new series of experiments. Although this gives you multiple series of expriments, they are not mutually independent, strictly. Becaues the number of elements are not small, this quick-and-dirty way will work for you to get an idea of similarity among repetition.
+    + Actually you can avoid the loop of 10 times by generatin 100000 x 10 random values at once. Put the values in 100000 x 10 matrix. You can get the series of means for each columns. To get the series, you can use apply() function.
+
+
+When n is fixed, p is estimated by calculated the number of occurence divided by the number of trials. 
+
+Mean is one of point estimates of a variable.
