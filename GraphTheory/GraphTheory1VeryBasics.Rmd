@@ -1,5 +1,5 @@
 ---
-title: "Graph Theory"
+title: "Graph Theory 1 Very Basics"
 author: "ryamada"
 date: "2020年5月21日"
 output: html_document
@@ -158,3 +158,8 @@ The edge starting from and ending into the same vertex is called a "loop".
 
 同じ頂点から出て、同じ頂点に終わる辺を「ループ」と呼ぶ。
 
+## Exercise 練習問題
+
+* Make an edge list and an adjacency matrix of hexagon and draw the graph. 六角形のグラフのエッジリストと隣接行列を作り、そのグラフを描け
+* Make an edge list and an adjacency matrix of a cubic and draw the graph. 立方体のグラフのエッジリストと隣接行列を作り、そのグラフを描け
+* Make an edge list and an adjacency matrix of a Chinese character "寺" and draw the graph. 漢字「寺」のエッジリストと隣接行列を作り、そのグラフを描け
