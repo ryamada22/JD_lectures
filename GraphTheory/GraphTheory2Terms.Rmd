@@ -326,3 +326,4 @@ plot(g.dual)
 * Make a pyramid graph that has one square base and four oblique triangles. ピラミッドグラフを作れ(正方形の底面と、４つの三角形斜面からなる)
 * Make the dual of the pyramid graph. ピラミッドグラフの双対グラフを作れ
 * Make a 3-regular graph with 30 verties. 頂点数30の3-正則グラフを作れ。Draw a histogram of its pair-wise graph distances. そのグラフの頂点ペアのグラフ距離のヒストグラムを描け
+* Make 3 different subgraphs from the 3-regular graph generated above. 上で作成した3-正則グラフから３つの異なる部分グラフを作れ

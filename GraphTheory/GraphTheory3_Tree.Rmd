@@ -1,0 +1,101 @@
+---
+title: "Graph Theory 3 Trees"
+author: "ryamada"
+date: "2020/5/24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Trees 木
+
+A tree is a connected graph without a cycle.
+木はサイクルを持たない連結グラフ。
+
+A connected graph is a graph in which graph distance of any vertex pair is finite.
+
+連結グラフとは、全ての頂点間のグラフ距離が有限であるようなグラフ。
+
+$|E| = |V|- 1$
+
+## Examples of tree grtaphs 木グラフの例
+
+* Pylogeny tree 系統樹
+* Dendrogram, hierarchical clustering tree 樹形図, 階層的クラスタリングの樹形図
+* Bifurcation tree 分岐図
+
+## Rooted tree and unrooted tree 根のある木と根のない木
+
+When a tree graph is directed and all vertices are reacheable from one vertex, V0, V0 is called the root of the tree and the tree is rooted.
+
+A tree is unrooted when it is undirected.
+
+## Directed and undirected graphs 有向グラフと無向グラフ
+
+When edges of a graph have direction, or one of two vertices of each edge is a starting vertex and the other is an ending vertex, the graph is directed.
+
+When edges are the pair of vertices without order, the graph is undirected.
+
+The adjacendcy matrix of directed graph is asymmetric, or $(i,j) = 1$ then $(j,i) = 0$.
+
+The adjacency matrix of uindirected graph is symmetric, or $(i,j) =1$ then $(j,i) =1$.
+
+## Bifurcation tree 二分岐木
+
+Assume a bifurcation tree that starts from one vertex and repeat two-division 3 times.
+
+１頂点から始まり、２分岐を３回繰り返す二分岐木を考える。
+
+```{r}
+el <- rbind(c(1,2),c(1,3),c(2,4),c(2,5),c(3,6),c(3,7),c(4,8),c(4,9),c(5,10),c(5,11),c(6,12),c(6,13),c(7,14),c(7,15))
+
+g.bt <- graph.edgelist(el,directed=TRUE) 
+plot(g.bt)
+```
+
+Let's check that only root vertex V1 can reach all vertices.
+
+全ての頂点に到達できるのは、ルートであるV1であることを示す。
+
+```{r}
+g.dist <- distances(g.bt,mode="out")
+g.dist 
+apply(g.dist,1,sum) # 1st element is finite and all the others are infinite
+```
+
+Check adjacency matrix of this rooted tree (directed graph).
+It should be asymmetric.
+
+この根のある木(directed graph)の隣接行列を確認する。
+非対称行列のはずである。
+
+```{r}
+adj.bt <- get.adjacency(g.bt)
+adj.bt
+```
+
+```{r}
+adj.bt - t(adj.bt) # if symmetric, all elements are 0.
+range(adj.bt - t(adj.bt)) # if symmetric, it returns from 0 to 0.
+```
+
+Convert this rooted tree to un-rooted tree.
+
+この根のある木を根のない木に変える。
+
+Convert its asymmetric adjacency matrix to a symmetric one.
+非対称な隣接行列を対称な隣接行列にすれば良い。
+
+```{r}
+adj.unrooted <- adj.bt + t(adj.bt)
+adj.unrooted
+range(adj.unrooted - t(adj.unrooted)) 
+```
+
+```{r}
+g.bt.unroot <- graph.adjacency(adj.unrooted, mode="undirected")
+plot(g.bt.unroot)
+```
