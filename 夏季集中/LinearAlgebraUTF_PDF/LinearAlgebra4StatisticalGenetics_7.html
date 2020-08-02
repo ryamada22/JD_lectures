@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -85,7 +84,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -147,6 +145,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -186,8 +185,8 @@ summary {
 
 <div id="TOC">
 <ul>
-<li><a><span class="toc-section-number">1</span> 連立方程式の解と最小二乗法による線形回帰</a></li>
-<li><a><span class="toc-section-number">2</span> 連立方程式でも線形回帰でもない場合</a></li>
+<li><a href="#連立方程式の解と最小二乗法による線形回帰-least-square-method-for-linear-regression"><span class="toc-section-number">1</span> 連立方程式の解と最小二乗法による線形回帰 Least square method for linear regression</a></li>
+<li><a href="#連立方程式でも線形回帰でもない場合-the-case-where-it-is-not-the-solvable-system-or-linear-regression"><span class="toc-section-number">2</span> 連立方程式でも線形回帰でもない場合 The case where it is not the solvable system or linear regression</a></li>
 <li><a href="#exercise-1"><span class="toc-section-number">3</span> Exercise 1</a><ul>
 <li><a href="#exercise-1-1"><span class="toc-section-number">3.1</span> Exercise 1-1</a></li>
 <li><a href="#exercise-1-2"><span class="toc-section-number">3.2</span> Exercise 1-2</a></li>
@@ -201,14 +200,16 @@ summary {
 </ul>
 </div>
 
-<div class="section level1">
-<h1><span class="header-section-number">1</span> 連立方程式の解と最小二乗法による線形回帰</h1>
+<div id="連立方程式の解と最小二乗法による線形回帰-least-square-method-for-linear-regression" class="section level1">
+<h1><span class="header-section-number">1</span> 連立方程式の解と最小二乗法による線形回帰 Least square method for linear regression</h1>
+<p>When the number of variables and the number of equations are the same, and the inverse of matrix is calculable, the system is solvable.</p>
 <p>変数の数と等式の数が一致しているとき、うまく逆行列が取れれば <span class="math display">\[
 y = X \mathbf{a}
 \]</span> はきっちりと解けて<span class="math inline">\(\mathbf{a}\)</span>が一意に求まる。</p>
 <p>その際、 <span class="math display">\[
 \mathbf{a} = X^{-1} y = (X^TX)^{-1}X^T y
 \]</span> であった。</p>
+<p>In the case you do linear regression, the number of samples is more than the number of variables, therefore it does not happen. Instead the formula below should be minimized.</p>
 <p>線形回帰の場合は、サンプルの数(ベクトル<span class="math inline">\(y\)</span>の長さ:<span class="math inline">\(n\)</span>とする)に対して、説明変数の数<span class="math inline">\(X\)</span>の列数(<span class="math inline">\(m\)</span>とする)が小さいので</p>
 <p><span class="math display">\[
 y \sim X \mathbf{a}
@@ -220,24 +221,30 @@ y \sim X \mathbf{a}
 <p>結局、行列<span class="math inline">\(X\)</span>の列数によらず、<span class="math inline">\(\mathbf{a}\)</span>について、「これが一番」という答えが <span class="math display">\[
 \mathbf{a} = (X^TX)^{-1}X^T y
 \]</span> で求まる。</p>
+<p>The “minimizig” <span class="math inline">\(\mathbf{a}\)</span> is called the least square solution.</p>
 <p>ここで、「これが一番」というのは、最小二乗が0であったり、「かっちり連立方程式が解ける」ということだったりした。</p>
 </div>
-<div class="section level1">
-<h1><span class="header-section-number">2</span> 連立方程式でも線形回帰でもない場合</h1>
+<div id="連立方程式でも線形回帰でもない場合-the-case-where-it-is-not-the-solvable-system-or-linear-regression" class="section level1">
+<h1><span class="header-section-number">2</span> 連立方程式でも線形回帰でもない場合 The case where it is not the solvable system or linear regression</h1>
+<p>The number of rows of X is n and the number of columns is m. When n=m, it is the solvable system. when n&gt;m, it is linear regression.</p>
 <p>行列<span class="math inline">\(X\)</span>の行数<span class="math inline">\(n\)</span>,列数<span class="math inline">\(m\)</span>について</p>
 <ul>
 <li><p><span class="math inline">\(n=m\)</span>の場合：連立方程式を解く</p></li>
 <li><p><span class="math inline">\(n&gt;m\)</span>の場合：線形回帰をする</p></li>
 </ul>
 <p>だった。</p>
+<p>The condition n &lt; m has not been discussed yet.</p>
 <p>網羅されていないのは</p>
 <ul>
 <li><span class="math inline">\(n&lt;m\)</span>の場合である</li>
 </ul>
+<p>In this case, psuedo inverse matrix is used to solove.</p>
 <p>この場合にも、うまく行く方法があり、これをムーアペンローズ疑似逆行列と読んだり、一般化逆行列と読んだり、疑似逆行列と呼んだりする。</p>
+<p>The inverse matrix is not specifically determined when n is not m.</p>
 <p><span class="math inline">\(n &lt; m\)</span>の場合には、<span class="math inline">\((X^TX)^{-1}\)</span>がうまく計算されないので、別の式を用いる。</p>
+<p><span class="math inline">\((X'^TX')^{-1}X'^T\)</span> is the formula to get one type of psuedo-inverse matrices, called Moore-Penrose type.</p>
 <p>Xの行数が列数より小さい場合には、転置して考える。 転置(<span class="math inline">\(X'=X^T\)</span>)すると、そのムーアペンローズ疑似逆行列は、<span class="math inline">\((X'^TX')^{-1}X'^T\)</span>と計算できるので、それを再度転置すれとうまく行く(<span class="math inline">\(((X'^TX')^{-1}X'^T)^T\)</span>)。</p>
-<p>結局、覚えるべきは</p>
+<p>結局、覚えるべきは In summary,</p>
 <ul>
 <li><p><span class="math inline">\(n \ge m\)</span> のときは <span class="math inline">\(gen.inv(X)=(X^TX)^{-1}X^T\)</span></p></li>
 <li><p><span class="math inline">\(n &lt; m\)</span>のときは、<span class="math inline">\(X_{gen.inv} = (gen.inv(X^T))^T\)</span></p></li>
@@ -247,17 +254,17 @@ y \sim X \mathbf{a}
 m &lt;- 2 # m &lt; n
 X &lt;- matrix(rnorm(n*m),nrow=n)
 solve(t(X)%*%X)%*%t(X)</code></pre>
-<pre><code>##          [,1]       [,2]      [,3]
-## [1,] 1.347294 -2.0673768 0.2431391
-## [2,] 1.180096 -0.7110244 0.1672885</code></pre>
+<pre><code>##           [,1]       [,2]       [,3]
+## [1,] -0.625956 -0.9879096 -0.1472827
+## [2,]  1.614524  2.6134061 -1.4664492</code></pre>
 <pre class="r"><code>n &lt;- 3
 m &lt;- 3 # m = n
 X &lt;- matrix(rnorm(n*m),nrow=n)
 solve(t(X)%*%X)%*%t(X)</code></pre>
-<pre><code>##           [,1]       [,2]       [,3]
-## [1,]  1.860546  0.5413008 -1.1951049
-## [2,] -2.003575 -0.2372205  0.4930090
-## [3,]  2.890075  1.1240450 -0.8753272</code></pre>
+<pre><code>##           [,1]      [,2]        [,3]
+## [1,] -0.209077 0.8225860 -0.32208917
+## [2,]  1.897980 1.6719556 -1.92967732
+## [3,]  1.264410 0.2809747  0.03628408</code></pre>
 <pre class="r"><code>n &lt;- 2
 m &lt;- 3
 X &lt;- matrix(rnorm(n*m),nrow=n)
@@ -265,65 +272,71 @@ X &lt;- matrix(rnorm(n*m),nrow=n)
 tX &lt;- t(X)
 t(solve(t(tX)%*%tX)%*%t(tX))</code></pre>
 <pre><code>##            [,1]        [,2]
-## [1,]  0.5906884  0.01287776
-## [2,]  0.4153723  0.01793991
-## [3,] -0.1167761 -0.56387476</code></pre>
+## [1,] -1.2493320 -0.72758821
+## [2,]  0.1234655  0.06926064
+## [3,]  0.7660636 -0.09626852</code></pre>
 <pre class="r"><code>t(X)%*%solve(X%*%t(X))</code></pre>
 <pre><code>##            [,1]        [,2]
-## [1,]  0.5906884  0.01287776
-## [2,]  0.4153723  0.01793991
-## [3,] -0.1167761 -0.56387476</code></pre>
+## [1,] -1.2493320 -0.72758821
+## [2,]  0.1234655  0.06926064
+## [3,]  0.7660636 -0.09626852</code></pre>
+<p>You will find ginv() function in MASS package that returns Moore-Penrose psuedoinverse matrix.</p>
 <p>Rでは、MASS パッケージにginv() 関数があり、Xの行数・列数に関係なく、ムーアペンローズ疑似逆行列を算出できる。</p>
-<p>任意の行列を次のように分解することを特異値分解と言うが</p>
+<p>任意の行列を次のように分解することを特異値分解と言うが The following is singular value decomposition.</p>
 <p><span class="math display">\[
 X = U\Sigma V^T
 \]</span></p>
 <p>ムーアペンローズ疑似逆行列は <span class="math display">\[
 gen.inv(X) = V \Sigma^{+} U^T
-\]</span> で与えられる。ただし<span class="math inline">\(\Sigma\)</span>は対角成分に特異値を持つ行列であり、<span class="math inline">\(/Simga^{+}\)</span>は特異値の逆数を対角成分に持つ。</p>
+\]</span></p>
+<p>Where <span class="math inline">\(\Sigma\)</span> is diagonal and whose diagonal elements are singular values and <span class="math inline">\(\Sigma^{+}\)</span> is diagonal and its diagonal values are the inverse of sigular values.</p>
+<p>で与えられる。ただし<span class="math inline">\(\Sigma\)</span>は対角成分に特異値を持つ行列であり、<span class="math inline">\(/Simga^{+}\)</span>は特異値の逆数を対角成分に持つ。</p>
+<p>The ginv() function in MASS package uses this to return the psuedo-inverse matrix.</p>
 <p>実際、Rではこれを利用して、MASSパッケージのginv()関数(g:generalized, inv:inverse)がXの行数・列数を場合分けすることなく、ムーアペンローズ疑似逆行列を返す。</p>
-<pre class="r"><code>library(MASS)
-n &lt;- 3
+<pre class="r"><code>library(MASS)</code></pre>
+<pre><code>## Warning: package 'MASS' was built under R version 3.6.2</code></pre>
+<pre class="r"><code>n &lt;- 3
 m &lt;- 2 # m &lt; n
 X &lt;- matrix(rnorm(n*m),nrow=n)
 solve(t(X)%*%X)%*%t(X)</code></pre>
-<pre><code>##             [,1]      [,2]       [,3]
-## [1,] -0.65929868  1.432681 -0.3101911
-## [2,] -0.08738356 -0.806935  0.4711483</code></pre>
+<pre><code>##            [,1]      [,2]        [,3]
+## [1,] -0.1116292 0.1222668 -0.33937634
+## [2,] -0.2737158 0.5894858  0.07843593</code></pre>
 <pre class="r"><code>ginv(X)</code></pre>
-<pre><code>##             [,1]      [,2]       [,3]
-## [1,] -0.65929868  1.432681 -0.3101911
-## [2,] -0.08738356 -0.806935  0.4711483</code></pre>
+<pre><code>##            [,1]      [,2]        [,3]
+## [1,] -0.1116292 0.1222668 -0.33937634
+## [2,] -0.2737158 0.5894858  0.07843593</code></pre>
 <pre class="r"><code>n &lt;- 3
 m &lt;- 3
 X &lt;- matrix(rnorm(n*m),nrow=n)
 solve(t(X)%*%X)%*%t(X)</code></pre>
-<pre><code>##           [,1]      [,2]       [,3]
-## [1,] -25.51992 -7.142307 -12.741628
-## [2,]  15.32677  3.927049   8.075916
-## [3,] -23.13079 -6.570553 -12.417258</code></pre>
+<pre><code>##            [,1]       [,2]       [,3]
+## [1,]  0.9431798 -0.2103496 -0.6185412
+## [2,] -0.9681423 -0.5082898  0.0414813
+## [3,] -0.3874916  0.6476825 -0.4760076</code></pre>
 <pre class="r"><code>ginv(X)</code></pre>
-<pre><code>##           [,1]      [,2]       [,3]
-## [1,] -25.51992 -7.142307 -12.741628
-## [2,]  15.32677  3.927049   8.075916
-## [3,] -23.13079 -6.570553 -12.417258</code></pre>
+<pre><code>##            [,1]       [,2]       [,3]
+## [1,]  0.9431798 -0.2103496 -0.6185412
+## [2,] -0.9681423 -0.5082898  0.0414813
+## [3,] -0.3874916  0.6476825 -0.4760076</code></pre>
 <pre class="r"><code>n &lt;- 2
 m &lt;- 3
 X &lt;- matrix(rnorm(n*m),nrow=n)
 tX &lt;- t(X)
 t(solve(t(tX)%*%tX)%*%t(tX))</code></pre>
-<pre><code>##            [,1]      [,2]
-## [1,] -1.3768647 0.3987604
-## [2,] -1.4370526 1.6462194
-## [3,]  0.5656033 1.2149662</code></pre>
+<pre><code>##              [,1]        [,2]
+## [1,]  0.002383139 -0.04619755
+## [2,] -0.638975002  0.73034089
+## [3,] -0.445238855  2.84775425</code></pre>
 <pre class="r"><code>ginv(X)</code></pre>
-<pre><code>##            [,1]      [,2]
-## [1,] -1.3768647 0.3987604
-## [2,] -1.4370526 1.6462194
-## [3,]  0.5656033 1.2149662</code></pre>
+<pre><code>##              [,1]        [,2]
+## [1,]  0.002383139 -0.04619755
+## [2,] -0.638975002  0.73034089
+## [3,] -0.445238855  2.84775425</code></pre>
 </div>
 <div id="exercise-1" class="section level1">
 <h1><span class="header-section-number">3</span> Exercise 1</h1>
+<p>What does the Moore-Penrose pseudoinverse matrix indicate geometrically? To answer this question, go through the steps of the exsecises below.</p>
 <p>ムーアペンローズ疑似逆行列の解の幾何的な意味を以下の手順で確認せよ。</p>
 <div id="exercise-1-1" class="section level2">
 <h2><span class="header-section-number">3.1</span> Exercise 1-1</h2>
@@ -331,60 +344,82 @@ t(solve(t(tX)%*%tX)%*%t(tX))</code></pre>
 <p><span class="math display">\[
 \begin{pmatrix}y_1\\y_2\end{pmatrix} = \begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\end{pmatrix}\begin{pmatrix}a_1\\a_2\end{pmatrix}
 \]</span></p>
-<p>今、<span class="math inline">\(a_1,a_2\)</span>の値を求めるというのは、<span class="math inline">\((a_1,a_2)\)</span>を次元座標として、2次元平面にある2本の直線の交点座標を求めることである。 <span class="math display">\[
+<p>To get the values of <span class="math inline">\(a_1,a_2\)</span> means to know the crossing point of two straight lines in 2D space.</p>
+<p>今、<span class="math inline">\(a_1,a_2\)</span>の値を求めるというのは、<span class="math inline">\((a_1,a_2)\)</span>を2次元座標として、2次元平面にある2本の直線の交点座標を求めることである。 <span class="math display">\[
 x_{11} a_1 + x_{12}a_2=y_1\\
 x_{21} a_1 + x_{22}a_2=y_2
 \]</span></p>
 <p>今、<span class="math inline">\(y_1=3,y_2=1,x_{11}=4,x_{12}=2,x_{21}=-1,x_{22}=3\)</span>のとき の２直線を描き、その交点をMASS::ginv()関数を求め、その点<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>が交点にあることを、打点することによって示せ。</p>
+<p>Draw two straight lines and demonstrate <span class="math inline">\((\hat{a_1},\hat{a_2})\)</span> is actually the crossing point visually.</p>
 </div>
 <div id="exercise-1-2" class="section level2">
 <h2><span class="header-section-number">3.2</span> Exercise 1-2</h2>
-<p><span class="math inline">\(n &gt; m\)</span> <span class="math display">\[
-\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} = \begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\\x_{31},x_{32}\end{pmatrix}\begin{pmatrix}a_1\\a_2\\end{pmatrix}
+<p>The follwoing is the case of three lines. <span class="math inline">\(n &gt; m\)</span> <span class="math display">\[
+\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} = \begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\\x_{31},x_{32}\end{pmatrix}\begin{pmatrix}a_1\\a_2\end{pmatrix}
 \]</span></p>
 <p>これは３直線の場合である。</p>
 <p><span class="math inline">\(\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} = \begin{pmatrix}1\\2\\3\end{pmatrix}\)</span>,<span class="math inline">\(\begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\\x_{31},x_{32}\end{pmatrix} = \begin{pmatrix}2,3\\1,-2\\-3,-4\end{pmatrix}\)</span>とする。</p>
+<p>Draw three straight lines and draw a point <span class="math inline">\((\hat{a_1},\hat{a_2})\)</span> in it.</p>
 <p>３直線を描図し、ムーアペンローズ疑似逆行列による解<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>を打点せよ。</p>
 </div>
 <div id="exercise-1-3" class="section level2">
 <h2><span class="header-section-number">3.3</span> Exercise 1-3</h2>
-<p>Excerise 1-3 の例で、第１の直線は<span class="math inline">\((a_1,a_2)\)</span>座標について、<span class="math inline">\(y_1 = x_{11}a_1 + x_{12}a_2\)</span>で表されているのに対し、解<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>は、別の直線、<span class="math inline">\(\hat{y_1} = x_{11}\hat{a_1} + x_{12}\hat{a_2}\)</span>を表している。</p>
+<p>Excerise 1-2 の例で、第１の直線は<span class="math inline">\((a_1,a_2)\)</span>座標について、<span class="math inline">\(y_1 = x_{11}a_1 + x_{12}a_2\)</span>で表されているのに対し、解<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>は、別の直線、<span class="math inline">\(\hat{y_1} = x_{11}\hat{a_1} + x_{12}\hat{a_2}\)</span>を表している。</p>
+<p>In the case of Exercise 1-2 has the 1st line is <span class="math inline">\(y_1 = x_{11}a_1 + x_{12}a_2\)</span> but solution indicates another line <span class="math inline">\(\hat{y_1} = x_{11}\hat{a_1} + x_{12}\hat{a_2}\)</span>. Draw two lines.</p>
 <p>2本の直線を描け。</p>
 <p>同様に、第１、第２、第３の直線と、それに対応する、<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>を通る３直線を描け。</p>
+<p>Similarly, draw a pair of lines for 1st, 2nd and 3rd lines.</p>
 </div>
 <div id="exercise-1-4" class="section level2">
 <h2><span class="header-section-number">3.4</span> Exercise 1-4</h2>
 <p>第１の直線は、<span class="math inline">\((a_1 = \frac{y_1}{x_{11}},0)\)</span>と<span class="math inline">\((0,\frac{y_1}{x_{12}})\)</span>を通る直線である。</p>
-<p>それに対応する<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>を通る直線は<span class="math inline">\((a_1 = \frac{\hat{y_1}}{x_{11}}=\frac{\hat{a_1}}{x_{11}},0)\)</span>と<span class="math inline">\((0,\frac{\hat{y_1}}{x_{12}}=\frac{\hat{a_2}}{x_{12}})\)</span>を通る直線である。 これらは平行である。</p>
+<p>The 1st line connecting <span class="math inline">\((a_1 = \frac{y_1}{x_{11}},0)\)</span> and <span class="math inline">\((0,\frac{y_1}{x_{12}})\)</span>.</p>
+<p>それに対応する<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>を通る直線は<span class="math inline">\((a_1 = \frac{\hat{y_1}}{x_{11}}=\frac{\hat{a_1}}{x_{11}},0)\)</span>と<span class="math inline">\((0,\frac{\hat{y_1}}{x_{12}}=\frac{\hat{a_2}}{x_{12}})\)</span>を通る直線である。</p>
+<p>The corresponding estimated straight line goes through <span class="math inline">\((a_1 = \frac{\hat{y_1}}{x_{11}}=\frac{\hat{a_1}}{x_{11}},0)\)</span> and <span class="math inline">\((0,\frac{\hat{y_1}}{x_{12}}=\frac{\hat{a_2}}{x_{12}})\)</span>.</p>
+<p>These two lines are in parallel.</p>
 <p>点<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>を通り、この2直線と垂直な直線を引け。その直線の傾きは、<span class="math inline">\((x_{12},-x_{11})\)</span>である。 この垂直な直線が第１の直線と交わる交点<span class="math inline">\(P_1\)</span>を求めよ。</p>
+<p>Draw a line perpendicular to the parallel two lines that has <span class="math inline">\((\hat{a_1},\hat{a_2})\)</span> on it. Its slope is <span class="math inline">\((x_{12},-x_{11})\)</span>. Calculate the coordinate of point <span class="math inline">\(P_1\)</span> that is a crossing point of the 1st line and the perpendicular line.</p>
 <p><span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>と交点<span class="math inline">\(P_1\)</span>との距離を求めよ。</p>
+<p>Calculate the distance between <span class="math inline">\((\hat{a_1},\hat{a_2})\)</span> and <span class="math inline">\(P_1\)</span>.</p>
 <p>同様に、行列が定める３つの直線のそれぞれについて、行え。</p>
-<p><span class="math inline">\(||y_i,\hat{y_i}||\)</span>とこの距離の関係は何か。</p>
+<p>Do similarly for three lines.</p>
+<p><span class="math inline">\(||y_i - \hat{y_i}||\)</span>とこの距離の関係は何か。</p>
+<p>Explain the relation between the calculated distances and <span class="math inline">\(||y_i-\hat{y_i}||\)</span>.</p>
 </div>
 <div id="exercise-1-5" class="section level2">
 <h2><span class="header-section-number">3.5</span> Exercise 1-5</h2>
 <p><span class="math inline">\((a_1,a_2)\)</span>平面の任意の点に関して、その点から、直線への垂線の足を求める関数を作成せよ。</p>
-<p>その関数を用いて、行列が定める３直線への足、３点が求まる。 <span class="math inline">\(||y_i,\hat{y_i}||\)</span>がわかるので、<span class="math inline">\(\sum_{i=1}^3 (y_i-\hat{y_i})^2\)</span>も求まるはずである。</p>
+<p>Make a function that takes <span class="math inline">\((a_1,a_2)\)</span> and parameters of a straight line and returns the distance to the perpendicular foot from <span class="math inline">\((a_1,a_2)\)</span>.</p>
+<p>その関数を用いて、行列が定める３直線への足、３点が求まる。 <span class="math inline">\(||y_i-\hat{y_i}||\)</span>がわかるので、<span class="math inline">\(\sum_{i=1}^3 (y_i-\hat{y_i})^2\)</span>も求まるはずである。</p>
+<p>Using the function, you can calculate the distance of three line cases. You know <span class="math inline">\(||y_i-\hat{y_i}||\)</span> and you can calculate <span class="math inline">\(\sum_{i=1}^3 (y_i-\hat{y_i})^2\)</span> as well.</p>
 <p>この値が<span class="math inline">\((a_1,a_2)\)</span>平面に、どのような高低を作るかを図示し、<span class="math inline">\((\hat{a_1},\hat{a_2})\)</span>の意味を確認せよ。</p>
+<p>Draw the value of <span class="math inline">\(||y_i-\hat{y_i}||\)</span> as function of <span class="math inline">\((a_1,a_2)\)</span> and explain what <span class="math inline">\((\hat{a_1},\hat{a_2})\)</span> means.</p>
 </div>
 <div id="exercise-1-6" class="section level2">
 <h2><span class="header-section-number">3.6</span> Exercise 1-6</h2>
 <p><span class="math inline">\(n &lt; m\)</span> <span class="math display">\[
 \begin{pmatrix}y_1\end{pmatrix} = \begin{pmatrix}x_{11},x_{12} \end{pmatrix}\begin{pmatrix}a_1\\a_2\end{pmatrix}
 \]</span> この場合、直線は１本引ける。 ムーアペンローズ疑似逆行列の解は直線上の1点である。</p>
+<p>In this case only one line is drawn and Moore-Pensore psuedoinverse solution is one point on the line.</p>
 <p><span class="math inline">\(||(a_1,a_2)||\)</span>が原点から最短距離になっていることを確かめよ。</p>
+<p><span class="math inline">\(||(a_1,a_2)||\)</span> is the closest point from the origin.</p>
 </div>
 <div id="exercise-1-7" class="section level2">
 <h2><span class="header-section-number">3.7</span> Exercise 1-7</h2>
 <p><span class="math inline">\(n=m\)</span>,<span class="math inline">\(n&gt;m\)</span>,<span class="math inline">\(n&lt;m\)</span>の３つの場合について、ムーアペンローズ疑似逆行列の解の幾何学的な意味を説明せよ。</p>
+<p>For the three cases of <span class="math inline">\(n=m\)</span>,<span class="math inline">\(n&gt;m\)</span>,<span class="math inline">\(n&lt;m\)</span>, describe geometric meaning of Moore-Penrose solution.</p>
 </div>
 <div id="exercise-1-8" class="section level2">
 <h2><span class="header-section-number">3.8</span> Exercise 1-8</h2>
 <p><span class="math inline">\(n&lt;m\)</span>の場合に、<span class="math inline">\(y=X\mathbf{a}\)</span>の解は、直線上のいずれの点でもよかったが、ムーアペンローズ疑似逆行列は、原点からの距離が最短になるような点<span class="math inline">\(||(\hat{a_1},\hat{a_2})||\)</span>を選んだ。</p>
+<p>When n &lt; m, the solution of <span class="math inline">\(y=X\mathbf{a}\)</span> can be any point on the straight line. Moore-Penrose psuedoinverse method specifically takes a point <span class="math inline">\(||(\hat{a_1},\hat{a_2})||\)</span>.</p>
+<p>In machine learning, a procedure called regularization is taken to select THE solution among multiple candidates, with the following regularization formula.</p>
 <p>正規化手法と呼ばれる手法では、 <span class="math display">\[
 \sum_{i=1}^n (y_i-\hat{y_i})^2 + \lambda ||\mathbf{a}||^p
 \]</span> を最小にすることで、残差<span class="math inline">\(\sum_{i=1}^n (y_i-\hat{y_i})^2\)</span>を小さくことのみを目指すのではなく、<span class="math inline">\(||\mathbf{a}||^p\)</span>という形で、解の取り方に制約を持たせること、その制約の強さをパラメタ<span class="math inline">\(\lambda\)</span>でコントロールする。</p>
+<p>This regularization attempts not to minimize the residuals but put a restriction by introducing the term with <span class="math inline">\(\lambda\)</span> to select the “best” solution .</p>
 <p>ムーアペンローズによる解の選び方と、正則化手法での解の選び方との類似性についてコメントせよ。</p>
+<p>Do you have any comments on the Moore-Penrose solution and regularization?</p>
 </div>
 </div>
 

@@ -39,19 +39,28 @@ Or the simplest one is diagonal, if diagonalizable, and, in many cases the matri
 
 対角化可能な行列なら、ジョルダン標準形は対角化行列である。実際、統計解析で現れる行列の多くは、対角化可能である。
 
+Any square matrix M is decomposed into a jordan normal J and the inverse of R.
+
 任意の正方行列$M$はジョルダン標準形$J$と逆行列を持つ行列$R$とを用いて、次のように表せる。
 
 $$
 M = R J R^{-1}
 $$
 
+When $M' = R'JR'^{-1}$, M and M' are called similar.
+
 $M' = R'JR'^{-1}$となるとき、$M$と$M'$は相似であると言う。
+
+In the followings, the cases where Jordan normals are diagonal are discussed. But the discussed features are shared with non-diagonal Jordan normals without sepcification.
 
 以下では、ジョルダン標準形が対角行列であるようなもの(対角化可能行列)に絞って話を進めるが、特に断らなければ、提示している性質等は対角化可能行列に限るものではない。
 
-# 相似行列に共通する特徴量
+# 相似行列に共通する特徴量 Features shared by similar matrices.
+
+The element values of similar matrices are different. However they share essential features of matrices.
 
 相互に相似な行列は見かけは違うが、「本質的に同じ」なので、その「本質」に関する性質は共通である。
+
 
 + 階数(Rank)
 
@@ -61,8 +70,11 @@ $M' = R'JR'^{-1}$となるとき、$M$と$M'$は相似であると言う。
 
 + 固有値(Eigen values)
 
-## Rでの計算
+## Rでの計算 Calculation with R
+
 Rank, Determinant, Trace, Eigen valuesは次のように計算できる
+
+How to calculate them with R.
 
 ```{r}
 library(Matrix)
@@ -78,6 +90,10 @@ sum(diag(M)) # Trace
 # Exercise 1
 
 ## Exercise 1-1
+
+Make similar matrices with R and R' and J.
+
+Check their eigenvalues the same, as well as their rank, determinant and trace.
 
 逆行列を持つ行列Rを使って、対角行列Jを変換した行列M($M=RJR^{-1}$)がJと相似であることを、固有値が一致していることを確認して確かめよ。
 
@@ -102,7 +118,11 @@ sum(diag(M)) # Trace
 
 ## Exercise 1-2
 
+You can check whether two matrices are similar or not by comparing their eigenvalues. 
+
 行列が相互に相似かどうかは、(すべての固有値が異なるならば)固有値のセットが等しいことで確認できる。
+
+It means that you are able to calculate the shared featuring values from eigen values. Check the following relations.
 
 したがって相似な行列に共通する特徴は、固有値と紐づけて算出できるはずである。
 
@@ -114,9 +134,17 @@ trace = \sum_{i=1}^n \lambda_i
 $$
 ## Exercise 1-3
 
+Make d matrices who has different sets of eigenvalues.
+
+Also make their similar matrices and double check their trace and determinant are the same.
+
 $d$個の異なる固有値を持つ行列を作り、それと相似な行列を複数作れ。
 
 それらの固有値のセットが一致すること、トレース・行列式が一致することを確かめよ。
+
+To calculate traces, use two ways; one is to sum the diagonal elements and the other is to sum the eigenvalues.
+
+To calculate determinant, use two ways; one is to use the function det() and the other is to calculate the product of eigenvalues.
 
 また、トレースの計算は、対角成分の和を取る方法と、固有値の和を取る方法の両方を実施せよ。
 行列式の計算もdet()関数を使用する方法と固有値の積を取る方法の両方を実施せよ。
@@ -138,6 +166,10 @@ lapply(M.list,function(M){eigen(M)[[1]]})
 
 $M=M^T$である正方行列を対称行列と言う。
 
+When $M=M^T$, M is called symmetric.
+
+Symmetric matrices satisfy below.
+
 対称行列は
 $$
 M = R J R^{-1} = R J R^T\\
@@ -145,6 +177,10 @@ R^T=R^{-1}\\
 R R^T = R^T R = I
 $$
 と対角化で現れる行列$R$が特別な性質(直交行列)を持つ。
+
+R are orthogonal.
+
+Double check it with R.
 
 確かめてみる。
 
@@ -163,7 +199,12 @@ for(i in 1:n.iter){
 
 ## Exercise 2-1
 
+Make multiple sets of similar matrices with diagonal matrix and orthogonal matrix. They should be symmetric.
+
 対角行列と直交行列によって相似な関係にある行列を複数作り、それらが対称行列であることを確かめよ。
+
+
+You can use GPRrotation::Rnadom.Start() to generate random orthogonal matrices.
 
 なお、直交行列をランダムに発生するには、GPRrotation::Rnadom.Start()関数を用いるとよい。
 
@@ -187,36 +228,56 @@ for(i in 1:n.iter){
 }
 ```
 
-# 距離行列　分散共分散行列　対称行列　固有値が正　正定値行列
+# 距離行列　分散共分散行列　対称行列　固有値が正　正定値行列 Distance matrix, variance-covariance matrix, symmetric matrix, matrix whose eigenvalues >0 (positive-definite matrix)
+
+Matrices have the feature called "similar" and it is determined by eigenvalues.
 
 行列には相似という間柄があり、それは固有値で決まることが分かった。
 
+Similar matrices share multiple features.
+
 また、相似な行列の間で保存される性質があることもわかった。
+
+$R M R^{-1}$ makes similar matrices.
 
 また、$R M R^{-1}$という変換が相似な行列を作ることもわかった。
 
-また対象行列の場合 $R M R^{-1} = R M R^T$と書け、Rが直交行列であることもわかった。
+In case of symmetric matrix, R should be orthogonal.
+
+また対称行列の場合 $R M R^{-1} = R M R^T$と書け、Rが直交行列であることもわかった。
+
+These are general topics in matrices. In the followings, you will find matrices that appear in statistical analyses and their relation with eigenvalues and similar matrices.
 
 これらは、一般的な行列の話であったが、この節では、統計解析でよく登場する特別な行列を取り上げ、その場合に固有値・相似行列の特徴がどのような性質を持つかを確認する。
 
 
-## 距離行列
+## 距離行列 Distance matrix
+
+When you have n objects, you often make a distance matrix of them, each element of which is a distance of two objects.
+
 
 $n$個の要素があって、それらの要素ペアの距離を行列とすることがある。
 
+It is basic approach to evaluate relations among objects.
+
 要素間の関連を調べるときの基本的なデータ構造であり
+
+The distance from one to self should be 0, otherwise positive.
 
 距離の場合、自身から自身への距離は0である。
 自身以外への距離は正である。
 
+Distance from A to B and distance from B to A are the same, therefore distance matrices are symmetric.
 
 AからBへの距離とBからAへの距離は同じなので、距離行列は、次の性質を持つ。
 
-+ 対角成分が0
++ 対角成分が0 Diagonals are 0
 
-+ 対称
++ 対称 symmetric
 
-+ 非対角成分は正
++ 非対角成分は正 Non-diagonal elements > 0
+
+They have the following features.
 
 このような行列では、以下のような特徴がある。
 
@@ -237,9 +298,16 @@ eigen.out[[1]] # Negative and positive eigen values
 round(eigen.out[[2]] %*% t(eigen.out[[2]]),6) # 固有値ベクトルが作る行列は直交
 ```
 
-## 分散共分散行列
+## 分散共分散行列 Varicane-Covariance matrix
+
+When you have n samples with k variables, you can have k x k variance-covariance matrix.
 
 $k$個の変数、$n$個のサンプルがあるとき、$k\times k$の分散共分散行列が算出できる。
+
+Diagonals are variances of k variables.
+Trace is their sum.
+The sum of k variances are the sum of eigenvalues.
+They are symmetric.
 
 対角成分は$k$個の変数の分散である。
 トレースは$k$個の変数の分散の和である。
@@ -269,7 +337,11 @@ eigen.out[[1]]
 
 ```
 
-分散共分散行列は、対象行列であって、対角成分はすべて正。
+They are symmstric and their diagnals are positive.
+
+Their eigenvalues are all positive as below.
+
+分散共分散行列は、対称行列であって、対角成分はすべて正。
 
 また、以下に示すように、固有値もすべて正。
 
@@ -300,9 +372,13 @@ abline(h=0,col=2)
 min(re.part[,1])
 ```
 
-## 固有値がすべて正　正定値
+## 固有値がすべて正　正定値 Positive-definite
+
+Matrices whose eigenvalues > 0, are called positive-definite.
 
 固有値がすべて正であるような対称行列は正定値行列を呼ばれている。
+
+When M is positive-definite, the follwoing is satisfied for v that is not zero-vector.
 
 正定値行列$M$は、任意の0でないベクトル$v$に対して
 
@@ -312,17 +388,30 @@ $$
 
 となる。
 
+Identity matrix is a special case of positive-definite matrices and the calculation above returns the squared length of v.
+
 正定値行列の特殊例でもある、単位行列の場合は、以下のように、「ベクトルの長さの二乗」である。
 
+0-vector's $v^T M v=0$ and otherwise $v^T M v >0$ corresponds nicely to the definition of distance.
+
+
 これが0ベクトルなら0となり、そうでなければ正になる、というのは、ベクトルの「長さ」を定義するのに適切な性質を持つ行列を正定値行列と言う、というようにも理解できる。
+
+
+This is one of main reasons why positive-definite matices are used in statistical analysis so often.
 
 逆に言えば、統計解析で登場する行列は、この性質を満たすものが多いことともなる。
 
 $$
-v^T M v = v^T v
+v^T M v = v'^T v'
 $$
 
+M gives information how to define the length of vectors.
+
 このようなMは、ベクトルの長さの定め方でもあり、$v^T M v$の値を決めるという意味では、「計量」を定めるとも言える。
+
+Because R in symmetric $M = RJR^{-1}=RJR^T$ is rotational, 
+a diagonal matrix whose diagonals > 0 and a rotation matrix makes positive definite matix.
 
 対称行列の固有値分解 $M = RJR^{-1}=RJR^T$で、Vは回転行列の性質を持つから、
 
@@ -347,7 +436,9 @@ range(diag(t(vecs) %*% M %*% vecs)) # t(v) M vのみを取り出し、そのrang
 
 ```
 
-# 多変量正規分布
+# 多変量正規分布 Multivariable normal distribution
+
+Multivariable normal distribution is commonly encountered in statistical analysis. The following notation is used.
 
 多変量正規分布は、統計解析でよく使われる。
 
@@ -357,16 +448,25 @@ $$
 
 とパラメタ表現される。
 
+$\mu$ is a vector with length = number of variables.
+
+
 変数の数$n$個の多変量正規分布の場合、
 $\mu$は長さ$n$のベクトルであり、各変数の平均値を表す。
 
+$\Sigma$ is n x n positive definite matrix.
+
 $\Sigma$は$n \times n$行列であり、正定値行列であることになっている。
+
+We know how to make positive definite matices, therefore we can specify $\mu, \Sigma$.
+
+Let's generate random samples from a multivariable normal distribution.
 
 正定値行列は、対角化可能で、$\Sigma = RJR^{-1}$と対角化したときに、$R$が直交行列($R^{-1}=R^T$)であるようなものであった。
 
 これを利用して、多変量正規分布からの乱数発生をしてみる。
 
-## Rでの多変量正規乱数の発生
+## Rでの多変量正規乱数の発生 Random samples from multivariable normal distributions
 
 ```{r}
 library(mvtnorm)
@@ -377,7 +477,10 @@ colMeans(x)
 var(x)
 plot(x)
 ```
-2変数標準正規分布は、３変数の平均がともに0で、分散共分散行列が$2\times 2$の単位行列であるようなもののことである。
+
+Two-variable standard normal distribution is the average of two variables are both 0 and its variance-covariance matrix is identity.
+
+2変数標準正規分布は、2変数の平均がともに0で、分散共分散行列が$2\times 2$の単位行列であるようなもののことである。
 
 
 ```{r}
@@ -399,6 +502,8 @@ plot(x,asp=TRUE,pch=20,cex=0.1)
 
 ## Exercise 3-1
 
+Change the variance of two variables from (1,1). Keep the covariance 0.
+
 2変量正規分布において、各変数の分散を(1,1)からずらして、乱点を発生せよ。
 なお、分散共分散行列は対角行列のままとする。
 
@@ -413,7 +518,11 @@ plot(x,asp=TRUE,pch=20,cex=0.1)
 ```
 ## Exercise 3-2
 
-4-1で用いたSigmaと相似な行列で対称なものは正定値行列であるから、mvtnorm::rmvnorm()のsigma引数として適当なはずである。
+Make a matrix similar to the Sigma used in Exercise 3-1 should be positive-definite.
+
+Generate random samples from a normal distribution with the similar Sigma matrix.
+
+3-1で用いたSigmaと相似な行列で対称なものは正定値行列であるから、mvtnorm::rmvnorm()のsigma引数として適当なはずである。
 
 そのようなsigmaを作り、乱点を発生せよ。
 
@@ -430,9 +539,17 @@ plot(x,asp=TRUE,pch=20,cex=0.1)
 
 ## Exercise 3-3
 
+When you changed Sigma to a similar matrix, the distribution shifted to ellipse.
+
 分散共分散行列を $R J R^{-1}$にて変換すると、乱点分布が回転し、楕円の軸が斜めになった。
 
+The change is consisted of magnification to the orthogonal axes with a rotation.
+
 実際、分散共分散行列の変換に用いた直交行列$R$を利用して、乱点を変換すると、楕円の軸を正すことができる。
+
+You can rotate the sample points with an orthogonal matrix R.
+
+Read the following codes to understand the procedures. Put comments to each line to show you understand the contents.
 
 以下のコードを読み、変換した分散共分散行列に従う２変量正規分布の軸が補正されていることを、コードの各行の処理にコメントを加えることで確認せよ。
 
@@ -451,9 +568,11 @@ cov(x2)
 plot(x2,asp=TRUE,pch=20,cex=0.1)
 ```
 
-# 多次元の任意な分布
+# 多次元の任意な分布 Arbitrary distribution in multi-dimension
 
 ## Exercise 4
+
+Read the codes to generate multi-dimensional samples.
 
 次のようにして生成される、多変量の観察データ x があったとする。
 ```{r}
@@ -472,6 +591,8 @@ plot3d(x)
 
 ## Exercise 4-1
 
+Calculate sample average and variance-covariance matrix.
+
 xの各変数の標本平均を求めよ。
 xの分散共分散行列を求めよ。
 
@@ -481,6 +602,10 @@ cov(x)
 ```
 
 ## Exercise 4-2 
+
+Using the sample mean vector and sample variance-covariance matrix, generate random samples from multivariable normal distribution.
+
+Show the samples in pairwise coplot.
 
 4-1 で求めた平均値ベクトルと分散共分散行列とに基づく、多変量正規乱数を発生し、ペアワイズにプロットせよ。
 
@@ -497,6 +622,13 @@ points3d(x,col=2,radius=0.1)
 ```
 
 ## Exercise 4-3
+
+Rotate the samples so that the ellipse-distribution is in the standardize direction.
+
+Re-calculate their sample mean and variance-covariance matrix.
+
+Compare them with the result of 4-1.
+
 回転行列を用いて、xを回転し(軸を取り直し)、その標本平均と分散共分散行列とを求め、4-1のそれと比較せよ。
 
 各変数の平均も分散も異なることを確かめよ。
@@ -516,6 +648,12 @@ cov(x2)
 
 ## Exercise 4-4
 
+Their each variances are different but the sum of variances should be the same.
+Check it.
+
+You should check it by calculating trace of variance-covariance matrix.
+
+
 分散は異なるが、分散の和は変わっていないことを、分散共分散行列のトレースを計算することで確かめよ。
 
 同様に、分散共分散行列の固有値の和としてトレースを計算することでも確かめよ。
@@ -529,8 +667,13 @@ sum(eigen(cov(x2))[[1]])
 
 ## Exercise 4-5
 
+When you rotate the samples, the sum of variances does not change but the ways to distribute the total variance into axes are different.
+
 データセットxの軸の取り方を回転することによって変えても、各軸の分散の和は変わらない。
 分散の和は変わらないが、分散の総和の分配具合は変わる。
+
+
+Check this by generating multiple rotation matrices and by rotating samples and compare the covariance-variances.
 
 そのことを、多数の回転行列をランダムに発生させ、データセットを回転した上で各軸方向の分散を計算し、その分散の値を大小順序でソートしてプロットし、分配具合が変わることを具体的に確認せよ。
 
@@ -548,6 +691,8 @@ matplot(t(sorted.vars),type="l",xlab="order",ylab="var")
 
 ## Exercise 4-6
 
+You can calculate eigenvalues of variance-covariance matrix and you can tell the variances when you rotate the ellipsoids in the standard alignment.
+
 xの分散共分散行列の固有値を求めることで、分散共分散行列を対角化するような回転をしたときの、各軸の分散を求めることができる。
 
 その分散を4-4のプロットに重ねてプロットせよ。
@@ -564,6 +709,8 @@ for(i in 1:(d-1)){
 ```
 
 ## Exercise 4-7
+
+Increase the number of variables.
 
 4-4,4-5と同様のプロットを変数の数を増やして実施せよ。
 

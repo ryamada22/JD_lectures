@@ -16,7 +16,9 @@ library(rgl)
 knit_hooks$set(rgl = hook_webgl)
 ```
 
-# 連立方程式の解と最小二乗法による線形回帰
+# 連立方程式の解と最小二乗法による線形回帰 Least square method for linear regression
+
+When the number of variables and the number of equations are the same, and the inverse of matrix is calculable, the system is solvable.
 
 変数の数と等式の数が一致しているとき、うまく逆行列が取れれば
 $$
@@ -29,6 +31,8 @@ $$
 \mathbf{a} = X^{-1} y = (X^TX)^{-1}X^T y
 $$
 であった。
+
+In the case you do linear regression, the number of samples is more than the number of variables, therefore it does not happen. Instead the formula below should be minimized.
 
 線形回帰の場合は、サンプルの数(ベクトル$y$の長さ:$n$とする)に対して、説明変数の数$X$の列数($m$とする)が小さいので
 
@@ -51,9 +55,14 @@ $$
 $$
 で求まる。
 
+The "minimizig" $\mathbf{a}$ is called the least square solution.
+
 ここで、「これが一番」というのは、最小二乗が0であったり、「かっちり連立方程式が解ける」ということだったりした。
 
-# 連立方程式でも線形回帰でもない場合
+# 連立方程式でも線形回帰でもない場合 The case where it is not the solvable system or linear regression
+
+The number of rows of X is n and the number of columns is m. 
+When n=m, it is the solvable system. when n>m, it is linear regression.
 
 行列$X$の行数$n$,列数$m$について
 
@@ -63,22 +72,28 @@ $$
 
 だった。
 
+The condition n < m has not been discussed yet.
+
 網羅されていないのは
 
 + $n<m$の場合である
 
+In this case, psuedo inverse matrix is used to solove.
 
 この場合にも、うまく行く方法があり、これをムーアペンローズ疑似逆行列と読んだり、一般化逆行列と読んだり、疑似逆行列と呼んだりする。
 
+The inverse matrix is not specifically determined when n is not m.
 
 $n < m$の場合には、$(X^TX)^{-1}$がうまく計算されないので、別の式を用いる。
+
+$(X'^TX')^{-1}X'^T$ is the formula to get one type of psuedo-inverse matrices, called Moore-Penrose type.
 
 Xの行数が列数より小さい場合には、転置して考える。
 転置($X'=X^T$)すると、そのムーアペンローズ疑似逆行列は、$(X'^TX')^{-1}X'^T$と計算できるので、それを再度転置すれとうまく行く($((X'^TX')^{-1}X'^T)^T$)。
 
-結局、覚えるべきは
+結局、覚えるべきは In summary,
 
-+ $n \ge m$ のときは $gen.inv(X)=(X^TX)^{-1}X^T$
++ $n \ge m$ のときは $gen.inv(X)=(X^TX)^{-1}X^T$ 
 
 + $n < m$のときは、$X_{gen.inv} = (gen.inv(X^T))^T$
 
@@ -107,9 +122,11 @@ t(solve(t(tX)%*%tX)%*%t(tX))
 t(X)%*%solve(X%*%t(X))
 ```
 
+You will find ginv() function in MASS package that returns Moore-Penrose psuedoinverse matrix.
+
 Rでは、MASS パッケージにginv() 関数があり、Xの行数・列数に関係なく、ムーアペンローズ疑似逆行列を算出できる。
 
-任意の行列を次のように分解することを特異値分解と言うが
+任意の行列を次のように分解することを特異値分解と言うが The following is singular value decomposition.
 
 $$
 X = U\Sigma V^T
@@ -119,7 +136,12 @@ $$
 $$
 gen.inv(X) = V \Sigma^{+} U^T
 $$
+
+Where $\Sigma$ is diagonal and whose diagonal elements are singular values and $\Sigma^{+}$ is diagonal and its diagonal values are the inverse of sigular values.
+
 で与えられる。ただし$\Sigma$は対角成分に特異値を持つ行列であり、$/Simga^{+}$は特異値の逆数を対角成分に持つ。
+
+The ginv() function in MASS package uses this to return the psuedo-inverse matrix.
 
 実際、Rではこれを利用して、MASSパッケージのginv()関数(g:generalized, inv:inverse)がXの行数・列数を場合分けすることなく、ムーアペンローズ疑似逆行列を返す。
 
@@ -150,6 +172,9 @@ ginv(X)
 
 # Exercise 1
 
+What does the Moore-Penrose pseudoinverse matrix indicate geometrically? 
+To answer this question, go through the steps of the exsecises below.
+
 ムーアペンローズ疑似逆行列の解の幾何的な意味を以下の手順で確認せよ。
 
 ## Exercise 1-1
@@ -160,7 +185,9 @@ $$
 \begin{pmatrix}y_1\\y_2\end{pmatrix} = \begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\end{pmatrix}\begin{pmatrix}a_1\\a_2\end{pmatrix}
 $$
 
-今、$a_1,a_2$の値を求めるというのは、$(a_1,a_2)$を次元座標として、2次元平面にある2本の直線の交点座標を求めることである。
+To get the values of $a_1,a_2$ means to know the crossing point of two straight lines in 2D space.
+
+今、$a_1,a_2$の値を求めるというのは、$(a_1,a_2)$を2次元座標として、2次元平面にある2本の直線の交点座標を求めることである。
 $$
 x_{11} a_1 + x_{12}a_2=y_1\\
 x_{21} a_1 + x_{22}a_2=y_2
@@ -169,52 +196,84 @@ $$
 今、$y_1=3,y_2=1,x_{11}=4,x_{12}=2,x_{21}=-1,x_{22}=3$のとき
 の２直線を描き、その交点をMASS::ginv()関数を求め、その点$(\hat{a_1},\hat{a_2})$が交点にあることを、打点することによって示せ。
 
+Draw two straight lines and demonstrate  $(\hat{a_1},\hat{a_2})$ is actually the crossing point visually.
+
 ## Exercise 1-2
 
+The follwoing is the case of three lines.
 $n > m$
 $$
-\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} = \begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\\x_{31},x_{32}\end{pmatrix}\begin{pmatrix}a_1\\a_2\\end{pmatrix}
+\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} = \begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\\x_{31},x_{32}\end{pmatrix}\begin{pmatrix}a_1\\a_2\end{pmatrix}
 $$
 
 これは３直線の場合である。
 
 $\begin{pmatrix}y_1\\y_2\\y_3\end{pmatrix} = \begin{pmatrix}1\\2\\3\end{pmatrix}$,$\begin{pmatrix}x_{11},x_{12}\\x_{21},x_{22}\\x_{31},x_{32}\end{pmatrix} = \begin{pmatrix}2,3\\1,-2\\-3,-4\end{pmatrix}$とする。
 
+Draw three straight lines and draw a point $(\hat{a_1},\hat{a_2})$ in it.
 
 ３直線を描図し、ムーアペンローズ疑似逆行列による解$(\hat{a_1},\hat{a_2})$を打点せよ。
 
 ## Exercise 1-3
 
-Excerise 1-3 の例で、第１の直線は$(a_1,a_2)$座標について、$y_1 = x_{11}a_1 + x_{12}a_2$で表されているのに対し、解$(\hat{a_1},\hat{a_2})$は、別の直線、$\hat{y_1} = x_{11}\hat{a_1} + x_{12}\hat{a_2}$を表している。
+Excerise 1-2 の例で、第１の直線は$(a_1,a_2)$座標について、$y_1 = x_{11}a_1 + x_{12}a_2$で表されているのに対し、解$(\hat{a_1},\hat{a_2})$は、別の直線、$\hat{y_1} = x_{11}\hat{a_1} + x_{12}\hat{a_2}$を表している。
+
+In the case of Exercise 1-2 has the 1st line is  $y_1 = x_{11}a_1 + x_{12}a_2$ but solution indicates another line $\hat{y_1} = x_{11}\hat{a_1} + x_{12}\hat{a_2}$.
+Draw two lines.
 
 2本の直線を描け。
 
 同様に、第１、第２、第３の直線と、それに対応する、$(\hat{a_1},\hat{a_2})$を通る３直線を描け。
 
+Similarly, draw a pair of lines for 1st, 2nd and 3rd lines. 
+
 ## Exercise 1-4
 
 第１の直線は、$(a_1 = \frac{y_1}{x_{11}},0)$と$(0,\frac{y_1}{x_{12}})$を通る直線である。
 
+The 1st line connecting $(a_1 = \frac{y_1}{x_{11}},0)$ and $(0,\frac{y_1}{x_{12}})$.
+
 それに対応する$(\hat{a_1},\hat{a_2})$を通る直線は$(a_1 = \frac{\hat{y_1}}{x_{11}}=\frac{\hat{a_1}}{x_{11}},0)$と$(0,\frac{\hat{y_1}}{x_{12}}=\frac{\hat{a_2}}{x_{12}})$を通る直線である。
-これらは平行である。
+
+The corresponding estimated straight line goes through $(a_1 = \frac{\hat{y_1}}{x_{11}}=\frac{\hat{a_1}}{x_{11}},0)$ and $(0,\frac{\hat{y_1}}{x_{12}}=\frac{\hat{a_2}}{x_{12}})$.
+
+These two lines are in parallel.
+
+
 
 点$(\hat{a_1},\hat{a_2})$を通り、この2直線と垂直な直線を引け。その直線の傾きは、$(x_{12},-x_{11})$である。
 この垂直な直線が第１の直線と交わる交点$P_1$を求めよ。
 
+Draw a line perpendicular to the parallel two lines that has $(\hat{a_1},\hat{a_2})$ on it. Its slope is $(x_{12},-x_{11})$.
+Calculate the coordinate of point $P_1$ that is a crossing point of the 1st line and the perpendicular line.
+
+
 $(\hat{a_1},\hat{a_2})$と交点$P_1$との距離を求めよ。
+
+Calculate the distance between $(\hat{a_1},\hat{a_2})$ and $P_1$.
 
 同様に、行列が定める３つの直線のそれぞれについて、行え。
 
-$||y_i,\hat{y_i}||$とこの距離の関係は何か。
+Do similarly for three lines.
+
+$||y_i - \hat{y_i}||$とこの距離の関係は何か。
+
+Explain the relation between the calculated distances and $||y_i-\hat{y_i}||$.
 
 ## Exercise 1-5
 
 $(a_1,a_2)$平面の任意の点に関して、その点から、直線への垂線の足を求める関数を作成せよ。
 
+Make a function that takes $(a_1,a_2)$ and parameters of a straight line and returns the distance to the perpendicular foot from $(a_1,a_2)$.
+
 その関数を用いて、行列が定める３直線への足、３点が求まる。
-$||y_i,\hat{y_i}||$がわかるので、$\sum_{i=1}^3 (y_i-\hat{y_i})^2$も求まるはずである。
+$||y_i-\hat{y_i}||$がわかるので、$\sum_{i=1}^3 (y_i-\hat{y_i})^2$も求まるはずである。
+
+Using the function, you can calculate the distance of three line cases. You know $||y_i-\hat{y_i}||$ and you can calculate $\sum_{i=1}^3 (y_i-\hat{y_i})^2$ as well.
 
 この値が$(a_1,a_2)$平面に、どのような高低を作るかを図示し、$(\hat{a_1},\hat{a_2})$の意味を確認せよ。
+
+Draw the value of $||y_i-\hat{y_i}||$ as function of $(a_1,a_2)$ and explain what $(\hat{a_1},\hat{a_2})$ means.
 
 ## Exercise 1-6
 
@@ -225,15 +284,25 @@ $$
 この場合、直線は１本引ける。
 ムーアペンローズ疑似逆行列の解は直線上の1点である。
 
+In this case only one line is drawn and Moore-Pensore psuedoinverse solution is one point on the line.
+
 $||(a_1,a_2)||$が原点から最短距離になっていることを確かめよ。
+
+$||(a_1,a_2)||$ is the closest point from the origin.
 
 ## Exercise 1-7
 
 $n=m$,$n>m$,$n<m$の３つの場合について、ムーアペンローズ疑似逆行列の解の幾何学的な意味を説明せよ。
 
+For the three cases of $n=m$,$n>m$,$n<m$, describe geometric meaning of Moore-Penrose solution.
+
 ## Exercise 1-8
 
 $n<m$の場合に、$y=X\mathbf{a}$の解は、直線上のいずれの点でもよかったが、ムーアペンローズ疑似逆行列は、原点からの距離が最短になるような点$||(\hat{a_1},\hat{a_2})||$を選んだ。
+
+When n < m, the solution of $y=X\mathbf{a}$ can be any point on the straight line. Moore-Penrose psuedoinverse method specifically takes a point $||(\hat{a_1},\hat{a_2})||$. 
+
+In machine learning, a procedure called regularization is taken to select THE solution among multiple candidates, with the following regularization formula.
 
 正規化手法と呼ばれる手法では、
 $$
@@ -241,4 +310,10 @@ $$
 $$
 を最小にすることで、残差$\sum_{i=1}^n (y_i-\hat{y_i})^2$を小さくことのみを目指すのではなく、$||\mathbf{a}||^p$という形で、解の取り方に制約を持たせること、その制約の強さをパラメタ$\lambda$でコントロールする。
 
+This regularization attempts not to minimize the residuals but put a restriction by introducing the term with $\lambda$ to select the "best" solution .
+
+
 ムーアペンローズによる解の選び方と、正則化手法での解の選び方との類似性についてコメントせよ。
+
+Do you have any comments on the Moore-Penrose solution and regularization?
+

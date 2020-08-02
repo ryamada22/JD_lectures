@@ -1,7 +1,7 @@
 ---
-title: "Differentiate Matrix Formula üŒ`‘ã”®‚ğ”÷•ª‚·‚é"
+title: "Differentiate Matrix Formula ç·šå½¢ä»£æ•°å¼ã‚’å¾®åˆ†ã™ã‚‹"
 author: "ryamada"
-date: "2016”N12Œ27“ú"
+date: "2016å¹´12æœˆ27æ—¥"
 output: 
   html_document:
     toc: true
@@ -16,90 +16,116 @@ library(rgl)
 knit_hooks$set(rgl = hook_webgl)
 ```
 
-# Å¬“ñæ–@
+# æœ€å°äºŒä¹—æ³• Least square method
+
+When the number of rows of X is more than the number of columns, the estimates $\hat{\mathbf{a}}$ were obtained by minimizing the least square indicated below.
 
 $$
-y \sim X\mathbf{a}
+y Â¥sim XÂ¥mathbf{a}
 $$
-‚È‚éŠÖŒW®‚ª‚ ‚èA$X$‚Ìs”‚ª—ñ”‚æ‚è‘½‚¢‚Æ‚«A
+ãªã‚‹é–¢ä¿‚å¼ãŒã‚ã‚Šã€$X$ã®è¡Œæ•°ãŒåˆ—æ•°ã‚ˆã‚Šå¤šã„ã¨ãã€
 
 $$
-\sum_{i=1}^n (y_i-\hat{y_i})^2 = (y-X\mathbf{a})^T \cdot (y-X\mathbf{a})
+Â¥sum_{i=1}^n (y_i-Â¥hat{y_i})^2 = (y-XÂ¥mathbf{a})^T Â¥cdot (y-XÂ¥mathbf{a})
 $$
-‚ğÅ¬‚É‚·‚é‚æ‚¤‚È$\hat{\mathbf{a}}$‚ªA„’è’l‚Å‚ ‚Á‚½B
+ã‚’æœ€å°ã«ã™ã‚‹ã‚ˆã†ãª$\hat{\mathbf{a}}$ãŒã€æ¨å®šå€¤ã§ã‚ã£ãŸã€‚
 
-‚»‚µ‚Ä
+It can be calculated with matrix calculation.
+ãã—ã¦
 $$
-\hat{\mathbf{a}} = (X^TX)^{-1}X^Ty
+Â¥hat{Â¥mathbf{a}} = (X^TX)^{-1}X^Ty
 $$
 
-‚Å‹‚Ü‚é‚Ì‚Å‚ ‚Á‚½B
+ã§æ±‚ã¾ã‚‹ã®ã§ã‚ã£ãŸã€‚
 
-# •Î”÷•ª•û’ö®
+# åå¾®åˆ†æ–¹ç¨‹å¼ Partial differential equation
 
+When y and X are given, the following formula indicates a function of m variables $(a_1,...,a_m)$.
 $$
 f(\mathbf{a})=f((a_1,...,a_m))=\sum_{i=1}^n (y_i-\hat{y_i})^2 = (y-X\mathbf{a})^T \cdot (y-X\mathbf{a})
 $$
-‚ÍA$y$,$X$‚ª—^‚¦‚ç‚ê‚Ä‚¢‚é‚Æ‚«A$m$ŒÂ‚Ì•Ï”$(a_1,...,a_m)$‚Ì“ñŸ®‚Æ‚È‚Á‚Ä‚¢‚éƒXƒJƒ‰[ŠÖ”‚Å‚ ‚éB
+ã¯ã€$y$,$X$ãŒä¸ãˆã‚‰ã‚Œã¦ã„ã‚‹ã¨ãã€$m$å€‹ã®å¤‰æ•°$(a_1,...,a_m)$ã®äºŒæ¬¡å¼ã¨ãªã£ã¦ã„ã‚‹ã‚¹ã‚«ãƒ©ãƒ¼é–¢æ•°ã§ã‚ã‚‹ã€‚
 
-¡A‚±‚Ì$f(\mathbf{a})$‚ğÅ¬‚É‚·‚é$\mathbf{a}=(a_1,...,a_m)$‚Æ‚ÍA
+You can minimize the function when the following partial differential equations are satisfied with all $a_i$. 
+
+ä»Šã€ã“ã®$f(Â¥mathbf{a})$ã‚’æœ€å°ã«ã™ã‚‹$Â¥mathbf{a}=(a_1,...,a_m)$ã¨ã¯ã€
 $$
 \frac{\partial f(\mathbf{a})}{\partial a_i}=0
 $$
-‚ª‚·‚×‚Ä‚Ì$a_i$‚É‚Â‚¢‚Ä¬‚è—§‚Âê‡‚Å‚ ‚éB
+ãŒã™ã¹ã¦ã®$a_i$ã«ã¤ã„ã¦æˆã‚Šç«‹ã¤å ´åˆã§ã‚ã‚‹ã€‚
 
-ƒXƒJƒ‰[‚ğ•Ô‚·$z^Tw$‚Í$z^Tw = w z^T$‚Å‚ ‚é‚±‚Æ‚ğg‚¤‚Æ
+ã‚¹ã‚«ãƒ©ãƒ¼ã‚’è¿”ã™$z^Tw$ã¯$z^Tw = w z^T$ã§ã‚ã‚‹ã“ã¨ã‚’ä½¿ã†ã¨
+
+Using $z^Tw$ is $z^Tw = w z^T$,
 
 $$
 f(\mathbf{a}) = (y-X\mathbf{a})^T \cdot (y-X\mathbf{a})
  = y^Ty -2(X\mathbf{a})^Ty+(X\mathbf{a})^T \cdot (X\mathbf{a})
 $$
-‚³‚ç‚É•ÏŒ`‚µ‚Ä
+ã•ã‚‰ã«å¤‰å½¢ã—ã¦
 
+Further transformation gives us,
 $$
 f(\mathbf{a}) = y^Ty -2(X^Ty)\cdot \mathbf{a} + \mathbf{a}^TX^TX\mathbf{a}
 $$
 
-‚±‚ê‚ğ$\mathbf{a}$‚Å•Î”÷•ª‚·‚éB
+Let's partially differentiate it with $\mathbf{a}$.
 
-‘æ1€‚Í$0$
+ã“ã‚Œã‚’$\mathbf{a}$ã§åå¾®åˆ†ã™ã‚‹ã€‚
 
-‘æ2€‚ÍAŠe¬•ª‚É$-2y^TX$‚ÌŠe¬•ª‚ªc‚éB
+ç¬¬1é …ã¯$0$
 
-‘æ‚R€‚ÍA$X^TX=Z$‚Æ’u‚­‚Æ
+The 1st term is 0.
+
+ç¬¬2é …ã¯ã€å„æˆåˆ†ã«$-2y^TX$ã®å„æˆåˆ†ãŒæ®‹ã‚‹ã€‚
+
+The 2nd term will have $-2y^TX$ for each.
+
+ç¬¬ï¼“é …ã¯ã€$X^TX=Z$ã¨ç½®ãã¨
+
+The 3rd term is given as follows with $X^TX=Z$,
 
 $$
 \mathbf{a}^T Z \mathbf{a} = \sum_{i=1}^m \sum_{j=1}^m a_i a_j Z_{ij}
 $$
 
-‚Å‚ ‚èA‚»‚Ì$a_k$‚É‚æ‚é•Î”÷•ª‚Í
+ã§ã‚ã‚Šã€ãã®$a_k$ã«ã‚ˆã‚‹åå¾®åˆ†ã¯
+
+Now we have,
 
 $$
 \frac{\partial}{\partial a_k} (\sum_{i=1}^m \sum_{j=1}^m a_i a_j Z_{ij}) = 2\sum_{i=1}^m Z_{ik}a_i
 $$
+All formulae are summarized in one matrix formula as below.
 
-‚Æ‚È‚èA$k=1,...,m$‚É‚Â‚¢‚Ä‡‚í‚¹‚é‚Æ
+ã¨ãªã‚Šã€$k=1,...,m$ã«ã¤ã„ã¦åˆã‚ã›ã‚‹ã¨
 $$
 2Z \mathbf{a}
 $$
-‚Æ‚È‚é‚©‚çA
-Œ‹‹ÇA
+ã¨ãªã‚‹ã‹ã‚‰ã€
+çµå±€ã€
+
+The following appears.
 
 $$
 0 - 2X^Ty + 2Z\mathbf{a} = 2(X^TX) \mathbf{a} - 2X^Ty = \mathbf{0}
 $$
 
-‚Æ‚È‚èA
+ã¨ãªã‚Šã€
+
+Eventually we have,
 
 $$
 (X^TX)\mathbf{a} = X^T y
 $$
-‚ª“¾‚ç‚ê‚éB
+ãŒå¾—ã‚‰ã‚Œã‚‹ã€‚
 
-‚±‚±‚©‚çA$X^TX$‚É‹ts—ñ‚ª‚ ‚é‚Æ‚«‚Í
+When $X^TX$ has the inverse, we an calculate as follow.
+
+ã“ã“ã‹ã‚‰ã€$X^TX$ã«é€†è¡Œåˆ—ãŒã‚ã‚‹ã¨ãã¯
 
 $$
 \mathbf{a} = (X^TX)^{-1}X^T y
 $$
 
-‚ª“¾‚ç‚ê‚éB
+ãŒå¾—ã‚‰ã‚Œã‚‹ã€‚

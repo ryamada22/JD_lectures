@@ -188,13 +188,16 @@ X.. %*% X..
 
 ## Matrix exponential
 
-指数関数の性質
+指数関数の性質 Exponential function behaves:
+
 $$
 \frac{d}{dx} e^x= e^x
 $$
 $$e^0=1$$
 
 指数関数の定義式
+
+Definition of exponential function.
 
 $$
 e^x = \sum_{k=0}^{\infty} \frac{1}{k!}x^k
@@ -210,6 +213,8 @@ e^{VSV^{-1}} = \sum_{k=0}^{\infty} \frac{1}{k!}VS^kV^{-1} = V(\sum_{k=0}^{\infty
 $$
 
 対角成分ごとに$e^x$を計算できる
+
+You only have to calculate $e^x$ of each diagonal element.
 
 ```{r}
 X <- matrix(c(2,3,4,5),2,2)

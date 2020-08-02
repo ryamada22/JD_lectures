@@ -60,6 +60,9 @@ $$
 $$
 M \begin{pmatrix} 0 \\ 1 \end{pmatrix} = \begin{pmatrix} b \\ d \end{pmatrix}
 $$
+
+You read these as "M transforms (1,0) and (0,1) to (a,c) and  (b,d), respectively."
+
 これは、(1,0)を(a,c)へ、(0,1)を(b,d)へ移す、と読める。
 
 任意のベクトルは、
@@ -71,11 +74,15 @@ $$
 
 と書けるから、任意のベクトル$v=(s,t)$の移動先も確定する。
 
-# Exercises 1 $2 \times 2$行列による変換に関する以下の問に答えよ
+An arbitrary vector $v=(s,t)$ is written as above, subsequently the you can tell where M transforms it to. 
+
+# Exercises 1 $2 \times 2$行列による変換に関する以下の問に答えよ Answer Qs on $2 \times 2$ matrices.
 
 ## Exercises 1-0
 
 点 (2,3)が$2 \times 2$行列Mによる変換で動かなかったと言う。行列Mの4成分についてどのようなことが言えるか。
+
+M did not move (2,3). What should the four elements of M satisfy?
 
 $$
 \begin{pmatrix}a, b\\ c, d \end{pmatrix} \begin{pmatrix}2 \\3 \end{pmatrix} = \begin{pmatrix}2 \\3 \end{pmatrix}\\
@@ -99,24 +106,34 @@ M %*% x
 
 原点とは異なる点(p,q)が、Mによって不動であったと言う。行列Mの4成分について言えることは何か。
 
+In general, when (p,q) that is not the origin, was not moved by M, what can you say about the four elements of M?
+
 ## Exercises 1-2
 
 点(2,3)がMによって点(4,6)に移動したという。
 点(4,6)はどこに移動するか。
 
+M moved (2,3) to (4,6), then, to where does M move (4,6)?
+
 ## Exercises 1-3
 
 原点以外のすべての点が不動点でないようなMはどのようなMか。
+
+Every point except for the origin is moved by M. What feature should M have?
 
 
 
 # 固有値分解 Eigen value decomposition
 
+M が対称行列のとき、つぎのように分解される。
+
+A symmetric matrix M is decomposed as;
 $$
 M = V S V^{-1}
 $$
 
-S is a diagonal matrix for which 2 values
+where S is diagonal.
+ただし、Sは対角行列。
 
 $$
 M V = VSV^{-1}V\\
@@ -126,23 +143,35 @@ $$
 
 Therefore, colum vectors, $v_1,v_2$ ($V=(v_1,v_2)$), satisfies
 
+したがって、列ベクトル$v_1,v_2$ ($V=(v_1,v_2)$)は次を満たす。
+
 $$
 Mv_i = \lambda_i v_i .
 $$
 This means, points on the line in the direction of $v_i$ are transformed on the line itself.
+
+これの意味するところは、$v_i$を通る直線上の点は、その直線上の点に移されるということ。
 
 # Exercises 2
 ## Exercise 2-1
 
 ベクトル $(\cos{\theta_1},\sin{\theta_1})$と$(\cos{\theta_2},\sin{\theta_2})$とを固有ベクトルとし、そのベクトル方向の点は、そのベクトル方向に$\lambda_1,\lambda_2$倍するような行列は以下のように表される
 
+Assume a matrix M whose eigen vectors are $(\cos{\theta_1},\sin{\theta_1})$ and $(\cos{\theta_2},\sin{\theta_2})$, and the matrix moves points on the directions to the points with $\lambda_1$ and $\lambda_2$-fold change, respectively.
+
+M shoud be expressed as below.
+
 $$
-M = V\begin{pmatrix}\lambda_1,0\\0,\lambda_2\end{pmatrix}V^{-1}$$
+M = V\begin{pmatrix}\lambda_1,0\\0,\lambda_2\end{pmatrix}V^{-1}
+$$
+
 $$
 V =\begin{pmatrix}\cos{\theta_1},\cos{\theta_2}\\ \sin{\theta_1},\sin{\theta_2} \end{pmatrix} 
 $$
 
 固有値と固有ベクトルを指定し、それに対応する$2\times 2$変換行列を作成する関数を作れ
+
+Make a function that takes eigenvectors and eigenvalues and returns a 2x2 matrix.
 
 ```{r echo=FALSE}
 my.m <- function(thetas,lambdas){
@@ -168,6 +197,8 @@ my.m2 <- function(v1,v2){
 ## Exercise 2-2
 点(1,0)を点(1,2)に移し、点(0,1)を点(2,4)に移す行列を作り、その行列の固有値と固有ベクトルを計算すると以下のように固有値の一つは0となる。
 
+Make a matrix that moves (1,0) and (0,1) to (1,2) and (2,4), respectively. Calculate its eigenvectors and eigenvalues. One of eigen values will be 0. 
+
 ```{r}
 M <- matrix(c(1,2,2,4),2,2)
 M
@@ -176,13 +207,23 @@ eigen(M)
 
 この行列によって、第一固有ベクトル方向の点が、その方向に5倍した点に移ることを計算して確かめよ。
 
+Double check points in the direction of the first eigen vector are moved to the points in the direction with five-fold.
+
 ## Exercise 2-3
 上記の行列によって、第一固有ベクトル方向以外の点がどこに移されるか計算して確かめよ。
+
+Where does the matrix move the other points not on the direction of the 1st eigenvector?
 
 ## Exercise 2-4
 この行列の逆行列をRで計算するとどうなるか実行せよ。
 
+Calculate the inverse of this matrix with R.
+
 行列Mによって点vが点uに移せるとき、逆行列Mによって点uは点vに移るはずだが、この逆行列がうまく求まらない、ということと、行列Mの変換の特徴(Exercise 2-3)との関係を述べよ。
+
+When M moves v to u, the inverse of M seems to move u to v, but it is not true...
+
+Explain the relation between this phenomenon and the difficulty of calculation of the inverse of M.
 
 ## Exercise 2-5
 $$
@@ -190,26 +231,46 @@ M = \begin{pmatrix}1,2\\3,4\end{pmatrix}
 $$
 の固有値を求めよ。
 
+Calculate M's eigenvalues.
+
 ## Exercise 2-6
 $2\times 2$行列 $\begin{pmatrix}a,b\\c,d\end{pmatrix}$の固有値を行列の成分で表せ。
+
+Show the formula to calculate eigen values of $\begin{pmatrix}a,b\\c,d\end{pmatrix}$.
 
 ## Exercise 2-7
 
 Exercise 2-6の結果を踏まえ、M[1,1]=1、M[1,2]=1であって、固有値が複素数になるような行列Mを作成せよ。
 
+Using the result of Exercise 2-6, make M whose (1,1) and (1,2) elements are 1 and its eigenvalues are complex.
+
 ## Exercise 2-8
 
 行列の冪乗を用いることで、実数列{t}について$M^t$をある点に作用させたときの移動先の座標を求めることができる。
 
+Using exponential of matrix, you can calculate where $M^t$ moves points to for a sequence of real numbers {t}.
+
 $2\times 2$行列について、異なる２つの0ではない実数固有値を持つ場合、１つの固有値が0ではない実数であり、もう一つの固有値が0である場合、２つの固有値が複素数の場合のそれぞれについて、移動先の点列を描け。
+
+When the matrix has two real eigenvalues, calculate the points for {t} and draw the points.
+
+When one eigenvalue is non-zero and the other is zero, then draw the points also.
+
+When two eigenvalues are complex, also draw them.
 
 # Affine transformation
 
 $2\times 2$ matrix does not move the origin, (0,0).
 
-The affine transformation moves (0,0) as well.
+2x2行列では、原点(0,0)は動かない。
+
+The affine transformation is one of linear transformations and it moves (0,0) as well.
+
+アフィン変換は(0,0)も動かす線形変換である。
 
 Affine transformation moves a straight line to a straight line.
+
+アフィン変換では、直線を直線に移す。
 
 $$
 y = M x + v
@@ -235,8 +296,19 @@ $$
 
 (1,0)を(1,4)に移し、(0,1)を(3,3)に移す$2\times 2$行列 Mと、平行移動(0,0)->(1,2)との合成のはずである。
 
+When an affine transformation does not move (1,2) and it moves (2,2) and (1,3) to (3,5) and (4,6), respectively.
+Because,
+(2,2)-(1,2) = (1,0),(1,3)-(1,2)=(0,1), and  
+(3,5)-(2,1) = (1,4),(4,6)-(1,3)=(3,3),
+
+it should be a combination of 2x2 matrix, M, that moves (1,0) and (0,1) to (1,4) and (3,3), respectively and a parallel shift movement that moves (0,0) to (1,2).
+
 行列Mを作成せよ。
 また、Affine 変換を表す$3\times 3$行列を作成せよ。
 
+Calculate M and make a 3x3 matrix representing the affine transformation.
+
 作成した$3\times 3$行列により、(1,2)が動かないことを確認せよ。
+
+Double check your 3x3 matrix does not move (1,2). 
 
