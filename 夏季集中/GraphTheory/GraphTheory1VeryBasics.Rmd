@@ -1,0 +1,165 @@
+---
+title: "Graph Theory 1 Very Basics"
+author: "ryamada"
+date: "2020年5月21日"
+output: html_document
+---
+
+## What is a Graph? グラフって何？
+
+A graph is a pair of a set of vertices and a set of edges, where edges that are pairs of vertices.
+
+グラフは頂点の集合と辺の集合のペア。辺は頂点のペアである。
+
+When the pairs of veritices of edges are unordered, the graph is an unordered graph and when the pairs are ordered, the graph is ordered.
+
+辺をなす頂点ペアに順序がないとき、グラフは無向グラフと呼び、頂点ペアに順序があるとき、有向グラフと呼ぶ。
+
+## Graphs represent various stuffs グラフによって表現されるいろいろなもの
+
+* Road maps 道路地図
+* Molecular structures 分子構造
+* Electronic circuits 電子回路
+* Algorithm アルゴリズム
+* Relation among set and its subsets
+* Factorization 因数分解
+
+## Expression of graphs with computer languages グラフを計算機言語で表す
+
+Assume a graph in the shape of square.
+
+正方形の形をしたグラフを考える。
+
+There are four vertices and four edges. 4個の頂点、4個の辺からなる。
+
+There are two ways to express this square graph.
+
+それを、次のように2通りの方法で表すことができる。
+
+The first way is to make a list of edges with their vertices in a 2-column matrix
+1つ目の方法は、エッジを構成する２頂点を並べるもの。2列の行列になる。
+
+This is a matrix of edge list.
+
+辺リスト行列。
+
+$$
+\begin{pmatrix}
+1,2\\
+2,3\\
+3,4\\
+4,1
+\end{pmatrix}
+$$
+
+The other is to use a number-of-vertices x number of vertices square matrix.
+もう一つは、頂点数 x 頂点数の正方行列で表す方法。
+
+When the i-th and j-th vertices are connected with an edge, the (i,j) and (j,i) cells of the matrix are 1 and otherwise 0.
+
+i番頂点とj番頂点とが辺で結ばれているとき、行列の(i,j)と(j,i)のセルの値が1でそれ以外は0。
+
+This is an adjacency matrix.
+
+隣接行列。
+
+$$
+\begin{pmatrix}
+0,1,0,1\\
+1,0,1,0\\
+0,1,0,1\\
+1,0,1,0
+\end{pmatrix}
+$$
+
+```{r}
+library(igraph)
+edge.list <- rbind(c(1,2),c(2,3),c(3,4),c(4,1))
+edge.list
+```
+```{r}
+g1 <- graph.edgelist(edge.list, directed = FALSE) # undirected graph
+plot(g1)
+```
+
+```{r}
+adj <- matrix(0,4,4) # 4: no. vertices
+adj[1,2] <- adj[2,1] <- adj[2,3] <- adj[3,2] <- adj[3,4] <- adj[4,3] <- adj[4,1] <- adj[1,4] <- 1
+adj
+```
+
+```{r}
+g2 <- graph.adjacency(adj,mode="undirected")
+plot(g2)
+```
+
+## "Usual"" Graphs and unusual graphs 「普通の」グラフとそうでないグラフ
+
+Usual graphs have 0 or 1 edges between two different vertices.
+
+普通のグラフは、異なる2頂点間に、辺がないか、あるとしても1本の辺しかないようなグラフ
+
+### Adjacancy matrices of "usual" graphs 普通のグラフの隣接行列
+
+The adjacency matrix of "square" graph is;
+正方形グラフの隣接行列は
+
+```{r}
+adj
+```
+
+The values of cells are 0 or 1. すべてのセルの値は0か1。
+It is symmetric. 対称行列でもある。
+
+### Unusual graphs 普通でないグラフ
+If cells (1,2) and (2,1) are changed to 2;
+もし、(1,2)と(2,1)のセルを2に変えると;
+
+```{r}
+adj2 <- adj
+adj2[1,2] <- adj2[2,1] <- 2
+adj2
+```
+
+```{r}
+g3 <- graph.adjacency(adj2,mode = "undirected")
+plot(g3)
+```
+
+The number of edges between v1 and v2 is 2, meaning that it is an "unusual" graph.
+
+頂点V1とV2とを結ぶエッジの本数が2となり、"普通ではない"グラフとなる
+
+The diagonals of adjacency matrix of "usual" graphs are zero. 
+普通のグラフの隣接行列の対角成分は0。
+
+Let's change one of the diagonal cells from 0 to 1.
+
+対角成分の1つの値を0から1に変えてみる。
+
+```{r}
+adj3 <- adj 
+adj3[2,2] <- 1
+adj3
+```
+```{r}
+g4 <- graph.adjacency(adj3,mode="undirected")
+plot(g4)
+```
+
+The graph has an edge coming out from V2 and ending into V2.
+
+V2から出てV2に終わる辺がある。
+
+This is another "unusual" graph.
+これも「普通でない」グラフ。
+
+The edge starting from and ending into the same vertex is called a "loop".
+
+同じ頂点から出て、同じ頂点に終わる辺を「ループ」と呼ぶ。
+
+## Exercise 練習問題
+
+* Make an edge list and an adjacency matrix of hexagon and draw the graph. 六角形のグラフのエッジリストと隣接行列を作り、そのグラフを描け
+* Make an edge list and an adjacency matrix of a cubic and draw the graph. 立方体のグラフのエッジリストと隣接行列を作り、そのグラフを描け
+* Make an edge list and an adjacency matrix of a Chinese character "寺" and draw the graph. 漢字「寺」のエッジリストと隣接行列を作り、そのグラフを描け

@@ -1,0 +1,106 @@
+---
+title: "PCA with Matrix 行列でPCA"
+author: "ryamada"
+date: "2016年12月24日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+```
+
+# 行列の特徴
+
+正方行列の特徴を思い出そう。
+
+正方行列は回転させても変わらない性質があった。
+
+固有値の和(トレース)と固有値の積(行列式)がそれである。
+
+『行列の特徴』のExercises 4-6, 4-7で見たように、分散共分散行列を回転させると、固有値の和と積は変わらないが、固有値の内訳は変わる。
+そして、対角化すると、固有値の大小が最も大きくばらつくようにできることを見た。
+最も大きくばらつくとは、最大固有値が、色々な回転の中で最大となり、最小固有値が色々な回転の中で最小になるような内訳の取り方を指す。
+
+#Exercise 1
+## Exercise 1-1 
+『行列の特徴』のExercises 4-6, 4-7を再度実施せよ。
+
+# PCA
+
+PCAは分散共分散行列を回転させて、固有値のばらつきを大きくして、数少ない固有値で、すべての固有値の和の多くの部分を説明しようとするものである。
+
+
+### Exercise 4-6
+
+xの分散共分散行列の固有値を求めることで、分散共分散行列を対角化するような回転をしたときの、各軸の分散を求めることができる。
+
+その分散を4-4のプロットに重ねてプロットせよ。
+
+```{r,echo=FALSE}
+library(GPArotation)
+d <- 10
+n <- 1000
+x <- matrix(rnorm(d*n),ncol=d)
+x <- apply(x,2,cumsum)
+
+x.cov <- cov(x)
+n.iter <- 100
+sorted.vars <- matrix(0,n.iter,d)
+for(i in 1:n.iter){
+  R <- Random.Start(d)
+  x.tmp <- t(R %*% t(x))
+  cov.tmp <- cov(x.tmp)
+  sorted.vars[i,] <- sort(diag(cov.tmp))
+}
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var")
+lambdas <- sort(eigen(x.cov)[[1]])
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var",col=1)
+points(1:d,lambdas,col=2,pch=20)
+for(i in 1:(d-1)){
+  segments(i,lambdas[i],i+1,lambdas[i+1],col=2)
+
+}
+```
+
+### Exercise 4-7
+
+4-4,4-5と同様のプロットを変数の数を増やして実施せよ。
+
+```{r}
+d <- 10
+n <- 1000
+x <- matrix(rnorm(d*n),ncol=d)
+x <- apply(x,2,cumsum)
+
+plot(as.data.frame(x[,1:5]),pch=20,cex=0.1)
+```
+
+```{r echo=FALSE}
+n.iter <- 100
+sorted.vars <- matrix(0,n.iter,d)
+for(i in 1:n.iter){
+  R <- Random.Start(d)
+  x.tmp <- t(R %*% t(x))
+  cov.tmp <- cov(x.tmp)
+  sorted.vars[i,] <- sort(diag(cov.tmp))
+}
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var")
+```
+```{r,echo=FALSE}
+x.cov <- cov(x)
+lambdas <- sort(eigen(x.cov)[[1]])
+matplot(t(sorted.vars),type="l",xlab="order",ylab="var",col=1,ylim=range(c(sorted.vars,lambdas)))
+points(1:d,lambdas,col=2,pch=20)
+for(i in 1:(d-1)){
+  segments(i,lambdas[i],i+1,lambdas[i+1],col=2)
+
+}
+```
+

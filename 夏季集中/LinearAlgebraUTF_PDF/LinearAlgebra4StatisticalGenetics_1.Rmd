@@ -1,0 +1,383 @@
+---
+title: "Calculation with matrices 行列で計算"
+author: "ryamada"
+date: "2016年12月18日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# +, -, x and /
+## Calculation of real numbers 実数の計算
+
+```{r}
+x <- 3
+y <- -5
+x+y
+x-y
+x*y
+x/y
+```
+
+### Important numbers 大事な値
+
+```{r}
+zero <- 0
+one <- 1
+x
+x + zero
+x * zero
+x * one
+x.inverse <- 1/x
+x * x.inverse
+```
+```{r}
+x/y
+y.inverse <- 1/y
+x * y.inverse
+```
+## Square matrices 正方行列
+
+### $2 \times 2$ matrices
+```{r}
+X <- matrix(c(1,2,3,4),2,2)
+X
+```
+```{r}
+Y <- matrix(c(4,5,6,7),2,2)
+Y
+X+Y
+X-Y
+X %*% Y
+Y %*% X
+```
+
+Calculate yourself without computers. 計算機を使わずに計算すること。
+
+#### Important matrices
+
+```{r}
+ONE <- matrix(c(1,0,0,1),2,2)
+ONE
+ZERO <- matrix(0,2,2)
+ZERO
+X.inverse <- solve(X)
+X
+X.inverse
+
+X %*% X.inverse
+X.inverse %*% X
+```
+
+```{r}
+# x/y
+Y.inverse <- solve(Y)
+X %*% Y.inverse
+Y.inverse %*% X
+```
+
+### $n \times n$ matrices $n \times n$ 行列
+
+```{r}
+n <- sample(3:5,1)
+X <- matrix(sample((-20):20,n^2,replace=TRUE),n,n)
+Y <- matrix(sample((-20):20,n^2,replace=TRUE),n,n)
+X
+X + Y
+X - Y
+X %*% Y
+X %*% solve(X)
+solve(X) %*% X
+X %*% solve(Y)
+solve(Y) %*% X
+```
+
+#### Important matrices
+```{r}
+ONE <- diag(rep(1,n))
+ONE
+ZERO <- matrix(0,n,n)
+ZERO
+X.inverse <- solve(X)
+X
+X.inverse
+```
+
+# Power and exponential
+
+## Power to integer
+```{r}
+x <- 3
+p <- 2
+x^p
+x * x
+p <- 3
+x^3
+x * x * x
+```
+
+```{r}
+X <- matrix(c(1,2,3,4),2,2)
+p <- 2
+X %*% X
+p <- 3
+X %*% X %*% X
+```
+
+## Power to non-integer
+```{r}
+x <- 2
+p <- 2
+x. <- x^p
+x.
+p.inverse <- 1/p
+p.inverse
+x.^p.inverse
+```
+
+## Power of diagonal matrix
+```{r}
+X <- matrix(c(2,0,0,3),2,2) # Diagonal matrix
+X
+diag(c(2,3))
+X %*% X
+p <- 2
+p.inverse <- 1/p
+diag.X <- diag(X)
+diag.X
+diag(diag.X^p)
+diag(diag.X^p.inverse)
+```
+
+## Decomposition of matrix 行列の分解
+
+Eigen value decomposition　固有値分解
+
+$$
+X = V S V^{-1}
+$$
+$$
+X^2 = (V S V^{-1}) (V S V^{-1}) = (VS)(V^{-1}V)(SV^{-1})=V(S^2)V^{-1}
+$$
+$$
+X^p = V(S^p)V^{-1}
+$$
+```{r}
+X <- matrix(c(2,3,4,5),2,2)
+eigen.out <- eigen(X)
+eigen.out
+V <- eigen.out[[2]]
+S <- diag(eigen.out[[1]])
+V %*% S %*% solve(V)
+X %*% X
+V %*% diag(eigen.out[[1]]^2) %*% solve(V)
+X. <- V %*% diag(eigen.out[[1]]^(1/2)) %*% solve(V)
+X.
+s <- complex(real=eigen.out[[1]],imaginary=0)
+s^(1/2)
+X.. <- V %*% diag(s^(1/2)) %*% solve(V)
+X..
+X.. %*% X..
+```
+
+## Matrix exponential
+
+指数関数の性質
+$$
+\frac{d}{dx} e^x= e^x
+$$
+$$e^0=1$$
+
+指数関数の定義式
+
+$$
+e^x = \sum_{k=0}^{\infty} \frac{1}{k!}x^k
+$$
+
+
+$$
+e^X = \sum_{k=0}^{\infty} \frac{1}{k!}X^k
+$$
+
+$$
+e^{VSV^{-1}} = \sum_{k=0}^{\infty} \frac{1}{k!}VS^kV^{-1} = V(\sum_{k=0}^{\infty} \frac{1}{k!} S^k) V^{-1}
+$$
+
+対角成分ごとに$e^x$を計算できる
+
+```{r}
+X <- matrix(c(2,3,4,5),2,2)
+eigen.out <- eigen(X)
+s <- eigen.out[[1]]
+V <- eigen.out[[2]]
+s
+V
+
+V %*% diag(exp(s))%*% solve(V)
+```
+
+# 非正方行列の積 Multiplication of non-square matrices 
+
+$M_{n,m}$, $n \times m$ matrix can be multiplied by $M_{k,n}$ from its left and by $M_{m,k}$ from its right. The dimension of the products are $k\times n$ and $m\times k$, respectively.
+
+$n \times m$ 行列 $M_{n,m}$は、左から$M_{l,n}$行列を掛けることができ、右から$M_{m,k}$行列を掛けることができる。生じる行列はそれぞれ、$k \times n$、$m \times k$ である。
+
+```{r}
+n <- 4
+m <- 3
+k <- 2
+
+M1 <- matrix(1:(n*m),n,m)
+M1
+dim(M1)
+
+M2 <- matrix(1:(k*n),k,n)
+M2
+dim(M2)
+M21 <- M2 %*% M1
+M21
+dim(M21)
+
+M3 <- matrix(1:(m*k),m,k)
+M13 <- M1 %*% M3
+M13
+dim(M13)
+```
+
+## ベクトルの内積 Inner product of vectors
+
+A vector with n elements can be considered $n\times 1$ matrix or $1 \times n$ matrix.
+
+要素数 n のベクトルは$n\times 1$行列、$1 \times n$行列とみなせる。
+
+```{r}
+n <- 3
+v1 <- c(3,5,6)
+v2 <- c(1,2,4)
+V1 <- matrix(v1,nrow=n)
+V1
+V2 <- matrix(v2,nrow=1)
+V2
+```
+
+$n \times 1$ matrix can be multiplied by $1 \times n$ matrix from its left. The product is $1 \times 1$ matrix, or a scaler value. 
+
+$n \times 1$ 行列には、その左側から$1 \times n$行列を掛けることができる。その積は$1 \times 1 $ 行列、もしくは、スカラー値である。
+
+```{r}
+V2 %*% V1
+```
+
+The following returns the same value. 次のような計算と同じである。
+
+```{r}
+sum(v1*v2)
+```
+
+# Differential equation 微分方程式
+
+## Single differential equation １つの微分方程式
+$$
+\frac{d x(t)}{dt} = a x
+$$
+
+解
+$$
+x(t) = b \times e^at
+$$
+
+## System of differential equation 連立微分方程式
+
+$$
+\begin{pmatrix} \frac{dx_1}{dt} \\ \frac{dx_2}{dt} \end{pmatrix} = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x_1\\ x_2 \end{pmatrix}
+$$
+
+The solution of this system is known as,
+この連立微分方程式の解は以下であると知られている。
+
+
+$$
+\begin{pmatrix} x_1(t)\\ x_2(t) \end{pmatrix} = e^{t\times A} \begin{pmatrix} x_1(0)\\ x_2(0) \end{pmatrix}\\
+A = V S V^{-1}\\
+S = diag(e^{\lambda_A})\\
+\Sigma(t) = diag(e^{t \times \lambda_A})\\
+e^{t \times A} = V \Sigma(t) V^{-1}
+$$
+```{r}
+A <- matrix(c(0.5,1,-1,-0.3),2,2)
+A
+eigen.out <- eigen(A)
+S <- diag(eigen.out[[1]])
+V <- eigen.out[[2]]
+
+t <- seq(from=0,to=30,length=100)
+x0 <- c(5,-1)
+xs <- matrix(0,length(t),2)
+for(i in 1:length(t)){
+  etA <- V %*% diag(exp(t[i]*diag(S))) %*% solve(V)
+  xs[i,] <- etA %*% x0
+}
+matplot(xs,type="l")
+plot(Re(xs),type="l") # state space plot
+```
+
+# Exercises
+
+## Exercise 1-1
+正方行列の和を計算する関数は次のように作れる。
+それにならって、行列の積(非正方行列を含む)を計算する関数を作成、それが正しいことを確かめよ。
+
+The following function calculate sum of matrices. Make functions of production of (non-square) matrices in the similar way.
+```{r}
+my.matrix.sum <- function(x,y){
+  dm <- dim(x)
+  ret <- matrix(0,dm[1],dm[2])
+  for(i in 1:dm[1]){
+    for(j in 1:dm[2]){
+      ret[i,j] <- x[i,j]+y[i,j]
+    }
+  }
+  return(ret)
+}
+
+x <- matrix(c(2,3,4,5),2,2)
+y <- matrix(c(4,5,6,7),2,2)
+x + y
+my.matrix.sum(x,y)
+```
+
+## Exercise 1-2
+
+行列の冪$x^p$を計算する関数を作成せよ
+
+Make a function of power of matrix.
+
+## Exercise 1-3
+
+行列の指数関数$e^{t \times X}$を計算する関数を作成せよ
+
+Make a function of exponential of matix.
+
+## Exercise 1-4
+
+色々な$2 \times 2$ 行列を作り、それに基づく２変量連立微分方程式に関する解をプロットせよ。matplotと状態空間co-plotをせよ。カーブが多様であるように行列を選べ。
+
+Make various $2 \times 2 $ matrices and plot their answers of the system of differential equations of 2 variables. Plot them in two ways (matplot-way and co-plot-way in state space).
+Select matrices so that the curves of the variables are heterogeneous.
+
+## Exercise 1-5
+
+$3 \times 3$ 行列による3変量の場合を同様に行え。matplot-wayと3次元状態空間プロットを行え。
+さまざまなカーブを描くように、行列を選べ。
+
+Make various $3 \times 3$ matrices for three variables' system of differential equations.
+
+plot them in two ways (matplot-way and 3D-plot-way in state space).
+
+Select matrices so that the curves or the variables are heterogeneous.

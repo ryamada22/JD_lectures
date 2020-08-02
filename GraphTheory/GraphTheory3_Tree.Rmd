@@ -50,6 +50,7 @@ Assume a bifurcation tree that starts from one vertex and repeat two-division 3 
 １頂点から始まり、２分岐を３回繰り返す二分岐木を考える。
 
 ```{r}
+library(igraph)
 el <- rbind(c(1,2),c(1,3),c(2,4),c(2,5),c(3,6),c(3,7),c(4,8),c(4,9),c(5,10),c(5,11),c(6,12),c(6,13),c(7,14),c(7,15))
 
 g.bt <- graph.edgelist(el,directed=TRUE) 
@@ -78,8 +79,9 @@ adj.bt
 ```
 
 ```{r}
-adj.bt - t(adj.bt) # if symmetric, all elements are 0.
-range(adj.bt - t(adj.bt)) # if symmetric, it returns from 0 to 0.
+adj.bt2 <- as.matrix(adj.bt)
+adj.bt2 - t(adj.bt2) # if symmetric, all elements are 0.
+range(adj.bt2 - t(adj.bt2)) # if symmetric, it returns from 0 to 0.
 ```
 
 Convert this rooted tree to un-rooted tree.
@@ -90,7 +92,7 @@ Convert its asymmetric adjacency matrix to a symmetric one.
 非対称な隣接行列を対称な隣接行列にすれば良い。
 
 ```{r}
-adj.unrooted <- adj.bt + t(adj.bt)
+adj.unrooted <- adj.bt2 + t(adj.bt2)
 adj.unrooted
 range(adj.unrooted - t(adj.unrooted)) 
 ```

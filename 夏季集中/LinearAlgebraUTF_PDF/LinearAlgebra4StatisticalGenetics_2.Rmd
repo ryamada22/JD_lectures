@@ -1,0 +1,242 @@
+---
+title: "Transformation with matrices 行列で変換"
+author: "ryamada"
+date: "2016年12月19日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Transformation of a point to a point in n dimensional space n次元空間における点を別の点へ変換する
+
+$n \times n$ matrix transforms a vector with n elements into a vector with n elemens, that is movement of a point in n dimensional space to another point.
+
+$n \times n$行列は、長さnのベクトルを長さnのベクトルに変換する。これは、n次元空間の点の変換に相当する。
+
+```{r}
+d <- 2
+M <- matrix(rnorm(d^2),d,d)
+u <- rnorm(d)
+v <- M %*% u
+
+plot(rbind(u,c(v)),pch=20,col=c(1,2))
+```
+
+```{r}
+g1 <- seq(from=-3,to=3,by=1)
+g2 <- seq(from=-3,to=3,by=0.01)
+grids <- rbind(expand.grid(g1,g2),expand.grid(g2,g1))
+plot(grids,pch=20,cex=0.1)
+```
+```{r}
+grids. <- M %*% t(grids)
+plot(t(grids.),pch=20,col=2,cex=0.1)
+plot(grids,pch=20,cex=0.1)
+points(t(grids.),pch=20,cex=0.1,col=2)
+```
+
+# 2次元の場合、自由度4 degrees of freedom = 4 for dim=2
+
+When n=2, the number of elements of $2\times 2$ matrix is 4; therefore degrees of freedom =4.
+
+2次元の場合、$2\times 2$行列には4成分あるので、行列作成の自由度は4である。
+
+今、4成分を自由に決めるとする。
+
+$$
+M = \begin{pmatrix} a,b\\c,d \end{pmatrix}
+$$
+
+$$
+M \begin{pmatrix} 1 \\ 0 \end{pmatrix} = \begin{pmatrix} a \\ c \end{pmatrix}
+$$
+
+$$
+M \begin{pmatrix} 0 \\ 1 \end{pmatrix} = \begin{pmatrix} b \\ d \end{pmatrix}
+$$
+これは、(1,0)を(a,c)へ、(0,1)を(b,d)へ移す、と読める。
+
+任意のベクトルは、
+$$
+v = s \begin{pmatrix} 1\\0\end{pmatrix} + t \begin{pmatrix}0\\1\end{pmatrix}\\
+Mv = M(s \begin{pmatrix} 1\\0\end{pmatrix} + t \begin{pmatrix}0\\1\end{pmatrix}) = sM \begin{pmatrix} 1 \\ 0 \end{pmatrix} + t M \begin{pmatrix} 0 \\ 1 \end{pmatrix} \\
+Mv =  s\begin{pmatrix} a \\ c \end{pmatrix} + t \begin{pmatrix} b \\ d \end{pmatrix}
+$$
+
+と書けるから、任意のベクトル$v=(s,t)$の移動先も確定する。
+
+# Exercises 1 $2 \times 2$行列による変換に関する以下の問に答えよ
+
+## Exercises 1-0
+
+点 (2,3)が$2 \times 2$行列Mによる変換で動かなかったと言う。行列Mの4成分についてどのようなことが言えるか。
+
+$$
+\begin{pmatrix}a, b\\ c, d \end{pmatrix} \begin{pmatrix}2 \\3 \end{pmatrix} = \begin{pmatrix}2 \\3 \end{pmatrix}\\
+2a + 3b = 2\\
+2c + 3d = 3\\
+b=\frac{2-2a}{3}\\
+d=\frac{3-2c}{3}
+$$
+Any a,b,c, and d satisfying the equations above, transform (2,3) to (2,3).
+```{r}
+a <- runif(1)
+b <- (2-2*a)/3
+c. <- runif(1)
+d <- (3-2*c.)/3
+M <- matrix(c(a,b,c.,d),byrow=TRUE,2,2)
+x <- c(2,3)
+M %*% x
+```
+
+## Exercises 1-1
+
+原点とは異なる点(p,q)が、Mによって不動であったと言う。行列Mの4成分について言えることは何か。
+
+## Exercises 1-2
+
+点(2,3)がMによって点(4,6)に移動したという。
+点(4,6)はどこに移動するか。
+
+## Exercises 1-3
+
+原点以外のすべての点が不動点でないようなMはどのようなMか。
+
+
+
+# 固有値分解 Eigen value decomposition
+
+$$
+M = V S V^{-1}
+$$
+
+S is a diagonal matrix for which 2 values
+
+$$
+M V = VSV^{-1}V\\
+MV = VS = V \begin{pmatrix}\lambda_1,0\\0,\lambda_2\end{pmatrix}\\
+MV = \begin{pmatrix}\lambda_1,0\\0,\lambda_2\end{pmatrix}V
+$$
+
+Therefore, colum vectors, $v_1,v_2$ ($V=(v_1,v_2)$), satisfies
+
+$$
+Mv_i = \lambda_i v_i .
+$$
+This means, points on the line in the direction of $v_i$ are transformed on the line itself.
+
+# Exercises 2
+## Exercise 2-1
+
+ベクトル $(\cos{\theta_1},\sin{\theta_1})$と$(\cos{\theta_2},\sin{\theta_2})$とを固有ベクトルとし、そのベクトル方向の点は、そのベクトル方向に$\lambda_1,\lambda_2$倍するような行列は以下のように表される
+
+$$
+M = V\begin{pmatrix}\lambda_1,0\\0,\lambda_2\end{pmatrix}V^{-1}$$
+$$
+V =\begin{pmatrix}\cos{\theta_1},\cos{\theta_2}\\ \sin{\theta_1},\sin{\theta_2} \end{pmatrix} 
+$$
+
+固有値と固有ベクトルを指定し、それに対応する$2\times 2$変換行列を作成する関数を作れ
+
+```{r echo=FALSE}
+my.m <- function(thetas,lambdas){
+	V <- matrix(c(cos(thetas[1]),sin(thetas[1]),cos(thetas[2]),sin(thetas[2])),2,2)
+	S <- diag(lambdas)
+	return(V %*% S %*% solve(V))
+}
+
+#M <- my.m(c(0.3,0.3),c(1,2))
+
+#eigen(M)
+
+my.m2 <- function(v1,v2){
+	return(cbind(v1,v2))
+}
+
+#M2 <- my.m2(c(1,2),c(2,4))
+
+#eigen(M2)
+
+```
+
+## Exercise 2-2
+点(1,0)を点(1,2)に移し、点(0,1)を点(2,4)に移す行列を作り、その行列の固有値と固有ベクトルを計算すると以下のように固有値の一つは0となる。
+
+```{r}
+M <- matrix(c(1,2,2,4),2,2)
+M
+eigen(M)
+```
+
+この行列によって、第一固有ベクトル方向の点が、その方向に5倍した点に移ることを計算して確かめよ。
+
+## Exercise 2-3
+上記の行列によって、第一固有ベクトル方向以外の点がどこに移されるか計算して確かめよ。
+
+## Exercise 2-4
+この行列の逆行列をRで計算するとどうなるか実行せよ。
+
+行列Mによって点vが点uに移せるとき、逆行列Mによって点uは点vに移るはずだが、この逆行列がうまく求まらない、ということと、行列Mの変換の特徴(Exercise 2-3)との関係を述べよ。
+
+## Exercise 2-5
+$$
+M = \begin{pmatrix}1,2\\3,4\end{pmatrix}
+$$
+の固有値を求めよ。
+
+## Exercise 2-6
+$2\times 2$行列 $\begin{pmatrix}a,b\\c,d\end{pmatrix}$の固有値を行列の成分で表せ。
+
+## Exercise 2-7
+
+Exercise 2-6の結果を踏まえ、M[1,1]=1、M[1,2]=1であって、固有値が複素数になるような行列Mを作成せよ。
+
+## Exercise 2-8
+
+行列の冪乗を用いることで、実数列{t}について$M^t$をある点に作用させたときの移動先の座標を求めることができる。
+
+$2\times 2$行列について、異なる２つの0ではない実数固有値を持つ場合、１つの固有値が0ではない実数であり、もう一つの固有値が0である場合、２つの固有値が複素数の場合のそれぞれについて、移動先の点列を描け。
+
+# Affine transformation
+
+$2\times 2$ matrix does not move the origin, (0,0).
+
+The affine transformation moves (0,0) as well.
+
+Affine transformation moves a straight line to a straight line.
+
+$$
+y = M x + v
+$$
+
+$$
+\begin{pmatrix}y_1\\y_2\end{pmatrix} = \begin{pmatrix}a,b\\c,d \end{pmatrix} \begin{pmatrix} x_1\\x_2 \end{pmatrix} + \begin{pmatrix} v_1\\v_2 \end{pmatrix}
+$$
+
+Or 
+$$
+\begin{pmatrix}y_1\\y_2\\1\end{pmatrix} = \begin{pmatrix}a,b,v_1\\c,d,v_2\\ 0,0,1 \end{pmatrix} \begin{pmatrix} x_1\\x_2\\1 \end{pmatrix} 
+$$
+
+# Exercise 3
+
+## Exercise 3-1
+
+点(1,2)を動かさず、点(2,2)を点(3,5)に移し、点(1,3)を点(4,6)に移すAffine 変換は、
+(2,2)-(1,2) = (1,0),(1,3)-(1,2)=(0,1)、
+(3,5)-(2,1) = (1,4),(4,6)-(1,3)=(3,3)、
+であるから、
+
+(1,0)を(1,4)に移し、(0,1)を(3,3)に移す$2\times 2$行列 Mと、平行移動(0,0)->(1,2)との合成のはずである。
+
+行列Mを作成せよ。
+また、Affine 変換を表す$3\times 3$行列を作成せよ。
+
+作成した$3\times 3$行列により、(1,2)が動かないことを確認せよ。
+
