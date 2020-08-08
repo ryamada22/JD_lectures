@@ -1,0 +1,53 @@
+---
+title: "RandomVariable"
+author: "Ryo Yamada"
+date: "2017年11月15日"
+output:
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Random Variable 確率変数
+
+A random variable $X$ is a variable whose value is stochastically determined.
+
+### Examples
+
+#### A dice.
+
+The set of possible outcomes are $\{1,2,3,4,5,6\}$.
+
+The probability to observe $X=3$ is $1/6$.
+
+The probability to observe $X \in \{2,3,4\}$ is,
+
+$$
+P(X \in \{2,3,4\}) = \sum_{i \in \{2,3,4\}} q_i,
+$$
+
+where $q_i = 1/6, i = \{1,2,3,4,5,6\}$ is probability mass function of dice random variable.
+
+#### Normally distributed random variable
+
+The set of possible outcomes are $\mathbf{R}$ (real values).
+
+The probability to observe $x_1 \le X \le x_2$ is,
+
+$$
+P(x_1 \le X \le x_2) = \int_{x_1}^{x_2} \frac{1}{\sqrt{2\pi s^2}} e^{-\frac{(x-\mu)^2}{2s^2}} dx ,
+$$
+
+where $\frac{1}{\sqrt{2\pi s^2}} e^{-\frac{(x-\mu)^2}{2s^2}}$ is probability density function of normal distribution.
+
+
+### Further readings
+
+#### Mathematics
+
+See https://en.wikipedia.org/wiki/Random_variable and
+
+https://en.wikipedia.org/wiki/Probability_space .
