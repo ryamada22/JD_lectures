@@ -1,7 +1,7 @@
 ---
 title: "Calculus4 Partial differentiation"
 author: "ryamada"
-date: "2017”N1Œ22“ú"
+date: "2017å¹´1æœˆ22æ—¥"
 output: 
   html_document:
     toc: true
@@ -15,22 +15,22 @@ library(rgl)
 knit_hooks$set(rgl = hook_webgl)
 ```
 
-# ³‹K•ª•z‚Ìƒpƒ‰ƒƒ^„’è Estimation of parameters of normal distribution
+# æ­£è¦åˆ†å¸ƒã®ãƒ‘ãƒ©ãƒ¡ã‚¿æ¨å®š Estimation of parameters of normal distribution
 
-$k$ŒÂ‚ÌÀ” $X=(x_1,...,x_k)$‚ªŠÏ@‚³‚ê‚½‚Æ‚·‚éB
+$k$å€‹ã®å®Ÿæ•° $X=(x_1,...,x_k)$ãŒè¦³å¯Ÿã•ã‚ŒãŸã¨ã™ã‚‹ã€‚
 
 Assume k real values $X=(x_1,...,x_k)$, are observed.
 
-‚±‚ê‚ç‚ª•½‹Ï$m$ASD $s$‚Ì³‹K•ª•z‚©‚ç‚Ì“Æ—§•W–{‚Å‚ ‚é‚Æ‚·‚é‚ÆA‚»‚Ì–Ş“xŠÖ”‚Í
+ã“ã‚Œã‚‰ãŒå¹³å‡$m$ã€SD $s$ã®æ­£è¦åˆ†å¸ƒã‹ã‚‰ã®ç‹¬ç«‹æ¨™æœ¬ã§ã‚ã‚‹ã¨ã™ã‚‹ã¨ã€ãã®å°¤åº¦é–¢æ•°ã¯
 
 The likelihood function under the hypothesis where they are from normal dist with mean $m$ and SD $s$ is;
 
 $$
 L(m,s|x) = \prod_{i=1}^k (\frac{1}{\sqrt{2\pi s^2}}e^{-\frac{1}{2}\frac{(x_1-m)^2}{s^2}})
 $$
-‚Å‚ ‚éB
+ã§ã‚ã‚‹ã€‚
 
-‘Î”‚ğ‚Æ‚Á‚ÄA’è”•”•ª‚ğÈ—ª‚·‚ê‚Î
+å¯¾æ•°ã‚’ã¨ã£ã¦ã€å®šæ•°éƒ¨åˆ†ã‚’çœç•¥ã™ã‚Œã°
 
 Taking logaithm,
 
@@ -38,7 +38,7 @@ $$
 \log{L} = -k\log{s} -\frac{1}{2}\frac{1}{s^2}\sum_{i=1}^k (x_i-m)^2 + C
 $$
 
-‚±‚ê‚ğA$m$,$s$‚ÌŠÖ”‚ç‚µ‚­•ÏŒ`‚·‚é‚Æ
+ã“ã‚Œã‚’ã€$m$,$s$ã®é–¢æ•°ã‚‰ã—ãå¤‰å½¢ã™ã‚‹ã¨
 
 Transform the function so that it appears a function of $m$ and $s$,
 
@@ -46,7 +46,7 @@ $$
 \log{L} = -k\log{s}-\frac{1}{2}\frac{1}{s^2} (k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2) + C
 $$
 
-‚±‚Ì‘Î”–Ş“x‚É€‚¶‚½ŠÖ”‚ğA‰¡²‚É$m$Ac²‚É$s$‚ğ‚Æ‚Á‚Ä•`‚¢‚Ä‚İ‚éB
+ã“ã®å¯¾æ•°å°¤åº¦ã«æº–ã˜ãŸé–¢æ•°ã‚’ã€æ¨ªè»¸ã«$m$ã€ç¸¦è»¸ã«$s$ã‚’ã¨ã£ã¦æã„ã¦ã¿ã‚‹ã€‚
 
 Draw the function with $m$ horizontal and $s$ vertical axes;
 
@@ -65,7 +65,7 @@ plot3d(ms[,1],ms[,2],log.L)
 
 ## m = 0
 
-•½‹Ï‚ª0‚Ì³‹K•ª•z‚©‚ç‚ÌƒTƒ“ƒvƒ‹‚Å‚ ‚é‚±‚Æ‚ª‚í‚©‚Á‚Ä‚¢‚é‚È‚ç
+å¹³å‡ãŒ0ã®æ­£è¦åˆ†å¸ƒã‹ã‚‰ã®ã‚µãƒ³ãƒ—ãƒ«ã§ã‚ã‚‹ã“ã¨ãŒã‚ã‹ã£ã¦ã„ã‚‹ãªã‚‰
 
 Under the assumption where mean is 0,
 
@@ -75,7 +75,7 @@ plot3d(ms[,1],ms[,2],log.L)
 spheres3d(ms[id,1],ms[id,2],log.L[id],radius=3,color=2)
 ```
 
-$m=0$‚Ì‰º‚Å‚ÌA$s$‚ÌÅ–Ş„’è’l‚ÍA‘Î”–Ş“x(‚É€‚¶‚½)ŠÖ”‚Ì$m$‚É0‚ğ‘ã“ü‚µ‚½–Ş“xŠÖ”‚ğ”÷•ª‚·‚ê‚Î‚æ‚¢
+$m=0$ã®ä¸‹ã§ã®ã€$s$ã®æœ€å°¤æ¨å®šå€¤ã¯ã€å¯¾æ•°å°¤åº¦(ã«æº–ã˜ãŸ)é–¢æ•°ã®$m$ã«0ã‚’ä»£å…¥ã—ãŸå°¤åº¦é–¢æ•°ã‚’å¾®åˆ†ã™ã‚Œã°ã‚ˆã„
 
 The function with $m=0$ should be differentiate to tell the MLE of $s$. 
 
@@ -88,7 +88,7 @@ $$
 =-\frac{1}{s^3}(k s^2 - \sum_{i=1}^k x_i^2)
 $$
 
-Œ‹‹Ç then,
+çµå±€ then,
 $$
 s = \sqrt{\frac{\sum_{i=1}^k x_i^2}{k}}
 $$
@@ -105,7 +105,7 @@ spheres3d(0,s.,log.L.,radius=5,color=3)
 
 ## m=1
 
-$m=1$‚Å“¯‚¶‚±‚Æ‚ğ‚·‚é‚È‚ç
+$m=1$ã§åŒã˜ã“ã¨ã‚’ã™ã‚‹ãªã‚‰
 
 In the case of $m=1$,
 $$
@@ -137,17 +137,17 @@ spheres3d(1,s..,log.L..,radius=5,color=5)
 
 ## $m= ? $
 
-$m=0$, $m=1$‚Ìê‡‚Å‚ÍA$m$‚ğŒÅ’è‚µ‚Ä$\log{L}$‚ğ$s$‚Å”÷•ª‚µ‚½B
+$m=0$, $m=1$ã®å ´åˆã§ã¯ã€$m$ã‚’å›ºå®šã—ã¦$\log{L}$ã‚’$s$ã§å¾®åˆ†ã—ãŸã€‚
 
 For the cases of $m=0$ and $m=1$, $\log{L}$ was differentiated with $s$ with $m$ as constant.
 
-‚±‚Ì‚æ‚¤‚É•Ï”‚ğŒÅ’è‚µ‚Äc‚è‚Ì•Ï”‚Å”÷•ª‚·‚é‚Ì‚ª•Î”÷•ªB
+ã“ã®ã‚ˆã†ã«å¤‰æ•°ã‚’å›ºå®šã—ã¦æ®‹ã‚Šã®å¤‰æ•°ã§å¾®åˆ†ã™ã‚‹ã®ãŒåå¾®åˆ†ã€‚
 This is partial differentiation.
 
 $$
 \frac{\partial}{\partial s} \log{L} = -\frac{k}{s} + \frac{1}{s^3} (k m^2 - 2(\sum_{i=1}^k x_i)m + \sum_{i=1}^k x_i^2)
 $$
-$m$‚Ì’l‚É‰‚¶‚ÄA$s$‚ÌÅ–Ş„’è’l‚ÍŸ‚Ì‚æ‚¤‚È’l‚ğ‚Æ‚é‚±‚Æ‚ª‚í‚©‚é
+$m$ã®å€¤ã«å¿œã˜ã¦ã€$s$ã®æœ€å°¤æ¨å®šå€¤ã¯æ¬¡ã®ã‚ˆã†ãªå€¤ã‚’ã¨ã‚‹ã“ã¨ãŒã‚ã‹ã‚‹
 
 Partial differentiation tells MLE for arbitrary $m$.
 
@@ -163,27 +163,27 @@ plot(m,s.mle,type="l")
 
 ## Exercise 1
 
-### Exercise 1-‚P
-$m$‚ÉŠÖ‚·‚é•Î”÷•ª‚ğ‚µ‚ÄA$s$‚Æ‚»‚ê‚É‘Î‰‚·‚é$m$‚ÌÅ–Ş„’è’l‚ÌŠÖŒW‚ğƒvƒƒbƒg‚¹‚æ‚P
+### Exercise 1-ï¼‘
+$m$ã«é–¢ã™ã‚‹åå¾®åˆ†ã‚’ã—ã¦ã€$s$ã¨ãã‚Œã«å¯¾å¿œã™ã‚‹$m$ã®æœ€å°¤æ¨å®šå€¤ã®é–¢ä¿‚ã‚’ãƒ—ãƒ­ãƒƒãƒˆã›ã‚ˆï¼‘
 
 Partially differentiate $\log{L}$ with $m$ and draw the relation between $s$ and MLE of $m$.
 
 
 ### Exercise 1-3
 
-íõF‘Ìã‚ÌSNP‚Í3í—Ş‚ÌƒfƒBƒvƒƒ^ƒCƒv‚ğì‚éB
-‚»‚ÌƒfƒBƒvƒƒ^ƒCƒv•p“x‚ğ$(p_{MM},p_{Mm},p_{mm})$‚Æ‚·‚éB
+å¸¸æŸ“è‰²ä½“ä¸Šã®SNPã¯3ç¨®é¡ã®ãƒ‡ã‚£ãƒ—ãƒ­ã‚¿ã‚¤ãƒ—ã‚’ä½œã‚‹ã€‚
+ãã®ãƒ‡ã‚£ãƒ—ãƒ­ã‚¿ã‚¤ãƒ—é »åº¦ã‚’$(p_{MM},p_{Mm},p_{mm})$ã¨ã™ã‚‹ã€‚
 
 SNP in autosomal chromosome makes 3 diplitypes, whose frequency is 
 $(p_{MM},p_{Mm},p_{mm})$.
 
 
-¡A3ƒfƒBƒvƒƒ^ƒCƒvl”‚ª$(n_{MM},n_{Mm},n_{mm})$‚ÆŠÏ@‚³‚ê‚½‚Æ‚·‚éB
+ä»Šã€3ãƒ‡ã‚£ãƒ—ãƒ­ã‚¿ã‚¤ãƒ—äººæ•°ãŒ$(n_{MM},n_{Mm},n_{mm})$ã¨è¦³å¯Ÿã•ã‚ŒãŸã¨ã™ã‚‹ã€‚
 
 Assume $(n_{MM},n_{Mm},n_{mm})$ are the observed number of individuals of three diplotypes.
 
-‚±‚ÌŠÏ@‚Ì‰º‚Å‚ÌAW’c‚ÌƒfƒBƒvƒƒ^ƒCƒv•p“x
-(p_{MM},p_{Mm},p_{mm})‚Ì–Ş“xŠÖ”‚Í
+ã“ã®è¦³å¯Ÿã®ä¸‹ã§ã®ã€é›†å›£ã®ãƒ‡ã‚£ãƒ—ãƒ­ã‚¿ã‚¤ãƒ—é »åº¦
+(p_{MM},p_{Mm},p_{mm})ã®å°¤åº¦é–¢æ•°ã¯
 
 The likelihood fucntion of diplotype frequency for the observarion follows.
 
@@ -192,7 +192,7 @@ L((p_{MM},p_{Mm},p_{mm})|(n_{MM},n_{Mm},n_{mm})) = \begin{pmatrix} n_{MM}+n_{Mm}
 $$
 
 
-–Ş“xŠÖ”‚Ì‘Î”‚ğæ‚èA’è”•”•ª‚ğÈ—ª‚·‚é‚ÆˆÈ‰º‚Ì‚æ‚¤‚É‚È‚éB
+å°¤åº¦é–¢æ•°ã®å¯¾æ•°ã‚’å–ã‚Šã€å®šæ•°éƒ¨åˆ†ã‚’çœç•¥ã™ã‚‹ã¨ä»¥ä¸‹ã®ã‚ˆã†ã«ãªã‚‹ã€‚
 
 Taking logarithm,
 
@@ -200,7 +200,7 @@ $$
 \log{L((p_{MM},p_{Mm},p_{mm})|(n_{MM},n_{Mm},n_{mm}))} = n_{MM} \log{p_{MM}} + n_{Mm}\log{p_{Mm}} + n_{mm}\log{p_{mm}} + C
 $$
 
-$p_{mm}=1 - p_{MM}-p_{Mm}$‚Å‚ ‚é‚±‚Æ‚ğ—˜—p‚µ‚ÄA$\log{L}$‚ğ$(p_{MM},p_{Mm})$‚Ì2•Ï”ŠÖ”‚Å‚ ‚é‚Æ‚İ‚È‚µA$p_{MM}$,$p_{Mm}$‚Å‚»‚ê‚¼‚ê•Î”÷•ª‚¹‚æB
+$p_{mm}=1 - p_{MM}-p_{Mm}$ã§ã‚ã‚‹ã“ã¨ã‚’åˆ©ç”¨ã—ã¦ã€$\log{L}$ã‚’$(p_{MM},p_{Mm})$ã®2å¤‰æ•°é–¢æ•°ã§ã‚ã‚‹ã¨ã¿ãªã—ã€$p_{MM}$,$p_{Mm}$ã§ãã‚Œãã‚Œåå¾®åˆ†ã›ã‚ˆã€‚
 
 Using $p_{mm}=1 - p_{MM}-p_{Mm}$, handle the function as the funtion with two parameters $p_{MM}$,$p_{Mm}$ and partially differentialte the function with both.
 
@@ -208,30 +208,30 @@ Using $p_{mm}=1 - p_{MM}-p_{Mm}$, handle the function as the funtion with two pa
 
 ### Exercise 1-4
 
-Exercise 1-3 ‚Ì•Î”÷•ª‚ğ—˜—p‚µ‚ÄA$(p_{MM},p_{Mm},p_{mm})$‚ÌÅ–Ş„’è’l‚ğ‹‚ß‚æ
+Exercise 1-3 ã®åå¾®åˆ†ã‚’åˆ©ç”¨ã—ã¦ã€$(p_{MM},p_{Mm},p_{mm})$ã®æœ€å°¤æ¨å®šå€¤ã‚’æ±‚ã‚ã‚ˆ
 
 Using the result of Exercise 1-4, answer MLE of $(p_{MM},p_{Mm},p_{mm})$.
 
 ### Exercise 1-5
 
-ƒAƒŒƒ‹•p“x‚ğ(p,1-p)‚Æ‚·‚é‚ÆAHardy-Weinberg •½t‚Ì‰º‚Å‚ÌƒfƒBƒvƒƒ^ƒCƒv•p“x‚Í
+ã‚¢ãƒ¬ãƒ«é »åº¦ã‚’(p,1-p)ã¨ã™ã‚‹ã¨ã€Hardy-Weinberg å¹³è¡¡ã®ä¸‹ã§ã®ãƒ‡ã‚£ãƒ—ãƒ­ã‚¿ã‚¤ãƒ—é »åº¦ã¯
 
 Under the condition of Hardy-Weinberg equilibrium, three diplotype freq when allele frequencies are (p,1-p),
 
 $$
 (p_{MM},p_{Mm},p_{mm}) = (p^2, 2p(1-p),(1-p)^2)
 $$
-‚Å‚ ‚éBHWE‚ğ‰¼’è‚·‚é‚ÆA–Ş“xŠÖ”‚ÍA1•Ï”ŠÖ”‚Æ‚È‚éB
+ã§ã‚ã‚‹ã€‚HWEã‚’ä»®å®šã™ã‚‹ã¨ã€å°¤åº¦é–¢æ•°ã¯ã€1å¤‰æ•°é–¢æ•°ã¨ãªã‚‹ã€‚
 
 Under the assumption of HWE, the likelihood function is a funciton with one parameter.
 
-HWE‰¼’è‚Ì‰º‚Å‚ÌA–Ş“xŠÖ”‚ğ¦‚µA‚»‚ê‚ğ”÷•ª‚·‚é‚±‚Æ‚ÅƒAƒŒƒ‹•p“x$p$‚ÌÅ–Ş„’è’l‚ğ‹‚ß‚æB
+HWEä»®å®šã®ä¸‹ã§ã®ã€å°¤åº¦é–¢æ•°ã‚’ç¤ºã—ã€ãã‚Œã‚’å¾®åˆ†ã™ã‚‹ã“ã¨ã§ã‚¢ãƒ¬ãƒ«é »åº¦$p$ã®æœ€å°¤æ¨å®šå€¤ã‚’æ±‚ã‚ã‚ˆã€‚
 
 Show the likelihood function and differentiate it and answer MLE.
 
 ### Exercise 1-6
 
-Hardy-Weinberg•s•½t‚ğ‹–‚¹‚Î
+Hardy-Weinbergä¸å¹³è¡¡ã‚’è¨±ã›ã°
 
 Under the assumption of HW-disequiriblium,
 
@@ -239,11 +239,11 @@ Under the assumption of HW-disequiriblium,
 $$
 (p_{MM} + \delta, p_{Mm} - 2\delta, p_{mm} + \delta)
 $$
-‚Æ•\‚¹‚éB
+ã¨è¡¨ã›ã‚‹ã€‚
 
-‚±‚ê‚É‚æ‚èA–Ş“xŠÖ”‚Í$p$,$\delta$‚Ì2•Ï”ŠÖ”‚Æ‚È‚é
+ã“ã‚Œã«ã‚ˆã‚Šã€å°¤åº¦é–¢æ•°ã¯$p$,$\delta$ã®2å¤‰æ•°é–¢æ•°ã¨ãªã‚‹
 
-2•Ï”‚Å•Î”÷•ª‚µA‚»‚ÌŒ‹‰Ê‚ğ¦‚¹
+2å¤‰æ•°ã§åå¾®åˆ†ã—ã€ãã®çµæœã‚’ç¤ºã›
 
 Now the likelihood funtion has two parameters.
 Partially differentiate it and show the results.

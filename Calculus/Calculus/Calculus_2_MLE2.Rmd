@@ -1,7 +1,7 @@
 ---
 title: "Calculus2 Calculus for Likelihood Function and Maximum Likelihood Estimation "
 author: "ryamada"
-date: "2017�N1��22��"
+date: "2017年1月22日"
 output: 
   html_document:
     toc: true
@@ -17,11 +17,11 @@ knit_hooks$set(rgl = hook_webgl)
 ```
 
 
-# �x�[�^���z
+# ベータ分布
 
-## �ޓx�֐�
+## 尤度関数
 
-(n,m)���ۊώ@�̖ޓx�֐�
+(n,m)成否観察の尤度関数
 $$
 L(p|n,m) = \frac{\Gamma(n+m+2)}{\Gamma(n+1)\Gamma(m+1)}p^n (1-p)^m
 $$
@@ -40,7 +40,7 @@ d <- dbeta(p,n+1,m+1)
 plot(p,d,type="l")
 ```
 
-�Ŗސ���l$p_{MLE}$��
+最尤推定値$p_{MLE}$は
 $$
 p_{MLE}=\frac{n}{n+m}
 $$
@@ -49,7 +49,7 @@ plot(p,d,type="l")
 abline(v=n/(n+m),col=2)
 ```
 
-�������g���ċ��߂�B
+微分を使って求める。
 
 $$
 L(p|n,m) = \frac{\Gamma(n+m+2)}{\Gamma(n+1)\Gamma(m+1)}p^n (1-p)^m\\
@@ -96,10 +96,10 @@ $$
 
 ### Exercise 1-1
 
-$p_{MLE}$�ł�$\frac{d}{dp}L(p_{MLE}|n,m)=0$�ł���A���A$\frac{d^2}{dp^2}L(p_{MLE}|n,m) = \frac{d}{dp}(\frac{d}{dp}L(p_{MLE}|n,m)) > 0$�ł���B
-����������B
+$p_{MLE}$では$\frac{d}{dp}L(p_{MLE}|n,m)=0$であり、かつ、$\frac{d^2}{dp^2}L(p_{MLE}|n,m) = \frac{d}{dp}(\frac{d}{dp}L(p_{MLE}|n,m)) > 0$である。
+これを示せ。
 
-## �ΐ��ޓx�֐�
+## 対数尤度関数
 
 $$
 \log{L(p|n,m)}=\log{(\frac{\Gamma(n+m+2)}{\Gamma(n+1)\Gamma(m+1)}p^n (1-p)^m)}\\
@@ -117,7 +117,7 @@ abline(v=n/(n+m),col=2)
 ```
 
 
-�Ŗސ���̂��߂ɔ�������Ȃ�ΐ��ޓx�֐���������Ă��悢�B
+最尤推定のために微分するなら対数尤度関数を微分してもよい。
 
 $$
 \frac{d}{dp}(\log(L(p|n,m))) = \frac{d}{dp}(C + n\log{p} + m \log{(1-p)})\\
@@ -128,17 +128,17 @@ $$
 =\frac{n+m}{p(1-p)}(\frac{n}{n+m} - p)
 $$
 
-2�̑厖�Ȃ��ƁB
+2つの大事なこと。
 
-* �ޓx�֐��̂����A$p$�̊֐��ł͂Ȃ�����($\frac{\Gamma(n+m+2)}{\Gamma(n+1)\Gamma(m+1)})$)�͍Ŗސ���ɂ͕s�v
+* 尤度関数のうち、$p$の関数ではない成分($\frac{\Gamma(n+m+2)}{\Gamma(n+1)\Gamma(m+1)})$)は最尤推定には不要
 
-* �ޓx�֐��̐ς͑ΐ��ޓx�֐��Ƃ��邱�ƂŘa�Ƃ���Ɗy�ɂȂ�
+* 尤度関数の積は対数尤度関数とすることで和とすると楽になる
 
-# �|�A�\�����z
+# ポアソン分布
 
-�P�ʎ��ԓ����蕽��$\lambda$��N���錻�ۂ�����B
+単位時間当たり平均$\lambda$回起きる現象がある。
 
-�P�ʎ��Ԃ�����̐��N�񐔂̓|�A�\�����z�ɏ]���B
+単位時間あたりの生起回数はポアソン分布に従う。
 
 ```{r}
 lambda <- 2.8
@@ -148,7 +148,7 @@ plot(table(x))
 mean(x)
 ```
 
-## �m�����ʊ֐�
+## 確率質量関数
 
 $$
 P(n|\lambda) = \frac{\lambda^n}{n!}e^{-\lambda}
@@ -163,7 +163,7 @@ plot(ns,p,type="h")
 ```{r}
 plot(ns,dpois(ns,lambda),type="h")
 ```
-## �ޓx�֐��E�ΐ��ޓx�֐�
+## 尤度関数・対数尤度関数
 
 $$
 L(\lambda|n) = \frac{\lambda^n}{n!}e^{-\lambda}\\
@@ -179,27 +179,27 @@ plot(lambdas,L,type="l")
 plot(lambdas,log(L),type="l")
 ```
 
-�|�A�\�����z�����肵�A�P�ʎ��ԓ�����$n$��̊ώ@�������Ƃ���ƁA���̃|�A�\�����z�̃p�����^$/lambda$�̍Ŗސ���l�͂����Ȃ̂���������ċ��߂�B
+ポアソン分布を仮定し、単位時間当たり$n$回の観察をしたとすると、このポアソン分布のパラメタ$/lambda$の最尤推定値はいくつなのかを微分して求める。
 
 $$
 \frac{d}{d\lambda} \log{L(\lambda|n=4)} = \frac{d}{d\lambda}(n\log{\lambda} - \lambda) = \frac{n}{\lambda}-1 = 0
 $$
 
-����$\lambda = n$
+解は$\lambda = n$
 
-���A�����|�A�\�����z����$k$��̊ώ@�������Ƃ���A�P�ʎ��ԓ�����̐��N�񐔂��A$ns=(n_1,n_2,...,n_k)$�������Ƃ����B
+今、同じポアソン分布から$k$回の観察をしたところ、単位時間当たりの生起回数が、$ns=(n_1,n_2,...,n_k)$だったという。
 
-���̂Ƃ��̖ޓx�֐���
+このときの尤度関数は
 
 $$
 L(ns|\lambda) = \prod_{i=1}^k L(n_i|\lambda)
 $$
 
-�ΐ��ޓx�֐���
+対数尤度関数は
 $$
 \log{L(ns|\lambda)} = \sum_{i=1}^k \log{L(n_i|\lambda)}
 $$
-��������
+微分する
 
 $$
 \frac{d}{d\lambda}(\sum_{i=1}^k \log{L(n_i|\lambda)}) = \sum_{i=1}^k \frac{d}{d\lambda}\log{L(n_i|\lambda)}\\
@@ -207,27 +207,27 @@ $$
 = \frac{1}{\lambda} (\sum_{i=1}^k n_i - k\lambda)
 $$
 
-$\frac{d}{d\lambda }\log{L(ns|\lambda)}=0$�̉���$\lambda = \frac{\sum_{i=1}^k n_i}{k}$ 
+$\frac{d}{d\lambda }\log{L(ns|\lambda)}=0$の解は$\lambda = \frac{\sum_{i=1}^k n_i}{k}$ 
 
 # Exercise 2
 
 ## Exercise 2-1
 
-$k$�̐��̎����l$x=(x_1,...,x_k)$���ώ@���ꂽ�B�w�����z����̓Ɨ��ȕW�{�Ƃ݂Ȃ��A�w�����z�̃p�����^�Ɋւ���(�ΐ�)�ޓx�֐������B�܂��A�������g���āA�p�����^�̍Ŗސ���l�����߂�B
+$k$個の正の実数値$x=(x_1,...,x_k)$が観察された。指数分布からの独立な標本とみなし、指数分布のパラメタに関する(対数)尤度関数を作れ。また、微分を使って、パラメタの最尤推定値を求めよ。
 
 ## Exercise 2-2
 
-$k$��0�t�߂̎����l���ώ@���ꂽ�B����0�A�W���΍�$s$�̐��K���z����̓Ɨ��ȕW�{�Ƃ݂Ȃ��A$s$�Ɋւ���(�ΐ�)�ޓx�֐������B�܂��A�������g���āA$s$�̍Ŗސ���l�����߂�B
+$k$個の0付近の実数値が観察された。平均0、標準偏差$s$の正規分布からの独立な標本とみなし、$s$に関する(対数)尤度関数を作れ。また、微分を使って、$s$の最尤推定値を求めよ。
 
 ## Exercise 2-3
-�����W�{���W���΍���1�ŕ��ς����m�̐��K���z����̓Ɨ��ȕW�{�ł���Ƃ݂Ȃ��A����$m$�Ɋւ���(�ΐ�)�ޓx�֐������B�܂��A�������g���āA$m$�̍Ŗސ���l�����߂�B
+同じ標本が標準偏差が1で平均が未知の正規分布からの独立な標本であるとみなし、平均$m$に関する(対数)尤度関数を作れ。また、微分を使って、$m$の最尤推定値を求めよ。
 
-# �X���A�ڐ�
+# 傾き、接線
 
 $$
 y = f(x) = x^2
 $$
-�̃O���t��
+のグラフは
 
 ```{r}
 x <- seq(from=-5,to=5,length=100)
@@ -238,11 +238,11 @@ plot(x,y,type="l")
 $$
 \frac{d}{dx}f(x) = 2x
 $$
-�̓O���t�̐ڐ��̌X����\���B
+はグラフの接線の傾きを表す。
 
-$y=f(x)$��̓_�A$(x_0,y_0=f(x_0)$��ʂ�A�X����$/frac{d}{dx}f(x_0))$�̒����́A$(x_0,y_0$�ɂ�����A�Ȑ�$y=f(x))$�̐ڐ��ł���B
+$y=f(x)$上の点、$(x_0,y_0=f(x_0)$を通り、傾きが$/frac{d}{dx}f(x_0))$の直線は、$(x_0,y_0$における、曲線$y=f(x))$の接線である。
 
-�ڐ���̓_��
+接線上の点は
 
 $$
 y = y_0 + \frac{d}{dx}f(x_0) \times (x-x_0)
@@ -263,13 +263,13 @@ points(x,y.tangent,type="l",col=2)
 
 ## Exercise 3-1
 
-$y=x^2$�̃O���t��`���A���̏�̑����̓_�̐ڐ��𓯈�̃v���b�g�ɏd�˂ĕ`���B
+$y=x^2$のグラフを描き、その上の多数の点の接線を同一のプロットに重ねて描け。
 
 ## Exercise 3-2
 
-$y=sin(x)$�̃O���t��`���A�����̐ڐ����d�˂ĕ`���B
+$y=sin(x)$のグラフを描き、多数の接線を重ねて描け。
 
 ## Exercise 3-3
 
-���l�ɐ��K���z�̊m�����x�֐��̐ڐ���`���B
+同様に正規分布の確率密度関数の接線を描け。
 

@@ -1,7 +1,7 @@
 ---
-title: "Calculus6 Taylor expansion ƒeƒCƒ‰[“WŠJ"
+title: "Calculus6 Taylor expansion ãƒ†ã‚¤ãƒ©ãƒ¼å±•é–‹"
 author: "ryamada"
-date: "2017”N1Œ22“ú"
+date: "2017å¹´1æœˆ22æ—¥"
 output: 
   html_document:
     toc: true
@@ -16,9 +16,9 @@ library(rgl)
 knit_hooks$set(rgl = hook_webgl)
 ```
 
-# ® Formula
+# å¼ Formula
 
-ŠÖ”‚ª‘½€®‚É‚È‚Á‚Ä‚¢‚éB
+é–¢æ•°ãŒå¤šé …å¼ã«ãªã£ã¦ã„ã‚‹ã€‚
 
 A function is expressed as a polynomial function.
 
@@ -52,7 +52,7 @@ f^{(4k+1)}(x) = \cos{x}\\
 f^{(4k+2)}(x) = - \sin{x}\\
 f^{(4k+3)}(x) = - \cos{x}\\
 $$
-$a=0$‚Ì‚Æ‚«AWhen $a=0$
+$a=0$ã®ã¨ãã€When $a=0$
 
 $$
 f^{(4k)}(0) = \sin{0} = 0\\
@@ -121,15 +121,15 @@ Do the same of $f(x) = (x-1)(x-2)(x-3)(x-4)$
 
 # Multiple testing correction
 
-$N$ŒÂ‚Ì“Æ—§‚ÈŒŸ’è‚ğs‚¢$N$ŒÂ‚Ìp-’l‚ğ“¾‚é‚Æ‚·‚éB
-‹A–³‰¼à‚ª¬‚è—§‚Â‚Æ‚«A‚·‚×‚Ä‚Ìp-’l‚ª aˆÈã‚Å‚ ‚éŠm—¦‚Í
+$N$å€‹ã®ç‹¬ç«‹ãªæ¤œå®šã‚’è¡Œã„$N$å€‹ã®p-å€¤ã‚’å¾—ã‚‹ã¨ã™ã‚‹ã€‚
+å¸°ç„¡ä»®èª¬ãŒæˆã‚Šç«‹ã¤ã¨ãã€ã™ã¹ã¦ã®p-å€¤ãŒ aä»¥ä¸Šã§ã‚ã‚‹ç¢ºç‡ã¯
 
 Assume $N$ independent tests. When null hypothesis is true for all, probability that all p-values are equal or more than a is;
 
 $$
 f(a) = (1-a)^N
 $$
-‚±‚Ì®‚Ì$a=0$ü•Ó‚Ì$f(a)^{(1)}$‚Ü‚Å‚ÌƒeƒCƒ‰[“WŠJ‚Í
+ã“ã®å¼ã®$a=0$å‘¨è¾ºã®$f(a)^{(1)}$ã¾ã§ã®ãƒ†ã‚¤ãƒ©ãƒ¼å±•é–‹ã¯
 
 Taylor expanstion around $a=0$ upto $f(a)^{(1)}$ is;
 
@@ -137,7 +137,7 @@ $$
 f(a) \sim \frac{1}{0!}a^0 + (-1)\frac{N}{1!}a^1 = 1- Na
 $$
 
-‚±‚Ì‹ß—‚ğ—p‚¢‚½‚Ì‚ªƒ{ƒ“ƒtƒFƒƒj•â³B
+ã“ã®è¿‘ä¼¼ã‚’ç”¨ã„ãŸã®ãŒãƒœãƒ³ãƒ•ã‚§ãƒ­ãƒ‹è£œæ­£ã€‚
 
 Bonferroni's correction is based on this approximation.
 
@@ -145,26 +145,26 @@ Bonferroni's correction is based on this approximation.
 
 ## Exercise 2-1
 
-ˆÈ‰º‚ÌŠÖ”‚ğ$a=0$ü•Ó‚Å$f(a)^k; k=0,1,2,...$‚Ü‚ÅƒeƒCƒ‰[“WŠJ‚µ‚½‚Æ‚«‚Ì$k$‚Æ‹ß—’l‚Æ‚ÌŠÖŒW‚ğƒvƒƒbƒg‚µAƒ{ƒ“ƒtƒFƒƒj•â³‚ªu•Ûç“Iv‚Å‚ ‚é‚±‚Æ‚ğà–¾‚¹‚æB
+ä»¥ä¸‹ã®é–¢æ•°ã‚’$a=0$å‘¨è¾ºã§$f(a)^k; k=0,1,2,...$ã¾ã§ãƒ†ã‚¤ãƒ©ãƒ¼å±•é–‹ã—ãŸã¨ãã®$k$ã¨è¿‘ä¼¼å€¤ã¨ã®é–¢ä¿‚ã‚’ãƒ—ãƒ­ãƒƒãƒˆã—ã€ãƒœãƒ³ãƒ•ã‚§ãƒ­ãƒ‹è£œæ­£ãŒã€Œä¿å®ˆçš„ã€ã§ã‚ã‚‹ã“ã¨ã‚’èª¬æ˜ã›ã‚ˆã€‚
 
 Expand $f(a)$ around $a=0$ upto $f(a)^k; k=0,1,2,...$ and plot the relation between k and the approximated values, then describe that Bonferroni's correction is conservative using the plot.
 $$
 f(a) = (1-a)^N
 $$
 
-# Ï—¦•êŠÖ” Moment generating function
+# ç©ç‡æ¯é–¢æ•° Moment generating function
 
 ## Exercise 3
 
 ### Exercise 3-1
 
-‚±‚ÌƒTƒCƒg https://www.probabilitycourse.com/chapter6/6_1_3_moment_functions.php ‚ğ“Ç‚İAÏ—¦•êŠÖ”‚ÆƒeƒCƒ‰[“WŠJ‚Æ‚ÌŠÖŒW‚ğà–¾‚¹‚æB
+ã“ã®ã‚µã‚¤ãƒˆ https://www.probabilitycourse.com/chapter6/6_1_3_moment_functions.php ã‚’èª­ã¿ã€ç©ç‡æ¯é–¢æ•°ã¨ãƒ†ã‚¤ãƒ©ãƒ¼å±•é–‹ã¨ã®é–¢ä¿‚ã‚’èª¬æ˜ã›ã‚ˆã€‚
 
 Read the site https://www.probabilitycourse.com/chapter6/6_1_3_moment_functions.php .
 
 Describe relation between moment generating function and Taylor expansion.
 
-# ƒjƒ…[ƒgƒ“–@@Newton's method
+# ãƒ‹ãƒ¥ãƒ¼ãƒˆãƒ³æ³•ã€€Newton's method
 
 $$
 f(x) = \frac{1}{2}e^{x^3} + 2x - 2
@@ -180,20 +180,20 @@ plot(x,fx,type="l")
 abline(h=0,col=2)
 ```
 
-$f(x)=0$‚Ì‰ğ‚ğ‹ß—“I‚É‹‚ß‚éB
+$f(x)=0$ã®è§£ã‚’è¿‘ä¼¼çš„ã«æ±‚ã‚ã‚‹ã€‚
 
 Solve $f(x)=0$ numerically.
 
-## ’P’²«‚ÌŠm”F Monotonicity
+## å˜èª¿æ€§ã®ç¢ºèª Monotonicity
 
 # Exercise 4 
 ## Exercise 4-1 
-$f(x)$‚ª’P’²‘‰ÁŠÖ”‚Å‚ ‚é‚±‚Æ‚ğ¦‚¹B
+$f(x)$ãŒå˜èª¿å¢—åŠ é–¢æ•°ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã›ã€‚
 Show that $f(x)$ is a monotonically increasing function.
 
-## ƒjƒ…[ƒgƒ“–@ Newton's method
+## ãƒ‹ãƒ¥ãƒ¼ãƒˆãƒ³æ³• Newton's method
 
-“K“–‚È’l$x_0$‚©‚çƒXƒ^[ƒg‚µA$\frac{d}{dx}f(x)$‚ğg‚Á‚ÄA$f(x)=0$‚Ì‰ğ‚ÉŸ‘æ‚É‹ß‚Ã‚­B
+é©å½“ãªå€¤$x_0$ã‹ã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã—ã€$\frac{d}{dx}f(x)$ã‚’ä½¿ã£ã¦ã€$f(x)=0$ã®è§£ã«æ¬¡ç¬¬ã«è¿‘ã¥ãã€‚
 
 Take an arbitrary value$x_0$ and get closer to the solution of $f(x)=0$ step-by-step.
 
@@ -227,11 +227,11 @@ abline(h=0,col=2)
 abline(this.intercept,this.dfxdx,col=3)
 ```
 
-Úü‚Æx²‚ÌŒğ“_‚Í$f(x)=0$‚Ì‰ğ‚É‹ß‚Ã‚¢‚Ä‚¢‚éB
+æ¥ç·šã¨xè»¸ã®äº¤ç‚¹ã¯$f(x)=0$ã®è§£ã«è¿‘ã¥ã„ã¦ã„ã‚‹ã€‚
 
 The crossing point with the $y=0$ line of the tangent line at $(x_0,f(x_0))$ gets closer to the crossing point of $y=f(x)$ with the $y=0$ line is closer that $x_0$. 
 
-‚±‚ê‚ğŒJ‚è•Ô‚·BRepeat this procedure.
+ã“ã‚Œã‚’ç¹°ã‚Šè¿”ã™ã€‚Repeat this procedure.
 ```{r}
 this.x <- new.x
 this.y <- my.fx(this.x)

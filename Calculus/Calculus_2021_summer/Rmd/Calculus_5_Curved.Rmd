@@ -1,0 +1,470 @@
+---
+title: "Calculus5 曲線・曲面 Curved line and surface"
+author: "ryamada"
+date: "2017年1月22日"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 6
+    number_section: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+library(rgl)
+knit_hooks$set(rgl = hook_webgl)
+```
+
+# 曲線の長さ Length of curve
+
+$$
+y = f(x) = x + \frac{1}{2}x^2
+$$
+
+```{r}
+x <- seq(from=0,to=3,length=100)
+y <- x+ 1/2*x^2
+plot(x,y,type="l")
+```
+
+
+
+$$
+\frac{d}{dx}f(x) = 1 + x
+$$
+微分すると、単位x増分当たりのyの増加量がわかる。それらは、微小直角三角形。
+
+Differentiation gives increase of y along with unit increase in x. They are two edges of a right triangle.
+
+三角形 (x,y) ,(x+dx,y),(x+dx,y+dy)は直角三角形の3頂点。
+曲線の長さはこの三角形の斜辺の積分
+
+(x,y) ,(x+dx,y),(x+dx,y+dy) are three vertices of a right triangle.
+The length of curve is the integral of the obliques.
+
+$$
+\int_{0}^3 \sqrt{dx^2+dy^2} = \int_0^3 \sqrt{(\frac{dx}{dx})^2+(\frac{dy}{dx})^2}dx = \sqrt{1+(\frac{dy}{dx})^2}dx \\
+$$
+
+積分できるのか？
+Can we integrate this?
+
+$$
+\int_0^3 \sqrt{2+2x+x^2}dx\\
+=[\sqrt{2+2x+x^2}(x+1) + \sinh^{-1}(x+1)]^3_0
+$$
+
+Mathematicaを使えば…。
+
+Check Mathematica http://www.wolframalpha.com/examples/Math.html for "Calculus AND ANALYSIS"
+and http://d.hatena.ne.jp/ryamada22/20170128 
+
+積分できるかできないかわからなくても近似計算はできる。
+
+Even when the integral is not easy shape, computational calculation is possible.
+
+```{r}
+integrate(function(x){(2+2*x+x^2)^(1/2)},0,3)
+```
+
+# Exercise 1
+
+## Exercise 1-1
+
+$ y = f(x) = e^{x^2}$ の $x \in [-1,1]$の長さを計算せよ。
+
+Calculate the length of $ y = f(x) = e^{x^2}$ for $x \in [-1,1]$.
+
+# 曲線のパラメタ表示 Parameteric expression of curve.
+
+$$
+x = \cos{t}\\
+y = \sin{t}\\
+t \in [0,2\pi)
+$$
+
+```{r}
+t <- seq(from=0,to=1,length=100)*2*pi
+t <- t[-length(t)]
+x <- cos(t)
+y <- sin(t)
+plot(x,y,type="l")
+matplot(cbind(x,y),type="l")
+```
+
+$$
+L(\tau) = \int_0^\tau \sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2} dt
+$$
+
+$$
+\frac{dx}{dt} = -\sin{t}\\
+\frac{dy}{dt} = \cos{t}\\
+L(\tau) = \int_0^\tau \sqrt{(\sin{t})^2 + (\cos{t})^2} dt\\
+=\int_0^\tau 1 dt\\
+=[t]^\tau_0 = \tau
+$$
+
+## 同じ軌道、スピードが違う Same trajectory but different speed
+
+$$
+x = \cos{t^2}\\
+y = \sin{t^2}\\
+t \in [0,\sqrt{2\pi})
+$$
+
+```{r}
+t <- seq(from=0,to=1,length=100)*sqrt(2*pi)
+t <- t[-length(t)]
+x <- cos(t^2)
+y <- sin(t^2)
+plot(x,y,type="l")
+matplot(cbind(x,y),type="l")
+```
+
+$$
+L(\tau) = \int_0^\tau \sqrt{(\frac{dx}{dt})^2+(\frac{dy}{dt})^2}dt\\
+= \int_0^\tau \sqrt{(-2t\sin(t^2))^2+(2t\cos(t^2))^2}dt\\
+= \int_0^\tau 2t \sqrt{\sin^2{(t^2)}+\cos^2{(t^2)}} dt\\
+= \int_0^\tau 2t dt\\
+= [t^2]_0^\tau\\
+= \tau^2
+$$
+
+# Exercise 2
+
+## Exercise 2-1
+
+曲線 
+$$
+x = \cos{t}\\
+y = \sin{t}\\
+t \in [0,2\pi)
+$$
+を描き、その曲線の上に適当に多数の点を取り、その点での進行方向ベクトル$(\frac{dx}{dt},\frac{dy}{dt})$を描け。
+
+Draw the curve and put its speed vectors $(\frac{dx}{dt},\frac{dy}{dt})$ on many points on the curve.
+
+## Exercise 2-2
+
+$$
+x = \cos{t^2}\\
+y = \sin{t^2}\\
+t \in [0,\sqrt{2\pi})
+$$
+について同様のことをせよ。
+
+Do the same for this parameterization.
+
+## Exercise 2-3
+
+3次元空間の曲線
+$$
+x = r\cos{t}\\
+y = r\sin{t}\\
+z = r^2\\
+r = 0.1t+0.1\\
+t \in [0,100]
+$$
+```{r,rgl=TRUE}
+t <- seq(from=0,to=1,length=1000)*100
+r <- 0.1*t+0.1
+x <- r*cos(t)
+y <- r*sin(t)
+z <- r^2
+plot3d(x,y,z,type="l")
+```
+
+$\frac{dx}{dt},\frac{dy}{dt},\frac{dz}{dt}$を計算し、曲線の長さとしてその積分をRのintegrate()関数を使って計算せよ。
+
+This is a curve in 3D space. Calculate $\frac{dx}{dt},\frac{dy}{dt},\frac{dz}{dt}$ and calculate the length of curve with R's integrate() function.
+
+また、曲線の長さを折れ線の長さの集まりとして
+```{}
+t <- seq(from=0,to=1,length=n)*100
+```
+$n=10,100,1000,10000,100000$について計算せよ。
+
+For multiple n values, calculate the length of broken lines that approximate the curve.
+
+# 単位円の面積 Area of a unit circle.
+
+単位円の面積は、The following is the 1/4 of unit circle's area.
+
+$$
+y = \sqrt{(1-x^2)}\\
+y = 0 \\
+x \in [0,1]
+$$
+の4倍として求めることができる。
+
+$$
+4 \int_0^1 \sqrt{(1-x^2)}dx
+$$
+
+この積分を解くのは難しい。
+It's no easy to solve this.
+
+```{r}
+integrate(function(x){4*sqrt(1-x^2)},0,1)
+```
+
+微小底辺$dl$を円周上に持ち、高さが半径1の三角形の和として計算することもできる。
+
+中心からの半径方向を$\theta \in [0,2\pi)$とすれば
+
+The area of circle is the sum of small triangles whose base lines are small arcs $dl$ of the circle and whose hight are the radius.
+The directions of the triangles are parameterized as $\theta \in [0,2\pi)$.
+
+$$
+\int_0^{2\pi} \frac{1}{2}\times dl \\
+dl = \sqrt{(\frac{dx}{d\theta})^2+(\frac{dy}{d\theta})^2}d\theta = d\theta 
+$$
+これは、円周の長さ$2\pi$を底辺の長さとする三角形の面積。
+
+It corresponds to the area of triangle whose base is a whole circle.
+
+別の方法は円を半径が0から1に変化する円のあつまりとみなすものである。
+
+Another way is to consider the area of circle as the sum of cicles with radius ranging from 0 to 1.
+
+半径$r$での微小面積は$2\pi r \times dr$.
+
+The small area attached to the circle with radius r is $2\pi r \times dr$.
+
+$$
+\int_0^1 2\pi r dr = 2\pi \int_0^1 r dr = 2\pi [\frac{1}{2}r^2]^1_0 = \pi
+$$
+# 曲面 Curved surface
+
+以下のような曲面の面積はどうなるか？
+
+How do we approach to the area of the curved surface as below?
+
+$$
+z = \sin{x}+\cos{y}\\
+x, y \in [-5,5]
+$$
+```{r,rgl=TRUE}
+x <- y <- seq(from=-1,to=1,length=100) * 5
+xy <- as.matrix(expand.grid(x,y))
+z <- sin(xy[,1])+cos(xy[,2])
+xlim <- max(xy[,1])-min(xy[,1])
+ylim <- max(xy[,2])-min(xy[,2])
+zlim <- max(z)-min(z)
+plot3d(xy[,1],xy[,2],z,aspect=c(xlim,ylim,zlim))
+```
+
+(x,y),(x+dx,y),(x,y+dy),(x+dx,x+dy)が作る「斜面」の面積$dS$を足し合わせる。
+
+Small areas that are slopes over (x,y),(x+dx,y),(x,y+dy),(x+dx,x+dy), $dS$, should be summed up.
+
+これを斜めになった平行四辺形の面積とみなす。
+They are considered small parallelograms.
+
+平行四辺形の第1の辺は$(x,y,z)$と$(x+dx,y,z+\frac{\partial x}{\partial z}dx)$とが作るベクトル。
+第2の辺は$(x,y,z)$と$(x,y+dy+z+\frac{\partial y}{\partial z}dy)$。
+
+The parallelogram's two edges are; one connecting $(x,y,z)$と$(x+dx,y,z+\frac{\partial x}{\partial z}dx)$ and 
+and the other connecting $(x,y,z)$ and $(x,y+dy+z+\frac{\partial y}{\partial z}dy)$.
+
+2つのベクトルは They are:
+$$
+v_1 = (dx,0,\frac{\partial z}{\partial x}dx)\\
+v_2 = (0,dy,\frac{\partial z}{\partial y}dy)
+$$
+
+2つのベクトル$v_1,v_2$が作る平行四辺形の面積は
+The area of parallelogram is;
+
+$$
+dS = ||v_1||v_2|\sin{\theta}|
+$$
+$$
+\cos{\theta} = \frac{(v_1,v_2)}{|v_1||v_2|}
+$$
+ただし、$(v_1,v_2)$は内積。
+where $(v_1,v_2)$ is inner product.
+
+したがって Therefore,
+
+$$
+dS = ||v_1||v_2|\sqrt{1-(\frac{(v_1,v_2)}{|v_1||v_2|})^2}|\\
+= \sqrt{|v_1|^2|v_2|^2 - (v_1,v_2)^2}
+$$
+
+ここで Using 
+$$
+|v_1|^2 = (1+(\frac{\partial z}{\partial x})^2dx^2\\
+|v_2|^2 = (1+(\frac{\partial z}{\partial y})^2dy^2\\
+(v_1,v_2) =(\frac{\partial z}{\partial x}\frac{\partial z}{\partial y})^2dxdy
+$$
+
+以上より、Then,
+$$
+dS = \sqrt{1+(\frac{\partial z}{\partial x})^2+(\frac{\partial z}{\partial y})^2} dxdy
+$$
+
+## Exercise 3
+
+### Exercise 3-1 
+
+2つの式を比較せよ。
+
+Compare two formulas.
+
+$$
+\int_{0}^3 \sqrt{dx^2+dy^2} = \int_0^3 \sqrt{(\frac{dx}{dx})^2+(\frac{dy}{dx})^2}dx = \sqrt{1+(\frac{dy}{dx})^2}dx \\
+$$
+
+$$
+dS = \sqrt{1+(\frac{\partial z}{\partial x})^2+(\frac{\partial z}{\partial y})^2} dxdy
+$$
+
+
+## 曲面の前に、平面 Before using this to curved surface, apply it to the flat one.
+
+$$
+z = ax + by + c
+$$
+
+$$
+\frac{\partial z}{\partial x}=a\\
+\frac{\partial z}{\partial y}=b\\
+dS = \sqrt{1+a^2+b^2}dxdy \\
+\int_{x_0}^{x_1} \int_{y_0}^{y_1} dS dxdy = \sqrt{1+a^2+b^2} \times (x_1-x_0)(y_1-y_0)
+$$
+単なる、平行四辺形の面積。
+
+Simple parallelogram's area.
+
+## 単位球面積 Surface area of unit sphere.
+
+$$
+x^2+y^2+z^2=1\\
+z = \pm \sqrt{1-(x^2+y^2)}
+$$
+$ z= \sqrt{1-(x^2+y^2)}$ , $0 \le x^2+y^2 \le 1;x,y \ge 0$を扱うことにする。
+
+Calculate a part of the sphere of $ z= \sqrt{1-(x^2+y^2)}$ , $0 \le x^2+y^2 \le 1;x,y \ge 0$.
+
+$$
+dS = \sqrt{1+(\frac{\partial z}{\partial x})^2+(\frac{\partial z}{\partial y})^2} dxdy\\
+\frac{\partial z}{\partial x}= \frac{1}{2}\frac{-2x}{\sqrt{1-(x^2+y^2)}}\\
+\frac{\partial z}{\partial y} = \frac{1}{2}\frac{-2y}{\sqrt{1-(x^2+y^2)}}\\
+$$
+
+$$
+dS = \sqrt{1+\frac{x^2}{1-(x^2+y^2)}+\frac{y^2}{1-(x^2+y^2)}}dxdy\\
+= \sqrt{\frac{1}{1-(x^2+y^2)}}dxdy
+$$
+
+$$
+S = \int_{x^2+y^2 \le 1} dS = \int_{x^2+y^2 \le 1} \sqrt{\frac{1}{1-(x^2+y^2)}}dxdy
+$$
+
+これは解けないが、うまくパラメタ表示を変えることで解けるようにできる。
+
+This is not easy but converting to different parameterization, then it can  be.
+
+$$
+x = r \cos{\theta}\\
+y = r \sin{\theta}\\
+0 \le r \le 1\\
+0 \le \theta \le 2\pi\\
+$$
+
+$(r\cos{\theta},r\sin{\theta}),((r+dr)\cos{\theta},(r+dr)\sin{\theta}),(r\cos{(\theta+d\theta)},r\sin{(\theta+d\theta)}),((r+dr)\cos{(\theta+d\theta)},(r+dr)\sin{(\theta+d\theta)})が作る微小面積は
+
+Small area should be changed accordingly.
+
+$$
+dr \times (r \times d\theta)
+$$
+したがって$dxdy$に相当するのは$rdrd\theta$
+
+Means $dxdy$ is converted to $rdrd\theta$.
+
+ゆえに
+$$
+S = \int_{x^2+y^2 \le 1} \sqrt{\frac{1}{1-(x^2+y^2)}}dxdy\\
+= \int_{0 \le r \le 1, 0\le \theta \le 2\pi} \sqrt{\frac{1}{1-r^2(\cos^2\theta + \sin^2{\theta})}}rdrd\theta\\
+=\int_0^{2\pi} 1 d\theta \int_0^1 r\sqrt{\frac{1}{1-r^2}}dr
+$$
+
+$$
+\frac{d}{dr} \sqrt{1-r^2} = \frac{1}{2}(-2r) \sqrt{\frac{1}{1-r^2}}\\
+= -r\sqrt{\frac{1}{1-r^2}}
+$$
+
+したがって
+$$
+S = 2\pi
+$$
+これは球の上半分であるから、球面全体の表面積は、$4\pi$.
+
+This is the upper half's area, therefore the are of unit sphere is $4\pi$.
+
+## 曲面 Curverd surface
+
+
+$$
+z = \sin{x}+\cos{y}\\
+x, y \in [-5,5]
+$$
+```{r,rgl=TRUE}
+x <- y <- seq(from=-1,to=1,length=100) * 5
+xy <- as.matrix(expand.grid(x,y))
+z <- sin(xy[,1])+cos(xy[,2])
+xlim <- max(xy[,1])-min(xy[,1])
+ylim <- max(xy[,2])-min(xy[,2])
+zlim <- max(z)-min(z)
+plot3d(xy[,1],xy[,2],z,aspect=c(xlim,ylim,zlim))
+```
+
+$$
+\frac{\partial z}{\partial x} = -\sin{x}\\
+\frac{\partial z}{\partial y} = \cos{y}
+$$
+
+
+2つのベクトルは　The vecors are;
+$$
+(dx,0,-\sin{x}dx)\\
+(0,dy,\cos{y}dy)
+$$
+
+
+したがって Then
+
+$$
+dS = ||v_1||v_2|\sqrt{1-(\frac{(v_1,v_2)}{|v_1||v_2|})^2}|\\
+= \sqrt{|v_1|^2|v_2|^2 - (v_1,v_2)^2}
+$$
+
+ここで Using
+$$
+|v_1|^2 = (1+\sin^2{x})dx^2\\
+|v_2|^2 = (1+\cos^2{y})dy^2\\
+(v_1,v_2) = -\sin{x}\cos{y}dxdy
+$$
+
+以上より、Therefere
+$$
+dS = \sqrt{(1+\sin^2{x})(1+\cos^2{y})-\sin^2{x}\cos^2{y}} dxdy
+= \sqrt{1+(\sin^2{x}+\cos^2{y})}dxdy
+$$
+
+解けないけれど、計算機的には計算できる。
+Computationally calculable.
+
+
+## Exercise 4
+
+## Exercise 4-1
+
+Mathematicaのサイトを使ってこの面積を計算せよ。
+
+Calculate the area using Mathematica's site.
+
+

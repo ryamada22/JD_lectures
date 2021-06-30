@@ -1,7 +1,7 @@
 ---
 title: "Calculus1 Expected value and basics of differentiation and integration"
 author: "ryamada"
-date: "2017”N1Œ22“ú"
+date: "2017å¹´1æœˆ22æ—¥"
 output: 
   html_document:
     toc: true
@@ -16,7 +16,7 @@ library(rgl)
 knit_hooks$set(rgl = hook_webgl)
 ```
 
-# •½‹Ï Average
+# å¹³å‡ Average
 
 $$
 m = \frac{1}{n} \sum_{i=1}^n x_i
@@ -30,7 +30,7 @@ mean(x)
 1/n * sum(x)
 ```
 
-# d‚İ•t‚«•½‹Ï Weighted average
+# é‡ã¿ä»˜ãå¹³å‡ Weighted average
 
 $$
 m_w = \sum_{j=1}^k v_j \times Pr(j)
@@ -46,9 +46,9 @@ mw <- sum(v * w)
 mw
 ```
 
-# Šú‘Ò’l Expected value
+# æœŸå¾…å€¤ Expected value
 
-## ƒTƒCƒRƒ‚Ì–Ú‚Ì”‚ÌŠú‘Ò’l Expected value of dice
+## ã‚µã‚¤ã‚³ãƒ­ã®ç›®ã®æ•°ã®æœŸå¾…å€¤ Expected value of dice
 
 ```{r}
 v <- 1:6
@@ -56,7 +56,7 @@ p <- rep(1/6,6)
 sum(v*p)
 ```
 
-o—ˆ‚Ìˆ«‚¢ƒTƒCƒRƒ‚ÌŠú‘Ò’l Dice in bad condition
+å‡ºæ¥ã®æ‚ªã„ã‚µã‚¤ã‚³ãƒ­ã®æœŸå¾…å€¤ Dice in bad condition
 
 ```{r}
 v <- 1:6
@@ -68,7 +68,7 @@ sum(p)
 sum(v*p)
 ```
 
-## “ñ€•ª•z‚ÌŠú‘Ò’l‚Í@$np$ Expected value of binomial distribution : $np$
+## äºŒé …åˆ†å¸ƒã®æœŸå¾…å€¤ã¯ã€€$np$ Expected value of binomial distribution : $np$
 
 $$
 (p + (1-p)) ^n = 1^n = 1 = \sum_{i=0}^n \begin{pmatrix}n\\i \end{pmatrix} p^i (1-p)^i
@@ -87,42 +87,42 @@ sum(p*i)
 n * p0
 ```
 
-# ƒx[ƒ^•ª•z
+# ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ
 
-## ƒx[ƒ^•ª•z‚Ì³‹K‰» Normalization of beta distribution
+## ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒã®æ­£è¦åŒ– Normalization of beta distribution
 
-¬Œ÷E¸”s‚ªAn‰ñ‚Æm‰ñ‚¾‚Á‚½‚Æ‚«A¬Œ÷—¦‚ªp‚Å‚ ‚é–Ş“x‚Í@n successes and m failures. Likelihood of success rate p is proportional to ;
+æˆåŠŸãƒ»å¤±æ•—ãŒã€nå›ã¨må›ã ã£ãŸã¨ãã€æˆåŠŸç‡ãŒpã§ã‚ã‚‹å°¤åº¦ã¯ã€€n successes and m failures. Likelihood of success rate p is proportional to ;
 
 $$
 p^n (1-p)^m
 $$
-‚É”ä—á‚·‚éB
+ã«æ¯”ä¾‹ã™ã‚‹ã€‚
 
 With $h(n,m)$ below,
 $$
 h(n,m)=\int_0^1 p^n(1-p)^m dp
 $$
 
-‚Æ‚¨‚¯‚ÎAthe following equaion follows;
+ã¨ãŠã‘ã°ã€the following equaion follows;
 
 $$
 \int_0^1 \frac{1}{h(n,m)}p^n (1-p)^m dp =1
 $$
-‚Æ‚È‚é‚©‚ç
+ã¨ãªã‚‹ã‹ã‚‰
 
 The following is the likelihood function of success rate p when n successes and m failures.
 $$
 \frac{1}{h(n,m)}p^n (1-p)^m
 $$
 
-‚ª¬Œ÷n‰ñA¸”sm‰ñ‚Ì‚Æ‚«‚Ì¬Œ÷—¦p‚Ì–Ş“xŠÖ”B
+ãŒæˆåŠŸnå›ã€å¤±æ•—må›ã®ã¨ãã®æˆåŠŸç‡pã®å°¤åº¦é–¢æ•°ã€‚
 
-$p^n(1-p)^m$‚ªŠÖ”‚ÌŒ`‚ğŒˆ‚ßA$h(n,m)$‚ÍÏ•ª‚ª1‚Æ‚È‚é‚æ‚¤‚É³‹K‰»‚µ‚Ä‚¢‚é‚Ì‚ÅA$h(n,m)$‚É‚æ‚Á‚Ä(–Ş“x)ŠÖ”‚ğ³‹K‰»‚·‚éA‚ÆŒ¾‚¤B
+$p^n(1-p)^m$ãŒé–¢æ•°ã®å½¢ã‚’æ±ºã‚ã€$h(n,m)$ã¯ç©åˆ†ãŒ1ã¨ãªã‚‹ã‚ˆã†ã«æ­£è¦åŒ–ã—ã¦ã„ã‚‹ã®ã§ã€$h(n,m)$ã«ã‚ˆã£ã¦(å°¤åº¦)é–¢æ•°ã‚’æ­£è¦åŒ–ã™ã‚‹ã€ã¨è¨€ã†ã€‚
 
 $p^n (1-p)^m$ determines its shape and $h(n,m)$ normalizes its integration to 1.
 
 
-## $h(n,m)=\int_0^1 p^n(1-p)^m dp$‚ğŒvZ‚µ‚Ä‚İ‚é Calculation of $h(n,m)$
+## $h(n,m)=\int_0^1 p^n(1-p)^m dp$ã‚’è¨ˆç®—ã—ã¦ã¿ã‚‹ Calculation of $h(n,m)$
 
 ### n=1, m=0
 $$
@@ -135,45 +135,45 @@ h <- p
 plot(p,h,type="l")
 ```
 
-$h(1,0)$‚Í–ÊÏ‚Æ‚µ‚ÄŒvZ‚Å‚«‚éB Area of $h(1,0)$ is given geometrically. 
+$h(1,0)$ã¯é¢ç©ã¨ã—ã¦è¨ˆç®—ã§ãã‚‹ã€‚ Area of $h(1,0)$ is given geometrically. 
 
 $$
 \frac{1}{2} \times 1 \times 1 = \frac{1}{2}
 $$
 
 
-Ï•ª‚·‚é‚È‚ç Integration;
+ç©åˆ†ã™ã‚‹ãªã‚‰ Integration;
 
 $$
 \frac{d}{dx} x^2 = 2x\\
 \frac{d}{dx} \frac{1}{2} x^2 = x
 $$
-‚ğg‚Á‚ÄA
+ã‚’ä½¿ã£ã¦ã€
 
 $$
 x^2 + C = \int 2x dx\\
 \frac{1}{2} (x^2+C) = \int x dx
 $$
 
-‚©‚çA
+ã‹ã‚‰ã€
 
 $$
 \int_0^1 p dp = [\frac{1}{2} x^2]^1_0 = \frac{1}{2} (1^2-0^2)=\frac{1}{2}
 $$
-‚Æ‚È‚éB
+ã¨ãªã‚‹ã€‚
 
-Œ‹‹ÇAn=1,m=0‚Ì‚Æ‚«‚Ì–Ş“xŠÖ”‚Í The likelihood function when n=1 and m=0;
+çµå±€ã€n=1,m=0ã®ã¨ãã®å°¤åº¦é–¢æ•°ã¯ The likelihood function when n=1 and m=0;
 $$
 \frac{1}{h(1,0)}p^1 (1-p)^0 = \frac{1}{\frac{1}{2}}p = 2p
 $$
 
-## ƒx[ƒ^•ª•z‚ÌŠú‘Ò’l Expected value of beta distribution
+## ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒã®æœŸå¾…å€¤ Expected value of beta distribution
 
-$n=1,m=0$‚Ì‚Æ‚«‚Ìƒx[ƒ^•ª•z When$n=1,m=0$, beta distribution is
+$n=1,m=0$ã®ã¨ãã®ãƒ™ãƒ¼ã‚¿åˆ†å¸ƒ When$n=1,m=0$, beta distribution is
 $$
 2p
 $$
-‚»‚ÌŠú‘Ò’l‚Í Its expected value is
+ãã®æœŸå¾…å€¤ã¯ Its expected value is
 
 $$
 \int_0^1 (2p) \times p dp = \int_0^1 2p^2 dp = \frac{2}{3}[p^3]^1_0 = \frac{2}{3}
@@ -183,7 +183,7 @@ $$
 # Exercise 1
 
 ## Exercise 1-1
-n=1, m=1‚Ìê‡A“ñ€ŠÏ@‚Ì–Ş“xŠÖ”‚Í Likelihood function for binomial observation n=1 and m=1 
+n=1, m=1ã®å ´åˆã€äºŒé …è¦³å¯Ÿã®å°¤åº¦é–¢æ•°ã¯ Likelihood function for binomial observation n=1 and m=1 
 $$
 \frac{1}{h(1,1)} p(1-p) = \frac{1}{h(1,1)}(p-p^2)
 $$
@@ -191,38 +191,38 @@ $$
 h(1,1) = \int_0^1 p-p^2 dp
 $$
 
-‚ğ‹‚ß‚½‚¢B
+ã‚’æ±‚ã‚ãŸã„ã€‚
 
-$f(x) = x^1 (1-x)^1$ ‚ÌƒOƒ‰ƒt‚ğ•`‚¯BDraw $f(x) = x^1(1-x)^1$.
+$f(x) = x^1 (1-x)^1$ ã®ã‚°ãƒ©ãƒ•ã‚’æã‘ã€‚Draw $f(x) = x^1(1-x)^1$.
 
 ## Exercise 1-2
 
-[0,1]‹æŠÔ‚ğAk“™•ª‚µ‚Ä‚»‚Ì¬‹æŠÔ‚²‚Æ‚Ì–ÊÏ‚ğ‹ß—“I‚ÉŒvZ‚µA‚»‚Ì˜a‚ğ[0,1]‚Ì”ÍˆÍ‚Ì$p-p^2$‚Ì–ÊÏ‚Æ‚İ‚È‚·‚±‚Æ‚Æ‚·‚éB
-‘æi¬‹æŠÔ‚Ì–ÊÏ‚ğA’·•ûŒ`‚Ì–ÊÏ‚Æ‚İ‚È‚µ‚ÄAŒvZ‚µAk‚ğA1,2,...,100‚Æ•Ï‰»‚³‚¹A‚»‚Ì—lq‚ğƒvƒƒbƒg‚¹‚æB‚½‚¾‚µA’·•ûŒ`‚Í•$\frac{1}{k}$A‚‚³‚Í‚»‚Ì¬‹æŠÔ‚Ì—¼’[‚Ì$p-p^2$‚Ì’l‚Ì•½‹Ï’l‚Æ‚¹‚æB
+[0,1]åŒºé–“ã‚’ã€kç­‰åˆ†ã—ã¦ãã®å°åŒºé–“ã”ã¨ã®é¢ç©ã‚’è¿‘ä¼¼çš„ã«è¨ˆç®—ã—ã€ãã®å’Œã‚’[0,1]ã®ç¯„å›²ã®$p-p^2$ã®é¢ç©ã¨ã¿ãªã™ã“ã¨ã¨ã™ã‚‹ã€‚
+ç¬¬iå°åŒºé–“ã®é¢ç©ã‚’ã€é•·æ–¹å½¢ã®é¢ç©ã¨ã¿ãªã—ã¦ã€è¨ˆç®—ã—ã€kã‚’ã€1,2,...,100ã¨å¤‰åŒ–ã•ã›ã€ãã®æ§˜å­ã‚’ãƒ—ãƒ­ãƒƒãƒˆã›ã‚ˆã€‚ãŸã ã—ã€é•·æ–¹å½¢ã¯å¹…$\frac{1}{k}$ã€é«˜ã•ã¯ãã®å°åŒºé–“ã®ä¸¡ç«¯ã®$p-p^2$ã®å€¤ã®å¹³å‡å€¤ã¨ã›ã‚ˆã€‚
 
 Divide the interval [0,1] into k evenly. Calculate subintervals' area approximately and sum them which is approcimation of the area under the curve.
 The area of the i-th subinterval should be considered a rectangle whose width is $/frac{1}{k}$ and its hight is the average of the hights of the both ends of the rectangle. Calculate and plot for k=1,2,...,100.
 
 ## Exercise 1-3
 
-$\frac{d}{dx}x^2 = 2x, \frac{d}{dx}x^3=3x^2$‚ğg‚Á‚Ä$h(1,1)$‚ğ‹‚ßA‹ß—‚Å‹‚ß‚½’l‚Æ”äŠr‚¹‚æB
+$\frac{d}{dx}x^2 = 2x, \frac{d}{dx}x^3=3x^2$ã‚’ä½¿ã£ã¦$h(1,1)$ã‚’æ±‚ã‚ã€è¿‘ä¼¼ã§æ±‚ã‚ãŸå€¤ã¨æ¯”è¼ƒã›ã‚ˆã€‚
 
 Integrate the function and compare the value with the approximation above.
 
 ## Exercise 1-4
 
-Šú‘Ò’l‚ğd‚İ•t‚«•½‹Ï$ \int_0^1 p Pr(p) dp$ ‚ÌÏ•ª‚ğ‰ğ‚­‚±‚Æ‚Å‹‚ß‚æB
+æœŸå¾…å€¤ã‚’é‡ã¿ä»˜ãå¹³å‡$ \int_0^1 p Pr(p) dp$ ã®ç©åˆ†ã‚’è§£ãã“ã¨ã§æ±‚ã‚ã‚ˆã€‚
 Answer its expected value by integrating $\int_0^1 p Pr(p) dp.
 
 ## Exercise 1-5
 
-n=2,m=3‚Ìê‡‚Ì$p^n(1-p)^3$‚ğ“WŠJ‚µAn=1,m=1‚Ìê‡‚Æ“¯—l‚Ì‚±‚Æ‚ğ‚¹‚æ
+n=2,m=3ã®å ´åˆã®$p^n(1-p)^3$ã‚’å±•é–‹ã—ã€n=1,m=1ã®å ´åˆã¨åŒæ§˜ã®ã“ã¨ã‚’ã›ã‚ˆ
 
 Do the same for n=2 and m=3.
 
 ## Exercise 1-6
 
-w”•ª•z‚ÌŠú‘Ò’l‚Í $\frac{1}{\lambda}$‚Å‚ ‚é‚ÆŒ¾‚¤B‚±‚Ì‚±‚Æ‚ğA—£U“I‚ÈŒvZ‚ğ‚·‚é‚±‚Æ‚ÅŠm”F‚¹‚æB
+æŒ‡æ•°åˆ†å¸ƒã®æœŸå¾…å€¤ã¯ $\frac{1}{\lambda}$ã§ã‚ã‚‹ã¨è¨€ã†ã€‚ã“ã®ã“ã¨ã‚’ã€é›¢æ•£çš„ãªè¨ˆç®—ã‚’ã™ã‚‹ã“ã¨ã§ç¢ºèªã›ã‚ˆã€‚
 
 The expected value of exponential distribution is $\frac{1}{\lambda}$. Calculate its expected value discretely.
 
@@ -231,7 +231,7 @@ Pr(x) = \lambda \times e^{-\lambda x}
 $$
 
 ## Exercise 1-6
-”÷•ªÏ•ª‚ÌŠî‘b‹Zp Basic skills of calculus 
+å¾®åˆ†ç©åˆ†ã®åŸºç¤æŠ€è¡“ Basic skills of calculus 
 
 Go through the every item in the page 
 https://en.wikibooks.org/wiki/Calculus/Differentiation/Basics_of_Differentiation/Solutions#Find_The_Derivative_By_Definition 

@@ -1,7 +1,7 @@
 ---
 title: "Calculus3 Density, Cumulative, Hazard"
 author: "ryamada"
-date: "2017”N1Œ22“ú"
+date: "2017å¹´1æœˆ22æ—¥"
 output: 
   html_document:
     toc: true
@@ -17,34 +17,34 @@ knit_hooks$set(rgl = hook_webgl)
 ```
 
 
-Šm—¦–§“xŠÖ”‚ğÏ•ª‚·‚é‚Æ—İÏ–§“xŠÖ”B
+ç¢ºç‡å¯†åº¦é–¢æ•°ã‚’ç©åˆ†ã™ã‚‹ã¨ç´¯ç©å¯†åº¦é–¢æ•°ã€‚
 
 Integrate probability density function, then it is cumulative density function.
 
-—İÏ–§“xŠÖ”‚ğ”÷•ª‚·‚é‚ÆŠm—¦–§“xŠÖ”B
+ç´¯ç©å¯†åº¦é–¢æ•°ã‚’å¾®åˆ†ã™ã‚‹ã¨ç¢ºç‡å¯†åº¦é–¢æ•°ã€‚
 Differentiate cumulative density function, then it is density function.
 
-Šm—¦•ª•z‚Ì–{‘Ì‚Í“¯‚¶‚ÅA‚»‚ÌŒ©•û‚ªˆÙ‚È‚Á‚Ä‚¢‚é‚¾‚¯B
+ç¢ºç‡åˆ†å¸ƒã®æœ¬ä½“ã¯åŒã˜ã§ã€ãã®è¦‹æ–¹ãŒç•°ãªã£ã¦ã„ã‚‹ã ã‘ã€‚
 Both density and cumulative density functions represent the same function and they are two ways to show it.
 
-‚¢‚ë‚¢‚ë‚ÈŒ©•û‚ğˆµ‚¢A‚»‚ê‚ç‚Ì”÷Ï•ªŠÖŒW‚ğŠm”F‚·‚éB
+ã„ã‚ã„ã‚ãªè¦‹æ–¹ã‚’æ‰±ã„ã€ãã‚Œã‚‰ã®å¾®ç©åˆ†é–¢ä¿‚ã‚’ç¢ºèªã™ã‚‹ã€‚
 
 Some other ways to represent probability function follow.
 
-# Šm—¦–§“xŠÖ” Probability density function $f(x)$
+# ç¢ºç‡å¯†åº¦é–¢æ•° Probability density function $f(x)$
 
-Šm—¦•Ï”$X$‚ª’l$x$‚ğ‚Æ‚éŠm—¦–§“x‚ğ$P(X=x)$‚Æ‘‚­B
+ç¢ºç‡å¤‰æ•°$X$ãŒå€¤$x$ã‚’ã¨ã‚‹ç¢ºç‡å¯†åº¦ã‚’$P(X=x)$ã¨æ›¸ãã€‚
 
 Let $P(X=x)$ denote the probability density of X being x 
 
-Šm—¦–§“xŠÖ” Probability density function.
+ç¢ºç‡å¯†åº¦é–¢æ•° Probability density function.
 $$
 f(x) = P(X=x)\\
 f(x) \ge 0\\
 \int_{x\in D} f(x) = 1
 $$
 
-w”•ª•z‚ğ—á‚Éæ‚é‚Æ In case of exponential distribution,
+æŒ‡æ•°åˆ†å¸ƒã‚’ä¾‹ã«å–ã‚‹ã¨ In case of exponential distribution,
 
 $$
 f(x) = \lambda e^{-\lambda x}
@@ -60,14 +60,14 @@ fx. <- dexp(x,lambda)
 plot(fx,fx.)
 ```
 
-# —İÏ•ª•zŠÖ” Cumulative distribution function $F(x)$
+# ç´¯ç©åˆ†å¸ƒé–¢æ•° Cumulative distribution function $F(x)$
 
 $$
 F(x) = P(X \le x) = \int_{}^x f(x) dx\\
 \frac{d}{dx} F(x) = f(x)
 $$
 
-w”•ª•z‚Ìê‡ Exponential distribution:
+æŒ‡æ•°åˆ†å¸ƒã®å ´åˆ Exponential distribution:
 
 $$
 F(x) = \int_{0}^x f(t) dt\\
@@ -84,13 +84,13 @@ Fx. <- pexp(x,lambda,lower.tail=TRUE)
 plot(Fx,Fx.)
 ```
 
-# ¶‘¶ŠÖ” Survival function $S(x)$
+# ç”Ÿå­˜é–¢æ•° Survival function $S(x)$
 
 The order of x in $F(x)$ is inversed.
 
-—İÏ•ª•zŠÖ”$F(x)$‚Ì¸~‡‚ğ‹t‚É‚µ‚½ŠÖ”B
+ç´¯ç©åˆ†å¸ƒé–¢æ•°$F(x)$ã®æ˜‡é™é †ã‚’é€†ã«ã—ãŸé–¢æ•°ã€‚
 
-$P(X=x)$‚ğ$X=x$‚Å‚ÌuŠÔ€–S—¦‚Æ‚·‚é‚ÆA$S(x)$‚Í$X=x$‚Å‚Ì¶‘¶Ò‚ÌŠ„‡
+$P(X=x)$ã‚’æ™‚åˆ»$X=x$ã§ã®ç¬é–“æ­»äº¡ç‡ã¨ã™ã‚‹ã¨ã€$S(x)$ã¯æ™‚åˆ»$X=x$ã§ã®ç”Ÿå­˜è€…ã®å‰²åˆ
 
 When the $P(X=x)$ is probability of death at time $X=x$, then $S(x)$ stands for the fraction of survivers at time $X=x$.
 
@@ -106,7 +106,7 @@ plot(x,Sx,type="l")
 Sx. <- pexp(x,lambda,lower.tail=FALSE)
 plot(Sx,Sx.)
 ```
-# ‹t—İÏ•ª•zŠÖ” Inverse of cumulative density function $G(t)$
+# é€†ç´¯ç©åˆ†å¸ƒé–¢æ•° Inverse of cumulative density function $G(t)$
 
 
 
@@ -134,7 +134,7 @@ Gt. <- qexp(t,lambda)
 plot(Gt,Gt.)
 ```
 
-# ‹t¶‘¶ŠÖ” Inverse of survival function $Z(x)$
+# é€†ç”Ÿå­˜é–¢æ•° Inverse of survival function $Z(x)$
 
 $$
 P(X>Z(t)) = t\\
@@ -157,7 +157,7 @@ Zt. <- qexp(t,lambda,lower.tail=FALSE)
 plot(Zt,Zt.)
 ```
 
-# ƒnƒU[ƒhŠÖ” Hazard function $h(x)$
+# ãƒã‚¶ãƒ¼ãƒ‰é–¢æ•° Hazard function $h(x)$
 
 $$
 h(x) = \frac{f(x)}{S(x)}\\
@@ -183,7 +183,7 @@ h(x) = -\frac{d}{dx} \log{S(x)}\\
 = -\frac{d}{dx} (-\lambda x)\\
 = \lambda
 $$
-¶‚«c‚Á‚Ä‚¢‚é•”•ª$S(x)$‚Ì€–S—¦(uŠÔ€–S—¦)
+ç”Ÿãæ®‹ã£ã¦ã„ã‚‹éƒ¨åˆ†$S(x)$ã®æ­»äº¡ç‡(ç¬é–“æ­»äº¡ç‡)
 
 Probability to die for the survivers.
 
@@ -194,11 +194,11 @@ plot(x,hx,type="l")
 
 
 
-w”•ª•z‚Æ‚ÍAu‚Ç‚Ì“_‚É‚¨‚¢‚Ä‚àA¶‚«c‚Á‚Ä‚¢‚é•”•ª‚Å‚ÌuŠÔ€–S—¦‚ªˆê’èv‚Å‚ ‚é•ª•z
+æŒ‡æ•°åˆ†å¸ƒã¨ã¯ã€ã€Œã©ã®æ™‚ç‚¹ã«ãŠã„ã¦ã‚‚ã€ç”Ÿãæ®‹ã£ã¦ã„ã‚‹éƒ¨åˆ†ã§ã®ç¬é–“æ­»äº¡ç‡ãŒä¸€å®šã€ã§ã‚ã‚‹åˆ†å¸ƒ
 
 Exponential distribution stands for the stochastic process where the probability to die among the people alive is constant regardless of the size of population.
 
-# —İÏƒnƒU[ƒhŠÖ” Cumulative hazard function $H(x)$
+# ç´¯ç©ãƒã‚¶ãƒ¼ãƒ‰é–¢æ•° Cumulative hazard function $H(x)$
 
 $$
 \frac{d}{dx}H(x) = h(x) = -\frac{d}{dx} \log{S(x)}\\
@@ -213,21 +213,21 @@ $$
 
 ## Exercise 1-1
 
-¶‘¶ŠÔ‚Ìƒ‚ƒfƒ‹A‹@ŠB‚ªŒÌá‚·‚é‚Ü‚Å‚ÌŠÔ‚Ìƒ‚ƒfƒ‹‚Ì‚Ğ‚Æ‚Â‚ªw”•ª•z‚Å‚ ‚éB
+ç”Ÿå­˜æ™‚é–“ã®ãƒ¢ãƒ‡ãƒ«ã€æ©Ÿæ¢°ãŒæ•…éšœã™ã‚‹ã¾ã§ã®æ™‚é–“ã®ãƒ¢ãƒ‡ãƒ«ã®ã²ã¨ã¤ãŒæŒ‡æ•°åˆ†å¸ƒã§ã‚ã‚‹ã€‚
 
 Exponential distribution is one of stochastic models of survival time (time to death) or time to failure.
 
-•Ê‚Ìƒ‚ƒfƒ‹‚Æ‚µ‚ÄƒƒCƒuƒ‹•ª•z‚ª‚ ‚éB
+åˆ¥ã®ãƒ¢ãƒ‡ãƒ«ã¨ã—ã¦ãƒ¯ã‚¤ãƒ–ãƒ«åˆ†å¸ƒãŒã‚ã‚‹ã€‚
 
 Weibull distribution is one of them.
 
-ƒƒCƒuƒ‹•ª•z‚ÌŠm—¦–§“x•ª•z‚Í The probability density distribution of Weibull distribution is;
+ãƒ¯ã‚¤ãƒ–ãƒ«åˆ†å¸ƒã®ç¢ºç‡å¯†åº¦åˆ†å¸ƒã¯ The probability density distribution of Weibull distribution is;
 
 $$
 f(x) = k\lambda (\lambda x)^{k-1} e^{-(\lambda x)^k}
 $$
-‚Å—^‚¦‚ç‚ê‚éB
+ã§ä¸ãˆã‚‰ã‚Œã‚‹ã€‚
 
-‚±‚ÌƒƒCƒuƒ‹•ª•z‚Ì¶‘¶ŠÖ”AƒnƒU[ƒhŠÖ”‚ğ‹‚ßAw”•ª•z‚Ì‚»‚ê‚Æ”äŠr‚¹‚æ
+ã“ã®ãƒ¯ã‚¤ãƒ–ãƒ«åˆ†å¸ƒã®ç”Ÿå­˜é–¢æ•°ã€ãƒã‚¶ãƒ¼ãƒ‰é–¢æ•°ã‚’æ±‚ã‚ã€æŒ‡æ•°åˆ†å¸ƒã®ãã‚Œã¨æ¯”è¼ƒã›ã‚ˆ
 
 Calculate survival function and hazard function for Weibull distribution, then compare them with ones of exponential distribution.

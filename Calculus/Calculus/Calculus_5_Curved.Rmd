@@ -1,7 +1,7 @@
 ---
-title: "Calculus5 ‹ÈüE‹È–Ê Curved line and surface"
+title: "Calculus5 æ›²ç·šãƒ»æ›²é¢ Curved line and surface"
 author: "ryamada"
-date: "2017”N1Œ22“ú"
+date: "2017å¹´1æœˆ22æ—¥"
 output: 
   html_document:
     toc: true
@@ -16,7 +16,7 @@ library(rgl)
 knit_hooks$set(rgl = hook_webgl)
 ```
 
-# ‹Èü‚Ì’·‚³ Length of curve
+# æ›²ç·šã®é•·ã• Length of curve
 
 $$
 y = f(x) = x + \frac{1}{2}x^2
@@ -33,12 +33,12 @@ plot(x,y,type="l")
 $$
 \frac{d}{dx}f(x) = 1 + x
 $$
-”÷•ª‚·‚é‚ÆA’PˆÊx‘•ª“–‚½‚è‚Ìy‚Ì‘‰Á—Ê‚ª‚í‚©‚éB‚»‚ê‚ç‚ÍA”÷¬’¼ŠpOŠpŒ`B
+å¾®åˆ†ã™ã‚‹ã¨ã€å˜ä½xå¢—åˆ†å½“ãŸã‚Šã®yã®å¢—åŠ é‡ãŒã‚ã‹ã‚‹ã€‚ãã‚Œã‚‰ã¯ã€å¾®å°ç›´è§’ä¸‰è§’å½¢ã€‚
 
 Differentiation gives increase of y along with unit increase in x. They are two edges of a right triangle.
 
-OŠpŒ` (x,y) ,(x+dx,y),(x+dx,y+dy)‚Í’¼ŠpOŠpŒ`‚Ì3’¸“_B
-‹Èü‚Ì’·‚³‚Í‚±‚ÌOŠpŒ`‚ÌÎ•Ó‚ÌÏ•ª
+ä¸‰è§’å½¢ (x,y) ,(x+dx,y),(x+dx,y+dy)ã¯ç›´è§’ä¸‰è§’å½¢ã®3é ‚ç‚¹ã€‚
+æ›²ç·šã®é•·ã•ã¯ã“ã®ä¸‰è§’å½¢ã®æ–œè¾ºã®ç©åˆ†
 
 (x,y) ,(x+dx,y),(x+dx,y+dy) are three vertices of a right triangle.
 The length of curve is the integral of the obliques.
@@ -47,7 +47,7 @@ $$
 \int_{0}^3 \sqrt{dx^2+dy^2} = \int_0^3 \sqrt{(\frac{dx}{dx})^2+(\frac{dy}{dx})^2}dx = \sqrt{1+(\frac{dy}{dx})^2}dx \\
 $$
 
-Ï•ª‚Å‚«‚é‚Ì‚©H
+ç©åˆ†ã§ãã‚‹ã®ã‹ï¼Ÿ
 Can we integrate this?
 
 $$
@@ -55,12 +55,12 @@ $$
 =[\sqrt{2+2x+x^2}(x+1) + \sinh^{-1}(x+1)]^3_0
 $$
 
-Mathematica‚ğg‚¦‚ÎcB
+Mathematicaã‚’ä½¿ãˆã°â€¦ã€‚
 
 Check Mathematica http://www.wolframalpha.com/examples/Math.html for "Calculus AND ANALYSIS"
 and http://d.hatena.ne.jp/ryamada22/20170128 
 
-Ï•ª‚Å‚«‚é‚©‚Å‚«‚È‚¢‚©‚í‚©‚ç‚È‚­‚Ä‚à‹ß—ŒvZ‚Í‚Å‚«‚éB
+ç©åˆ†ã§ãã‚‹ã‹ã§ããªã„ã‹ã‚ã‹ã‚‰ãªãã¦ã‚‚è¿‘ä¼¼è¨ˆç®—ã¯ã§ãã‚‹ã€‚
 
 Even when the integral is not easy shape, computational calculation is possible.
 
@@ -72,11 +72,11 @@ integrate(function(x){(2+2*x+x^2)^(1/2)},0,3)
 
 ## Exercise 1-1
 
-$ y = f(x) = e^{x^2}$ ‚Ì $x \in [-1,1]$‚Ì’·‚³‚ğŒvZ‚¹‚æB
+$ y = f(x) = e^{x^2}$ ã® $x \in [-1,1]$ã®é•·ã•ã‚’è¨ˆç®—ã›ã‚ˆã€‚
 
 Calculate the length of $ y = f(x) = e^{x^2}$ for $x \in [-1,1]$.
 
-# ‹Èü‚Ìƒpƒ‰ƒƒ^•\¦ Parameteric expression of curve.
+# æ›²ç·šã®ãƒ‘ãƒ©ãƒ¡ã‚¿è¡¨ç¤º Parameteric expression of curve.
 
 $$
 x = \cos{t}\\
@@ -105,7 +105,7 @@ L(\tau) = \int_0^\tau \sqrt{(\sin{t})^2 + (\cos{t})^2} dt\\
 =[t]^\tau_0 = \tau
 $$
 
-## “¯‚¶‹O“¹AƒXƒs[ƒh‚ªˆá‚¤ Same trajectory but different speed
+## åŒã˜è»Œé“ã€ã‚¹ãƒ”ãƒ¼ãƒ‰ãŒé•ã† Same trajectory but different speed
 
 $$
 x = \cos{t^2}\\
@@ -135,13 +135,13 @@ $$
 
 ## Exercise 2-1
 
-‹Èü 
+æ›²ç·š 
 $$
 x = \cos{t}\\
 y = \sin{t}\\
 t \in [0,2\pi)
 $$
-‚ğ•`‚«A‚»‚Ì‹Èü‚Ìã‚É“K“–‚É‘½”‚Ì“_‚ğæ‚èA‚»‚Ì“_‚Å‚Ìis•ûŒüƒxƒNƒgƒ‹$(\frac{dx}{dt},\frac{dy}{dt})$‚ğ•`‚¯B
+ã‚’æãã€ãã®æ›²ç·šã®ä¸Šã«é©å½“ã«å¤šæ•°ã®ç‚¹ã‚’å–ã‚Šã€ãã®ç‚¹ã§ã®é€²è¡Œæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«$(\frac{dx}{dt},\frac{dy}{dt})$ã‚’æã‘ã€‚
 
 Draw the curve and put its speed vectors $(\frac{dx}{dt},\frac{dy}{dt})$ on many points on the curve.
 
@@ -152,13 +152,13 @@ x = \cos{t^2}\\
 y = \sin{t^2}\\
 t \in [0,\sqrt{2\pi})
 $$
-‚É‚Â‚¢‚Ä“¯—l‚Ì‚±‚Æ‚ğ‚¹‚æB
+ã«ã¤ã„ã¦åŒæ§˜ã®ã“ã¨ã‚’ã›ã‚ˆã€‚
 
 Do the same for this parameterization.
 
 ## Exercise 2-3
 
-3ŸŒ³‹óŠÔ‚Ì‹Èü
+3æ¬¡å…ƒç©ºé–“ã®æ›²ç·š
 $$
 x = r\cos{t}\\
 y = r\sin{t}\\
@@ -175,43 +175,43 @@ z <- r^2
 plot3d(x,y,z,type="l")
 ```
 
-$\frac{dx}{dt},\frac{dy}{dt},\frac{dz}{dt}$‚ğŒvZ‚µA‹Èü‚Ì’·‚³‚Æ‚µ‚Ä‚»‚ÌÏ•ª‚ğR‚Ìintegrate()ŠÖ”‚ğg‚Á‚ÄŒvZ‚¹‚æB
+$\frac{dx}{dt},\frac{dy}{dt},\frac{dz}{dt}$ã‚’è¨ˆç®—ã—ã€æ›²ç·šã®é•·ã•ã¨ã—ã¦ãã®ç©åˆ†ã‚’Rã®integrate()é–¢æ•°ã‚’ä½¿ã£ã¦è¨ˆç®—ã›ã‚ˆã€‚
 
 This is a curve in 3D space. Calculate $\frac{dx}{dt},\frac{dy}{dt},\frac{dz}{dt}$ and calculate the length of curve with R's integrate() function.
 
-‚Ü‚½A‹Èü‚Ì’·‚³‚ğÜ‚êü‚Ì’·‚³‚ÌW‚Ü‚è‚Æ‚µ‚Ä
+ã¾ãŸã€æ›²ç·šã®é•·ã•ã‚’æŠ˜ã‚Œç·šã®é•·ã•ã®é›†ã¾ã‚Šã¨ã—ã¦
 ```{}
 t <- seq(from=0,to=1,length=n)*100
 ```
-$n=10,100,1000,10000,100000$‚É‚Â‚¢‚ÄŒvZ‚¹‚æB
+$n=10,100,1000,10000,100000$ã«ã¤ã„ã¦è¨ˆç®—ã›ã‚ˆã€‚
 
 For multiple n values, calculate the length of broken lines that approximate the curve.
 
-# ’PˆÊ‰~‚Ì–ÊÏ Area of a unit circle.
+# å˜ä½å††ã®é¢ç© Area of a unit circle.
 
-’PˆÊ‰~‚Ì–ÊÏ‚ÍAThe following is the 1/4 of unit circle's area.
+å˜ä½å††ã®é¢ç©ã¯ã€The following is the 1/4 of unit circle's area.
 
 $$
 y = \sqrt{(1-x^2)}\\
 y = 0 \\
 x \in [0,1]
 $$
-‚Ì4”{‚Æ‚µ‚Ä‹‚ß‚é‚±‚Æ‚ª‚Å‚«‚éB
+ã®4å€ã¨ã—ã¦æ±‚ã‚ã‚‹ã“ã¨ãŒã§ãã‚‹ã€‚
 
 $$
 4 \int_0^1 \sqrt{(1-x^2)}dx
 $$
 
-‚±‚ÌÏ•ª‚ğ‰ğ‚­‚Ì‚Í“ï‚µ‚¢B
+ã“ã®ç©åˆ†ã‚’è§£ãã®ã¯é›£ã—ã„ã€‚
 It's no easy to solve this.
 
 ```{r}
 integrate(function(x){4*sqrt(1-x^2)},0,1)
 ```
 
-”÷¬’ê•Ó$dl$‚ğ‰~üã‚É‚¿A‚‚³‚ª”¼Œa1‚ÌOŠpŒ`‚Ì˜a‚Æ‚µ‚ÄŒvZ‚·‚é‚±‚Æ‚à‚Å‚«‚éB
+å¾®å°åº•è¾º$dl$ã‚’å††å‘¨ä¸Šã«æŒã¡ã€é«˜ã•ãŒåŠå¾„1ã®ä¸‰è§’å½¢ã®å’Œã¨ã—ã¦è¨ˆç®—ã™ã‚‹ã“ã¨ã‚‚ã§ãã‚‹ã€‚
 
-’†S‚©‚ç‚Ì”¼Œa•ûŒü‚ğ$\theta \in [0,2\pi)$‚Æ‚·‚ê‚Î
+ä¸­å¿ƒã‹ã‚‰ã®åŠå¾„æ–¹å‘ã‚’$\theta \in [0,2\pi)$ã¨ã™ã‚Œã°
 
 The area of circle is the sum of small triangles whose base lines are small arcs $dl$ of the circle and whose hight are the radius.
 The directions of the triangles are parameterized as $\theta \in [0,2\pi)$.
@@ -220,24 +220,24 @@ $$
 \int_0^{2\pi} \frac{1}{2}\times dl \\
 dl = \sqrt{(\frac{dx}{d\theta})^2+(\frac{dy}{d\theta})^2}d\theta = d\theta 
 $$
-‚±‚ê‚ÍA‰~ü‚Ì’·‚³$2\pi$‚ğ’ê•Ó‚Ì’·‚³‚Æ‚·‚éOŠpŒ`‚Ì–ÊÏB
+ã“ã‚Œã¯ã€å††å‘¨ã®é•·ã•$2\pi$ã‚’åº•è¾ºã®é•·ã•ã¨ã™ã‚‹ä¸‰è§’å½¢ã®é¢ç©ã€‚
 
 It corresponds to the area of triangle whose base is a whole circle.
 
-•Ê‚Ì•û–@‚Í‰~‚ğ”¼Œa‚ª0‚©‚ç1‚É•Ï‰»‚·‚é‰~‚Ì‚ ‚Â‚Ü‚è‚Æ‚İ‚È‚·‚à‚Ì‚Å‚ ‚éB
+åˆ¥ã®æ–¹æ³•ã¯å††ã‚’åŠå¾„ãŒ0ã‹ã‚‰1ã«å¤‰åŒ–ã™ã‚‹å††ã®ã‚ã¤ã¾ã‚Šã¨ã¿ãªã™ã‚‚ã®ã§ã‚ã‚‹ã€‚
 
 Another way is to consider the area of circle as the sum of cicles with radius ranging from 0 to 1.
 
-”¼Œa$r$‚Å‚Ì”÷¬–ÊÏ‚Í$2\pi r \times dr$.
+åŠå¾„$r$ã§ã®å¾®å°é¢ç©ã¯$2\pi r \times dr$.
 
 The small area attached to the circle with radius r is $2\pi r \times dr$.
 
 $$
 \int_0^1 2\pi r dr = 2\pi \int_0^1 r dr = 2\pi [\frac{1}{2}r^2]^1_0 = \pi
 $$
-# ‹È–Ê Curved surface
+# æ›²é¢ Curved surface
 
-ˆÈ‰º‚Ì‚æ‚¤‚È‹È–Ê‚Ì–ÊÏ‚Í‚Ç‚¤‚È‚é‚©H
+ä»¥ä¸‹ã®ã‚ˆã†ãªæ›²é¢ã®é¢ç©ã¯ã©ã†ãªã‚‹ã‹ï¼Ÿ
 
 How do we approach to the area of the curved surface as below?
 
@@ -255,26 +255,26 @@ zlim <- max(z)-min(z)
 plot3d(xy[,1],xy[,2],z,aspect=c(xlim,ylim,zlim))
 ```
 
-(x,y),(x+dx,y),(x,y+dy),(x+dx,x+dy)‚ªì‚éuÎ–Êv‚Ì–ÊÏ$dS$‚ğ‘«‚µ‡‚í‚¹‚éB
+(x,y),(x+dx,y),(x,y+dy),(x+dx,x+dy)ãŒä½œã‚‹ã€Œæ–œé¢ã€ã®é¢ç©$dS$ã‚’è¶³ã—åˆã‚ã›ã‚‹ã€‚
 
 Small areas that are slopes over (x,y),(x+dx,y),(x,y+dy),(x+dx,x+dy), $dS$, should be summed up.
 
-‚±‚ê‚ğÎ‚ß‚É‚È‚Á‚½•½sl•ÓŒ`‚Ì–ÊÏ‚Æ‚İ‚È‚·B
+ã“ã‚Œã‚’æ–œã‚ã«ãªã£ãŸå¹³è¡Œå››è¾ºå½¢ã®é¢ç©ã¨ã¿ãªã™ã€‚
 They are considered small parallelograms.
 
-•½sl•ÓŒ`‚Ì‘æ1‚Ì•Ó‚Í$(x,y,z)$‚Æ$(x+dx,y,z+\frac{\partial x}{\partial z}dx)$‚Æ‚ªì‚éƒxƒNƒgƒ‹B
-‘æ2‚Ì•Ó‚Í$(x,y,z)$‚Æ$(x,y+dy+z+\frac{\partial y}{\partial z}dy)$B
+å¹³è¡Œå››è¾ºå½¢ã®ç¬¬1ã®è¾ºã¯$(x,y,z)$ã¨$(x+dx,y,z+\frac{\partial x}{\partial z}dx)$ã¨ãŒä½œã‚‹ãƒ™ã‚¯ãƒˆãƒ«ã€‚
+ç¬¬2ã®è¾ºã¯$(x,y,z)$ã¨$(x,y+dy+z+\frac{\partial y}{\partial z}dy)$ã€‚
 
-The parallelogram's two edges are; one connecting $(x,y,z)$‚Æ$(x+dx,y,z+\frac{\partial x}{\partial z}dx)$ and 
+The parallelogram's two edges are; one connecting $(x,y,z)$ã¨$(x+dx,y,z+\frac{\partial x}{\partial z}dx)$ and 
 and the other connecting $(x,y,z)$ and $(x,y+dy+z+\frac{\partial y}{\partial z}dy)$.
 
-2‚Â‚ÌƒxƒNƒgƒ‹‚Í They are:
+2ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã¯ They are:
 $$
 v_1 = (dx,0,\frac{\partial z}{\partial x}dx)\\
 v_2 = (0,dy,\frac{\partial z}{\partial y}dy)
 $$
 
-2‚Â‚ÌƒxƒNƒgƒ‹$v_1,v_2$‚ªì‚é•½sl•ÓŒ`‚Ì–ÊÏ‚Í
+2ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«$v_1,v_2$ãŒä½œã‚‹å¹³è¡Œå››è¾ºå½¢ã®é¢ç©ã¯
 The area of parallelogram is;
 
 $$
@@ -283,24 +283,24 @@ $$
 $$
 \cos{\theta} = \frac{(v_1,v_2)}{|v_1||v_2|}
 $$
-‚½‚¾‚µA$(v_1,v_2)$‚Í“àÏB
+ãŸã ã—ã€$(v_1,v_2)$ã¯å†…ç©ã€‚
 where $(v_1,v_2)$ is inner product.
 
-‚µ‚½‚ª‚Á‚Ä Therefore,
+ã—ãŸãŒã£ã¦ Therefore,
 
 $$
 dS = ||v_1||v_2|\sqrt{1-(\frac{(v_1,v_2)}{|v_1||v_2|})^2}|\\
 = \sqrt{|v_1|^2|v_2|^2 - (v_1,v_2)^2}
 $$
 
-‚±‚±‚Å Using 
+ã“ã“ã§ Using 
 $$
 |v_1|^2 = (1+(\frac{\partial z}{\partial x})^2dx^2\\
 |v_2|^2 = (1+(\frac{\partial z}{\partial y})^2dy^2\\
 (v_1,v_2) =(\frac{\partial z}{\partial x}\frac{\partial z}{\partial y})^2dxdy
 $$
 
-ˆÈã‚æ‚èAThen,
+ä»¥ä¸Šã‚ˆã‚Šã€Then,
 $$
 dS = \sqrt{1+(\frac{\partial z}{\partial x})^2+(\frac{\partial z}{\partial y})^2} dxdy
 $$
@@ -309,7 +309,7 @@ $$
 
 ### Exercise 3-1 
 
-2‚Â‚Ì®‚ğ”äŠr‚¹‚æB
+2ã¤ã®å¼ã‚’æ¯”è¼ƒã›ã‚ˆã€‚
 
 Compare two formulas.
 
@@ -322,7 +322,7 @@ dS = \sqrt{1+(\frac{\partial z}{\partial x})^2+(\frac{\partial z}{\partial y})^2
 $$
 
 
-## ‹È–Ê‚Ì‘O‚ÉA•½–Ê Before using this to curved surface, apply it to the flat one.
+## æ›²é¢ã®å‰ã«ã€å¹³é¢ Before using this to curved surface, apply it to the flat one.
 
 $$
 z = ax + by + c
@@ -334,17 +334,17 @@ $$
 dS = \sqrt{1+a^2+b^2}dxdy \\
 \int_{x_0}^{x_1} \int_{y_0}^{y_1} dS dxdy = \sqrt{1+a^2+b^2} \times (x_1-x_0)(y_1-y_0)
 $$
-’P‚È‚éA•½sl•ÓŒ`‚Ì–ÊÏB
+å˜ãªã‚‹ã€å¹³è¡Œå››è¾ºå½¢ã®é¢ç©ã€‚
 
 Simple parallelogram's area.
 
-## ’PˆÊ‹…–ÊÏ Surface area of unit sphere.
+## å˜ä½çƒé¢ç© Surface area of unit sphere.
 
 $$
 x^2+y^2+z^2=1\\
 z = \pm \sqrt{1-(x^2+y^2)}
 $$
-$ z= \sqrt{1-(x^2+y^2)}$ , $0 \le x^2+y^2 \le 1;x,y \ge 0$‚ğˆµ‚¤‚±‚Æ‚É‚·‚éB
+$ z= \sqrt{1-(x^2+y^2)}$ , $0 \le x^2+y^2 \le 1;x,y \ge 0$ã‚’æ‰±ã†ã“ã¨ã«ã™ã‚‹ã€‚
 
 Calculate a part of the sphere of $ z= \sqrt{1-(x^2+y^2)}$ , $0 \le x^2+y^2 \le 1;x,y \ge 0$.
 
@@ -363,7 +363,7 @@ $$
 S = \int_{x^2+y^2 \le 1} dS = \int_{x^2+y^2 \le 1} \sqrt{\frac{1}{1-(x^2+y^2)}}dxdy
 $$
 
-‚±‚ê‚Í‰ğ‚¯‚È‚¢‚ªA‚¤‚Ü‚­ƒpƒ‰ƒƒ^•\¦‚ğ•Ï‚¦‚é‚±‚Æ‚Å‰ğ‚¯‚é‚æ‚¤‚É‚Å‚«‚éB
+ã“ã‚Œã¯è§£ã‘ãªã„ãŒã€ã†ã¾ããƒ‘ãƒ©ãƒ¡ã‚¿è¡¨ç¤ºã‚’å¤‰ãˆã‚‹ã“ã¨ã§è§£ã‘ã‚‹ã‚ˆã†ã«ã§ãã‚‹ã€‚
 
 This is not easy but converting to different parameterization, then it can  be.
 
@@ -374,18 +374,18 @@ y = r \sin{\theta}\\
 0 \le \theta \le 2\pi\\
 $$
 
-$(r\cos{\theta},r\sin{\theta}),((r+dr)\cos{\theta},(r+dr)\sin{\theta}),(r\cos{(\theta+d\theta)},r\sin{(\theta+d\theta)}),((r+dr)\cos{(\theta+d\theta)},(r+dr)\sin{(\theta+d\theta)})‚ªì‚é”÷¬–ÊÏ‚Í
+$(r\cos{\theta},r\sin{\theta}),((r+dr)\cos{\theta},(r+dr)\sin{\theta}),(r\cos{(\theta+d\theta)},r\sin{(\theta+d\theta)}),((r+dr)\cos{(\theta+d\theta)},(r+dr)\sin{(\theta+d\theta)})ãŒä½œã‚‹å¾®å°é¢ç©ã¯
 
 Small area should be changed accordingly.
 
 $$
 dr \times (r \times d\theta)
 $$
-‚µ‚½‚ª‚Á‚Ä$dxdy$‚É‘Š“–‚·‚é‚Ì‚Í$rdrd\theta$
+ã—ãŸãŒã£ã¦$dxdy$ã«ç›¸å½“ã™ã‚‹ã®ã¯$rdrd\theta$
 
 Means $dxdy$ is converted to $rdrd\theta$.
 
-‚ä‚¦‚É
+ã‚†ãˆã«
 $$
 S = \int_{x^2+y^2 \le 1} \sqrt{\frac{1}{1-(x^2+y^2)}}dxdy\\
 = \int_{0 \le r \le 1, 0\le \theta \le 2\pi} \sqrt{\frac{1}{1-r^2(\cos^2\theta + \sin^2{\theta})}}rdrd\theta\\
@@ -397,15 +397,15 @@ $$
 = -r\sqrt{\frac{1}{1-r^2}}
 $$
 
-‚µ‚½‚ª‚Á‚Ä
+ã—ãŸãŒã£ã¦
 $$
 S = 2\pi
 $$
-‚±‚ê‚Í‹…‚Ìã”¼•ª‚Å‚ ‚é‚©‚çA‹…–Ê‘S‘Ì‚Ì•\–ÊÏ‚ÍA$4\pi$.
+ã“ã‚Œã¯çƒã®ä¸ŠåŠåˆ†ã§ã‚ã‚‹ã‹ã‚‰ã€çƒé¢å…¨ä½“ã®è¡¨é¢ç©ã¯ã€$4\pi$.
 
 This is the upper half's area, therefore the are of unit sphere is $4\pi$.
 
-## ‹È–Ê Curverd surface
+## æ›²é¢ Curverd surface
 
 
 $$
@@ -428,34 +428,34 @@ $$
 $$
 
 
-2‚Â‚ÌƒxƒNƒgƒ‹‚Í@The vecors are;
+2ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã¯ã€€The vecors are;
 $$
 (dx,0,-\sin{x}dx)\\
 (0,dy,\cos{y}dy)
 $$
 
 
-‚µ‚½‚ª‚Á‚Ä Then
+ã—ãŸãŒã£ã¦ Then
 
 $$
 dS = ||v_1||v_2|\sqrt{1-(\frac{(v_1,v_2)}{|v_1||v_2|})^2}|\\
 = \sqrt{|v_1|^2|v_2|^2 - (v_1,v_2)^2}
 $$
 
-‚±‚±‚Å Using
+ã“ã“ã§ Using
 $$
 |v_1|^2 = (1+\sin^2{x})dx^2\\
 |v_2|^2 = (1+\cos^2{y})dy^2\\
 (v_1,v_2) = -\sin{x}\cos{y}dxdy
 $$
 
-ˆÈã‚æ‚èATherefere
+ä»¥ä¸Šã‚ˆã‚Šã€Therefere
 $$
 dS = \sqrt{(1+\sin^2{x})(1+\cos^2{y})-\sin^2{x}\cos^2{y}} dxdy
 = \sqrt{1+(\sin^2{x}+\cos^2{y})}dxdy
 $$
 
-‰ğ‚¯‚È‚¢‚¯‚ê‚ÇAŒvZ‹@“I‚É‚ÍŒvZ‚Å‚«‚éB
+è§£ã‘ãªã„ã‘ã‚Œã©ã€è¨ˆç®—æ©Ÿçš„ã«ã¯è¨ˆç®—ã§ãã‚‹ã€‚
 Computationally calculable.
 
 
@@ -463,7 +463,7 @@ Computationally calculable.
 
 ## Exercise 4-1
 
-Mathematica‚ÌƒTƒCƒg‚ğg‚Á‚Ä‚±‚Ì–ÊÏ‚ğŒvZ‚¹‚æB
+Mathematicaã®ã‚µã‚¤ãƒˆã‚’ä½¿ã£ã¦ã“ã®é¢ç©ã‚’è¨ˆç®—ã›ã‚ˆã€‚
 
 Calculate the area using Mathematica's site.
 
