@@ -12,11 +12,17 @@ output:
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE)
+
 library(rgl)
+options(rgl.useNULL = TRUE)
+options(rgl.printRglwidget = TRUE) 
 knit_hooks$set(rgl = hook_webgl)
-library(MCMCpack)
-library(rgl)
 ```
+
+```{r}
+library(MCMCpack)
+```
+
 
 # 分布は点である Distributions are points
 
@@ -51,7 +57,7 @@ Information geometry treats these particular distribution instances as points.
 We can give two dimensional coordinate $(x_1=0.3,x_2=0.7)$ to the distribution, 
 
 ```{r}
-n <- 10
+n <- 100
 p1 <- runif(n)
 p2 <- 1-p1
 plot(p1,p2)

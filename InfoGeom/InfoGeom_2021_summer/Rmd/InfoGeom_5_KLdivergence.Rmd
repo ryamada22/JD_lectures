@@ -12,7 +12,10 @@ output:
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE)
+
 library(rgl)
+options(rgl.useNULL = TRUE)
+options(rgl.printRglwidget = TRUE) 
 knit_hooks$set(rgl = hook_webgl)
 ```
 
@@ -124,7 +127,7 @@ $$
 - 式の非対称性からわかるように、QからPに変えると値が異なる。The formula is asymmetric, that means the exchange of P and Q changes the value of divergence.
 
 $$
-KLd(Q \to P) = \int p \frac{\log{p}}{\log{q}} dx \ne KLd(P \to Q)
+KLd(Q \to P) = \int q \frac{\log{q}}{\log{p}} dx \ne KLd(P \to Q)
 $$
 
 ## 例 Example

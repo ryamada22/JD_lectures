@@ -9,10 +9,14 @@ output:
     number_section: true
 ---
 
+
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE)
+
 library(rgl)
+options(rgl.useNULL = TRUE)
+options(rgl.printRglwidget = TRUE) 
 knit_hooks$set(rgl = hook_webgl)
 ```
 
@@ -96,7 +100,7 @@ $$
 
 ### Exercise 1-1
 
-$p_{MLE}$では$\frac{d}{dp}L(p_{MLE}|n,m)=0$であり、かつ、$\frac{d^2}{dp^2}L(p_{MLE}|n,m) = \frac{d}{dp}(\frac{d}{dp}L(p_{MLE}|n,m)) > 0$である。
+$p_{MLE}$では$\frac{d}{dp}L(p_{MLE}|n,m)=0$であり、かつ、$\frac{d^2}{dp^2}L(p_{MLE}|n,m) = \frac{d}{dp}(\frac{d}{dp}L(p_{MLE}|n,m)) < 0$である。
 これを示せ。
 
 ## 対数尤度関数
@@ -203,9 +207,10 @@ $$
 
 $$
 \frac{d}{d\lambda}(\sum_{i=1}^k \log{L(n_i|\lambda)}) = \sum_{i=1}^k \frac{d}{d\lambda}\log{L(n_i|\lambda)}\\
-= \sum_{i=1}^k (\frac{n}{\lambda}-1)\\
-= \frac{1}{\lambda} (\sum_{i=1}^k n_i - k\lambda)
+= \sum_{i=1}^k (\frac{n_i}{\lambda}-1)\\
+= \frac{1}{\lambda} (\sum_{i=1}^k n_i) - k\lambda
 $$
+
 
 $\frac{d}{d\lambda }\log{L(ns|\lambda)}=0$の解は$\lambda = \frac{\sum_{i=1}^k n_i}{k}$ 
 

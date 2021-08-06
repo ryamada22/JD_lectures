@@ -11,7 +11,10 @@ output:
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE)
+
 library(rgl)
+options(rgl.useNULL = TRUE)
+options(rgl.printRglwidget = TRUE) 
 knit_hooks$set(rgl = hook_webgl)
 ```
 
@@ -135,7 +138,7 @@ log.L.. <- -k*log(s..)-1/2 * (1/s..^2) * (k-2*sum(x)+sum(x^2))
 spheres3d(1,s..,log.L..,radius=5,color=5)
 ```
 
-## $m= ? $
+## $m= ?$
 
 $m=0$, $m=1$の場合では、$m$を固定して$\log{L}$を$s$で微分した。
 

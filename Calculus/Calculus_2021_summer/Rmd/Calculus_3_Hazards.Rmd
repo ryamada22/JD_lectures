@@ -12,7 +12,10 @@ output:
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = TRUE)
+
 library(rgl)
+options(rgl.useNULL = TRUE)
+options(rgl.printRglwidget = TRUE) 
 knit_hooks$set(rgl = hook_webgl)
 ```
 
