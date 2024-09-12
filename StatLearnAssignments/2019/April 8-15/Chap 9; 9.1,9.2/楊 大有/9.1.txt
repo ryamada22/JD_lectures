@@ -1,0 +1,5 @@
+They are more flexible statistical methods that may be used to identify and characterize nonlinear regression effects. In generalized additive models, it replaces the linear term in the linear regression model by a more general functional term. Thus, it can easily mix linear and nonlinear term to describe a complicated situation.
+
+In this Model, It requires a smoother. Therefore, GAM uses the backfitting algorithm as smoother. By applying the backfitting algorithm until the functions fi change less than a prespecified threshold or the f is stable. 
+
+The backfitting procedure for fitting these models is simple and modular, allowing one to choose a suitable method appropriate for each input variable. However, the backfitting is not ideal for a large number of data, because it will try to fit all predictor.

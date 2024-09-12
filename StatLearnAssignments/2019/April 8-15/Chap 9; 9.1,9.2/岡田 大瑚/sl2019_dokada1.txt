@@ -1,0 +1,25 @@
+#Read 9.1 Generalized Additive Models, 9.2 Tree-Based Methods. Report each sections and subsections briefly as the attached file(s). 
+9.1:一般化加法的モデルの概要
+一般化加法的モデルは、回帰をより一般的に拡張したものである。
+左辺の予測変数は、リンク関数によって柔軟に説明変数と結び付けられる。重回帰では、これは期待値。
+右辺の説明変数は、各項の非線形な関数の和という一般的な形で表現される。重回帰では、これは各説明変数の線形和
+
+9.1.1 一般化加法的モデルでは、非線形な関数そのものを推定するひつようがあるので、そのアルゴリズムの説明。
+後退当てはめ法。
+
+9.1.2　一般化加法的モデルの例としての加法的ロジスティック回帰での実施例
+
+9.2 木を用いたモデル
+
+9.2.1,2&3分類木、回帰木それぞれでの、最小化すべきコスト関数の説明
+モデルをどの程度複雑にするかに関する「枝かり」のアイデアについて
+
+9.2.4木を用いたモデルの特徴、留意点
+9.2.5 実施例
+
+#Make a list of words you found in the assigned sections that you believe you should understand well and upload the word list.
+・一般化加法的モデル
+・リンク関数
+・後退当てはめ法
+・分類木
+・回帰木

@@ -1,0 +1,3 @@
+Classification and Regression Trees or CART is an algorithm that can be used for classification or regression predictive modeling problems. A property of this tree is that a single tree fully describes the feature space partition.
+
+Different measures of the node impurity include Misclassification error, Gini index, and Cross-entropy or deviance. Also, cross-entropy and the Gini index are more sensitive to changes in the node probabilities than the misclassification rate.
